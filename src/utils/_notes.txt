@@ -1,0 +1,12 @@
+📘 utils folder
+----------------
+Contains utility and helper functions (pure logic, no UI).
+
+Examples:
+- forecastUtils.js → handles forecasting + growth calculations
+- validators.js → input validation for setup forms
+- constants.js → global constants (setup steps, default budgets, etc.)
+- formatters.js → format money, percentages, or dates
+
+Keep logic modular and testable.
+Each util file should export reusable functions for backend or frontend use.

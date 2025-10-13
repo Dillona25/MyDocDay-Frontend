@@ -1,0 +1,7 @@
+Each step should be a route 
+
+/setup/profile
+/setup/connect
+/setup/budget
+/setup/goals
+/setup/buckets

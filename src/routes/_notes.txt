@@ -1,0 +1,16 @@
+📘 routes folder
+----------------
+Contains React Router definitions and flow logic.
+
+Main files:
+- AppRoutes.jsx → defines all app routes and nested setup routes.
+
+Example routes:
+- /setup/profile
+- /setup/connect
+- /setup/budget
+- /dashboard
+
+Future additions:
+- Route guards for protected pages (e.g., require account connection)
+- Redirects for onboarding completion

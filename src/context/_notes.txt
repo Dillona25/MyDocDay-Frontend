@@ -1,0 +1,12 @@
+📘 context folder
+-----------------
+Holds React Context providers for global state.
+
+Use this for:
+- SetupContext.jsx → manages multi-step setup data (profile, accounts, goals, etc.)
+- UserContext.jsx → manages global user/auth state (optional for later)
+
+Each context should:
+1. Expose state and setters via a Provider.
+2. Be wrapped around <App /> in main.jsx.
+3. Hold UI-level data, not server data.
