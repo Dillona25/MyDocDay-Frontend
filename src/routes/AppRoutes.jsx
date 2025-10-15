@@ -7,6 +7,7 @@ import { ProfileStep } from "../pages/onboarding/ProfileStep";
 import { OnboardingLayout } from "../pages/onboarding/OnboardingLayout";
 import { Signin } from "../pages/auth/Signin";
 import { Signup } from "../pages/auth/Signup";
+import { AccountConnect } from "../pages/onboarding/AccountConnect";
 
 export const AppRoutes = () => {
   return (
@@ -18,6 +19,7 @@ export const AppRoutes = () => {
         {/* Onboarding Routes */}
         <Route path="/setup" element={<OnboardingLayout />}>
           <Route path="profile" element={<ProfileStep />} />
+          <Route path="account-connect" element={<AccountConnect />} />
         </Route>
 
         {/* Auth Routes */}
