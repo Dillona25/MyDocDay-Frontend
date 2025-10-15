@@ -1,9 +1,6 @@
 const FormWrapper = ({ children, onSubmit, className }) => {
   return (
-    <form
-      onSubmit={onSubmit}
-      className={`${className} d-flex flex-column gap-4`}
-    >
+    <form onSubmit={onSubmit} className={`${className} d-flex flex-column`}>
       {children}
     </form>
   );
