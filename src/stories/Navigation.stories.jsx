@@ -1,8 +1,8 @@
-import SideNavigation from "../components/dashboard/SideNavigation";
+import Navigation from "../components/common/Navigation";
 
 export default {
   title: "Components/Dashboard/SideNavigation",
-  component: SideNavigation,
+  component: Navigation,
   argTypes: {},
 };
 

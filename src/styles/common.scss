@@ -1,3 +1,15 @@
+.bg-primary {
+  background-color: #1f3557 !important;
+}
+
+.bg-light {
+  background-color: #c5c5c5 !important;
+}
+
+.bg-active {
+  background-color: #3c65a6 !important;
+}
+
 .text-primary {
   color: #1f3557 !important;
 }
@@ -8,4 +20,24 @@
 
 .drop-shadow {
   box-shadow: 0 3.5px 40px rgba(0, 0, 0, 0.08);
+}
+
+.font-inter {
+  font-family: "Inter", sans-serif;
+}
+
+.font-poppins {
+  font-family: "Poppins", sans-serif;
+}
+
+.font-body {
+  font-size: 14px !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.border-light {
+  border: 1px solid #dadada !important;
 }
