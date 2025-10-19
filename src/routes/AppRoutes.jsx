@@ -3,11 +3,6 @@
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Home } from "../pages/Home";
-import { ProfileStep } from "../pages/onboarding/ProfileStep";
-import { OnboardingLayout } from "../pages/onboarding/OnboardingLayout";
-import { Signin } from "../pages/auth/Signin";
-import { Signup } from "../pages/auth/Signup";
-import { AccountConnect } from "../pages/onboarding/AccountConnect";
 
 export const AppRoutes = () => {
   return (
@@ -17,14 +12,14 @@ export const AppRoutes = () => {
         <Route path="/" element={<Home />} />
 
         {/* Onboarding Routes */}
-        <Route path="/setup" element={<OnboardingLayout />}>
+        {/* <Route path="/setup" element={<OnboardingLayout />}>
           <Route path="profile" element={<ProfileStep />} />
           <Route path="account-connect" element={<AccountConnect />} />
-        </Route>
+        </Route> */}
 
         {/* Auth Routes */}
-        <Route path="signin" element={<Signin />}></Route>
-        <Route path="signup" element={<Signup />}></Route>
+        {/* <Route path="signin" element={<Signin />}></Route>
+        <Route path="signup" element={<Signup />}></Route> */}
       </Routes>
     </Router>
   );
