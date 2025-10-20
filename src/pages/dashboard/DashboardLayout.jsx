@@ -1,5 +1,5 @@
 import Navigation from "../../components/common/Navigation";
-import DoctorWidget from "../../components/dashboard/DoctorWidget";
+import DoctorWidget from "../../components/widgets/DoctorWidget";
 
 const DashboardLayout = () => {
   const today = new Date();
@@ -19,7 +19,7 @@ const DashboardLayout = () => {
             </h1>
           </div>
         </div>
-        <div className="row justify-content-end">
+        <div className="row justify-content-between">
           <DoctorWidget />
         </div>
       </div>

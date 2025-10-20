@@ -1,7 +1,7 @@
 import currentUserImage from "../assets/currentUser.png";
 
 export const currentUser = {
-  firstName: "Scott",
+  firstName: "Dave",
   lastName: "Henderson",
   profilePhoto: "",
   usersDoctors: [
@@ -30,14 +30,14 @@ export const currentUser = {
       },
     },
     {
-      drFirstName: "UW Dental",
+      drFirstName: "UNL Dental",
       drLastName: "",
       drProfileImage: "",
       drID: "3",
       drProfession: "Dentist",
       drType: "entity",
       drOffice: {
-        drOfficeName: "University Of Washington Montlake",
+        drOfficeName: "University Of Nebraska-Lincoln Dental",
         drOfficeAddress: "1959 NE Pacific St Main Hospital, Seattle, WA 98195",
       },
     },
@@ -64,6 +64,48 @@ export const currentUser = {
         drOfficeName: "University Of Washington Montlake",
         drOfficeAddress: "1959 NE Pacific St Main Hospital, Seattle, WA 98195",
       },
+    },
+  ],
+  upcomingAppointments: [
+    {
+      id: "appt-001",
+      doctorId: "1",
+      doctorName: "Ruth Mendalin",
+      title: "Post-op follow up",
+      start: "2025-10-14T09:30:00-07:00",
+      end: "2025-10-14T10:00:00-07:00",
+      location: "UW Montlake - Room 204",
+      type: "In-person",
+    },
+    {
+      id: "appt-002",
+      doctorId: "2",
+      doctorName: "Bilbo Jenkins",
+      title: "Seasonal allergy consult",
+      start: "2025-10-21T13:00:00-07:00",
+      end: "2025-10-21T13:30:00-07:00",
+      location: "Telehealth",
+      type: "Virtual",
+    },
+    {
+      id: "appt-003",
+      doctorId: "3",
+      doctorName: "UNL Dental",
+      title: "Routine cleaning",
+      start: "2025-10-22T08:15:00-07:00",
+      end: "2025-10-22T09:00:00-07:00",
+      location: "UNL Dental Clinic",
+      type: "In-person",
+    },
+    {
+      id: "appt-004",
+      doctorId: "1",
+      doctorName: "Ruth Mendalin",
+      title: "MRI results review",
+      start: "2025-10-28T11:00:00-07:00",
+      end: "2025-10-18T11:45:00-07:00",
+      location: "UW Montlake - Radiology",
+      type: "In-person",
     },
   ],
 };

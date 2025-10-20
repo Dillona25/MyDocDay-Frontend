@@ -8,7 +8,7 @@ const DoctorWidget = () => {
   return (
     <div className="col-3 rounded-3 border-light p-3">
       <h3 className="text-primary text-poppins fw-semibold">Your Doctors</h3>
-      <ul className="list-unstyled d-flex flex-column gap-4 mt-5">
+      <ul className="list-unstyled d-flex flex-column gap-4 mt-4">
         {topDoctors?.map((doctor) => (
           <li key={doctor.drID} className="d-flex gap-2">
             {doctor.drProfileImage ? (
