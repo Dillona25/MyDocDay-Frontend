@@ -1,12 +1,13 @@
 import { useState } from "react";
 import MyDocDayLogo from "../../assets/NavLogo.svg";
 import { currentUser } from "../../data/user";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
   const navItems = [
-    { label: "Overview" },
-    { label: "Your Doctors" },
-    { label: "Appointments" },
+    { label: "Overview", href: "dashboard" },
+    { label: "Your Doctors", href: "doctors" },
+    { label: "Appointments", href: "appointments" },
     { label: "Calendar" },
     { label: "Reminders" },
     { label: "Account" },

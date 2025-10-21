@@ -1,6 +1,8 @@
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "./config.scss";
 @import "./common.scss";
 @import "./components/nav.scss";
 @import "./widgets/doctor-widget.scss";
 @import "./components/calendar.scss";
 @import "./widgets/appointment-widget.scss";
+@import "./widgets/reminders-widget.scss";

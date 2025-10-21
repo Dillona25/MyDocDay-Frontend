@@ -3,12 +3,14 @@ import currentUserImage from "../assets/currentUser.png";
 export const currentUser = {
   firstName: "Dave",
   lastName: "Henderson",
-  profilePhoto: "",
+  profilePhoto:
+    "https://images.unsplash.com/photo-1551847812-f815b31ae67c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2VsZmllfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=500",
   usersDoctors: [
     {
-      drFirstName: "Ruth",
+      drFirstName: "Dr. Ruth",
       drLastName: "Mendalin",
-      drProfileImage: "",
+      drProfileImage:
+        "https://images.unsplash.com/photo-1685760259914-ee8d2c92d2e0?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHByb2Zlc3Npb25hbCUyMGhlYWRzaG90fGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=500",
       drID: "1",
       drProfession: "Neurosurgeon",
       drType: "person",
@@ -18,11 +20,38 @@ export const currentUser = {
       },
     },
     {
-      drFirstName: "Bilbo",
+      drFirstName: "Dr. Scott",
       drLastName: "Jenkins",
-      drProfileImage: "",
+      drProfileImage:
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmVzc2lvbmFsJTIwaGVhZHNob3R8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=500",
       drID: "7",
       drProfession: "ENT",
+      drType: "person",
+      drOffice: {
+        drOfficeName: "University Of Washington Montlake",
+        drOfficeAddress: "1959 NE Pacific St Main Hospital, Seattle, WA 98195",
+      },
+    },
+    {
+      drFirstName: "Dr. Sara",
+      drLastName: "Carter",
+      drProfileImage:
+        "https://images.unsplash.com/photo-1655249481446-25d575f1c054?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHByb2Zlc3Npb25hbCUyMGhlYWRzaG90fGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=500",
+      drID: "2",
+      drProfession: "Oncologist",
+      drType: "person",
+      drOffice: {
+        drOfficeName: "University Of Washington Montlake",
+        drOfficeAddress: "1959 NE Pacific St Main Hospital, Seattle, WA 98195",
+      },
+    },
+    {
+      drFirstName: "Dr. Jeff",
+      drLastName: "Teague",
+      drProfileImage:
+        "https://images.unsplash.com/photo-1652471943570-f3590a4e52ed?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHJvZmVzc2lvbmFsJTIwaGVhZHNob3R8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=500",
+      drID: "4",
+      drProfession: "Dermatologist",
       drType: "person",
       drOffice: {
         drOfficeName: "University Of Washington Montlake",
@@ -41,37 +70,13 @@ export const currentUser = {
         drOfficeAddress: "1959 NE Pacific St Main Hospital, Seattle, WA 98195",
       },
     },
-    {
-      drFirstName: "Bilbo",
-      drLastName: "Jenkins",
-      drProfileImage: "",
-      drID: "2",
-      drProfession: "ENT",
-      drType: "person",
-      drOffice: {
-        drOfficeName: "University Of Washington Montlake",
-        drOfficeAddress: "1959 NE Pacific St Main Hospital, Seattle, WA 98195",
-      },
-    },
-    {
-      drFirstName: "Bilbo",
-      drLastName: "Jenkins",
-      drProfileImage: "",
-      drID: "4",
-      drProfession: "ENT",
-      drType: "person",
-      drOffice: {
-        drOfficeName: "University Of Washington Montlake",
-        drOfficeAddress: "1959 NE Pacific St Main Hospital, Seattle, WA 98195",
-      },
-    },
   ],
   upcomingAppointments: [
     {
       id: "appt-001",
       doctorId: "1",
       doctorName: "Ruth Mendalin",
-      title: "Post-op follow up",
+      title: "Post-op",
       start: "2025-10-22T09:30:00-07:00",
       end: "2025-10-14T10:00:00-07:00",
       location: "UW Montlake - Room 204",
@@ -80,12 +85,12 @@ export const currentUser = {
     {
       id: "appt-002",
       doctorId: "2",
-      doctorName: "Bilbo Jenkins",
-      title: "Seasonal allergy consult",
-      start: "2025-11-19T13:00:00-07:00",
+      doctorName: "Scott Jenkins",
+      title: "Hearing Test",
+      start: "2025-10-22T13:00:00-07:00",
       end: "2025-10-21T13:30:00-07:00",
-      location: "Telehealth",
-      type: "Virtual",
+      location: "UW Montlake - Room 309",
+      type: "In-person",
     },
     {
       id: "appt-003",
@@ -109,3 +114,27 @@ export const currentUser = {
     },
   ],
 };
+
+export const reminders = [
+  {
+    id: "1",
+    owner: "Dave",
+    content: "Schedule your 6 month MRI for December!",
+    status: "incomplete",
+    type: "task",
+  },
+  {
+    id: "2",
+    owner: "Dave",
+    content: "Schedule 6 month dental cleaning for this month!",
+    status: "incomplete",
+    type: "task",
+  },
+  {
+    id: "3",
+    owner: "Dave",
+    content: "You have two appointments in the next 30 days!",
+    status: "incomplete",
+    type: "reminder",
+  },
+];

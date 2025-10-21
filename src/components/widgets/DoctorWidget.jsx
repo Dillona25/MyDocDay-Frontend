@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { currentUser } from "../../data/user";
 
 const DoctorWidget = () => {
@@ -6,7 +7,7 @@ const DoctorWidget = () => {
   const hasMoreDoctors = doctors.length > topDoctors.length;
 
   return (
-    <div className="col-3 rounded-3 border-light p-3">
+    <section className="rounded-3 border-light p-3 h-100">
       <h3 className="text-primary text-poppins fw-semibold">Your Doctors</h3>
       <ul className="list-unstyled d-flex flex-column gap-4 mt-4">
         {topDoctors?.map((doctor) => (
@@ -40,12 +41,12 @@ const DoctorWidget = () => {
           </li>
         ))}
         {hasMoreDoctors && (
-          <a href="" className="text-body text-center">
+          <Link to="doctors" className="text-body text-center">
             View All Doctors
-          </a>
+          </Link>
         )}
       </ul>
-    </div>
+    </section>
   );
 };
 

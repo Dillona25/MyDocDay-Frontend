@@ -2,6 +2,7 @@ import AppointmentCard from "../common/AppointmentCard";
 import { currentUser } from "../../data/user";
 import Button from "../common/Button";
 import SleepingDog from "../../assets/Sleeping-Dog-Icon.png";
+import { Link } from "react-router-dom";
 
 const AppointmentsWidget = () => {
   const limitedApts = currentUser.upcomingAppointments.slice(0, 3);
@@ -29,8 +30,15 @@ const AppointmentsWidget = () => {
   });
 
   return (
-    <div className="col-8">
-      <h4>Your Appointments</h4>
+    <section className="border border-light rounded-3 p-3">
+      <div className="d-flex flex-column flex-md-row justify-content-center justify-content-md-between">
+        <h3 className="mt-0 mb-3 mb-md-0 text-center text-md-left">
+          Your Appointments
+        </h3>
+        <Link to="appointments" className="mx-auto mx-md-0 mb-3 mb-md-0">
+          <Button buttonText="View All Appointments" className="small" />
+        </Link>
+      </div>
 
       {todaysApts.length > 0 ? (
         <>
@@ -39,7 +47,6 @@ const AppointmentsWidget = () => {
               Today
             </span>
             <div className="divider-line flex-grow-1 bg-black" />
-            <Button buttonText="View Appointments" className="small" />
           </div>
 
           <div className="row mt-2 g-3">
@@ -50,15 +57,16 @@ const AppointmentsWidget = () => {
                 aptTime={apt.start}
                 aptlLocation={apt.location}
                 aptType={apt.type}
+                aptTitle={apt.title}
               />
             ))}
           </div>
         </>
       ) : (
         <>
-          <div className="mx-auto d-flex align-items-center gap-2">
+          <div className="mx-auto d-flex flex-column flex-md-row align-items-center gap-2">
             <img src={SleepingDog} height={100} alt="Relaxing Dog" />
-            <h5 className="text-body fw-semibold text-center">
+            <h5 className="text-body fw-semibold text-center mb-5 mb-md-0">
               It's a great day to relax. You have no appointments today!
             </h5>
           </div>
@@ -67,7 +75,6 @@ const AppointmentsWidget = () => {
               In the next 30 days
             </span>
             <div className="divider-line flex-grow-1 bg-black" />
-            <Button buttonText="View Appointments" className="small" />
           </div>
 
           <div className="row mt-2 g-3">
@@ -79,6 +86,7 @@ const AppointmentsWidget = () => {
                     aptTime={apt.start}
                     aptlLocation={apt.location}
                     aptType={apt.type}
+                    aptTitle={apt.title}
                     isMuted={true}
                   />
                 ))
@@ -86,7 +94,7 @@ const AppointmentsWidget = () => {
           </div>
         </>
       )}
-    </div>
+    </section>
   );
 };
 

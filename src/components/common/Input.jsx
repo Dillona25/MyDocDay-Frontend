@@ -9,7 +9,7 @@ const Input = ({
 }) => {
   return (
     <div className="d-flex flex-column gap-2">
-      <label>{labelText}</label>
+      {labelText ? <label>{labelText}</label> : ""}
       <input
         type={type}
         value={value}
