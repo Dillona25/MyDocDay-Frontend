@@ -13,12 +13,12 @@ const DoctorWidget = () => {
           <li key={doctor.drID} className="d-flex gap-2">
             {doctor.drProfileImage ? (
               <img
-                className="drImg rounded-circle"
+                className="dr-img rounded-circle object-fit-cover flex-shrink-0"
                 alt="Dr Profile Image"
                 src={doctor.drProfileImage}
               />
             ) : (
-              <div className="bg-light rounded-circle d-flex align-items-center justify-content-center drImg">
+              <div className="bg-light rounded-circle d-flex align-items-center justify-content-center dr-img object-fit-cover flex-shrink-0">
                 <span className="h4 fw-semibold m-0 text-body">
                   {doctor.drFirstName[0] && doctor.drLastName[0]
                     ? `${doctor.drFirstName[0] + doctor.drLastName[0]}`

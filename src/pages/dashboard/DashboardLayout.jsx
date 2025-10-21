@@ -1,4 +1,5 @@
 import Navigation from "../../components/common/Navigation";
+import AppointmentsWidget from "../../components/widgets/AppointmentsWidget";
 import DoctorWidget from "../../components/widgets/DoctorWidget";
 
 const DashboardLayout = () => {
@@ -20,6 +21,7 @@ const DashboardLayout = () => {
           </div>
         </div>
         <div className="row justify-content-between">
+          <AppointmentsWidget />
           <DoctorWidget />
         </div>
       </div>
