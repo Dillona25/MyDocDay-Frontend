@@ -1,6 +1,6 @@
 // src/components/common/Input.stories.jsx
 
-import TextInput from "../components/common/Inputs";
+import { TextInput } from "../components/common/Inputs";
 
 export default {
   title: "Components/Common/Inputs",

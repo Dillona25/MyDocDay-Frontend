@@ -7,6 +7,10 @@ import DashboardLayout from "../pages/dashboard/DashboardLayout";
 import DashboardHome from "../pages/dashboard/DashboardHome";
 import DashboardDoctors from "../pages/dashboard/DashboardDoctors";
 import DashboardAppointments from "../pages/dashboard/DashboardAppointments";
+import Signin from "../pages/auth/Signin";
+import OnboardingLayout from "../pages/onboarding/OnboardingLayout";
+import Signup from "../pages/auth/Signup";
+import OnboardingDoctors from "../pages/onboarding/OnboardingDoctors";
 
 export const AppRoutes = () => {
   return (
@@ -15,7 +19,15 @@ export const AppRoutes = () => {
         {/* Home Route (Marketing LP) */}
         <Route path="/" element={<Home />} />
 
+        <Route path="/signin" element={<Signin />} />
+
         {/* Onboarding Routes */}
+        <Route path="/onboarding" element={<OnboardingLayout />}>
+          <Route index element={<Signup />} />
+          <Route path="doctors" element={<OnboardingDoctors />} />
+        </Route>
+
+        {/* Dashboard Routes */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} />
           <Route path="doctors" element={<DashboardDoctors />} />

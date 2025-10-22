@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { reminders } from "../../data/user";
-import Input from "./Input";
+import { Input } from "./Inputs";
 
 const Reminders = () => {
   const [items, setItems] = useState(reminders ?? []);
