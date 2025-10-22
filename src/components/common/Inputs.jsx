@@ -3,6 +3,7 @@ import { useId } from "react";
 // ** TEXT INPUT
 const TextInput = ({
   labelText,
+  type = "text",
   value,
   name,
   placeholder,
@@ -27,7 +28,7 @@ const TextInput = ({
       <div className="input-field__wrapper position-relative">
         <input
           id={inputId}
-          type="text"
+          type={type}
           value={value}
           name={name}
           placeholder={placeholder}

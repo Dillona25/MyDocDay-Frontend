@@ -1,0 +1,51 @@
+.nboarding-container {
+  height: 100vh;
+}
+
+.signup-page {
+  min-height: 100vh;
+}
+
+.signup-coppy-wrapper {
+  padding-bottom: 500px;
+}
+
+.signup-card {
+  height: 600px;
+  border: 3px solid #627da5;
+}
+
+.signup-img-wrapper {
+  width: 700px;
+  border: 3px solid #74a9f9;
+}
+
+.signup-logo {
+  height: 50px;
+}
+
+.signup-toggle {
+  min-width: clamp(14rem, 45vw, 20rem);
+}
+
+.signup-form {
+  width: 100%;
+}
+
+.signup-toggle-indicator {
+  width: 50%;
+  background: #3c65a6;
+  transition: transform 0.35s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.signup-toggle-button {
+  background-color: transparent;
+  transition: color 0.35s ease, background-color 0.35s ease;
+  z-index: 1;
+}
+
+.signup-toggle-button--active {
+  color: #ffffff;
+}
