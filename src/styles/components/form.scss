@@ -1,0 +1,32 @@
+// Our input styles
+.input-field {
+  position: relative;
+
+  &__control {
+    width: 100%;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  &__label {
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff;
+    pointer-events: none;
+    opacity: 0;
+    transition: top 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  &__wrapper:focus-within .input-field__label,
+  &--focused .input-field__label,
+  &--filled .input-field__label {
+    opacity: 1;
+    top: 0;
+    transform: translateY(-60%);
+  }
+
+  &__wrapper:focus-within .input-field__control {
+    border-color: #1f3557;
+    box-shadow: 0 0 0 0.2rem rgba(31, 53, 87, 0.1);
+  }
+}

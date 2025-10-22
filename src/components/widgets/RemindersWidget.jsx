@@ -1,6 +1,4 @@
 import ReminderIcon from "../../assets/Reminders-icon.svg";
-import { reminders } from "../../data/user";
-import Input from "../common/Input";
 import Reminders from "../common/Reminders";
 
 const RemindersWidget = () => {

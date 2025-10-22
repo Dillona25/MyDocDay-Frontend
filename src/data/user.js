@@ -77,7 +77,7 @@ export const currentUser = {
       doctorId: "1",
       doctorName: "Ruth Mendalin",
       title: "Post-op",
-      start: "2025-10-22T09:30:00-07:00",
+      start: "2025-10-21T09:30:00-07:00",
       end: "2025-10-14T10:00:00-07:00",
       location: "UW Montlake - Room 204",
       type: "In-person",

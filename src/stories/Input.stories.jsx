@@ -1,13 +1,12 @@
 // src/components/common/Input.stories.jsx
 
-import Input from "../components/common/Input";
+import TextInput from "../components/common/Inputs";
 
 export default {
-  title: "Components/Common/Input",
-  component: Input,
+  title: "Components/Common/Inputs",
+  component: TextInput,
   argTypes: {
     labelText: { control: "text" },
-    type: { control: "text" },
     value: { control: "text" },
     className: { control: "text" },
   },
@@ -15,7 +14,6 @@ export default {
 
 export const Default = {
   args: {
-    type: "",
     labelText: "First Name",
     value: "",
     placeholder: "First Name",
