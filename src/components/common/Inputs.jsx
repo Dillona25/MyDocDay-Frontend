@@ -1,14 +1,17 @@
+import { bool } from "prop-types";
 import { useId } from "react";
 
 // ** TEXT INPUT
 const TextInput = ({
   labelText,
   type = "text",
+  pattern,
   value,
   name,
   placeholder,
   onChange,
   className = "",
+  required = false,
 }) => {
   // Provides an input/label pair a unique id
   const inputId = useId();
@@ -26,14 +29,21 @@ const TextInput = ({
       }`}
     >
       <div className="input-field__wrapper position-relative">
+        {required && (
+          <span className="h5 text-warning position-absolute input-field__required">
+            *
+          </span>
+        )}
         <input
           id={inputId}
           type={type}
+          pattern={pattern}
           value={value}
           name={name}
           placeholder={placeholder}
           onChange={onChange}
           className={`rounded-2 p-2 border-1 w-100 input-field__control ${className}`}
+          required={required}
         />
         {labelText ? (
           <label
