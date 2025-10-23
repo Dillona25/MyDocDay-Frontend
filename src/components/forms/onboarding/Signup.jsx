@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Button from "../common/Button";
-import FormWrapper from "../common/FormWrapper";
-import { TextInput } from "../common/Inputs";
+import Button from "../../common/Button";
+import FormWrapper from "../../common/FormWrapper";
+import { TextInput } from "../../common/Inputs";
 
 const SignupForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -9,6 +9,7 @@ const SignupForm = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   // Function to handle when the input changes
   function handleInputChange(event, inputState) {
@@ -39,7 +40,7 @@ const SignupForm = () => {
         </div>
       </div>
       <div className="row mb-4">
-        <div className="col-12">
+        <div className="col-12 mb-4">
           <TextInput
             name="email"
             onChange={(event) => handleInputChange(event, setEmail)}
@@ -49,9 +50,7 @@ const SignupForm = () => {
             placeholder="Your Email"
           />
         </div>
-      </div>
-      <div className="row mb-4">
-        <div className="col-12">
+        <div className="col-12 mb-4">
           <TextInput
             name="phone"
             onChange={(event) => handleInputChange(event, setPhone)}
@@ -62,15 +61,24 @@ const SignupForm = () => {
             pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
           />
         </div>
-      </div>
-      <div className="row mb-4">
-        <div className="col-12">
+
+        <div className="col-12 mb-4">
           <TextInput
             name="password"
             onChange={(event) => handleInputChange(event, setPassword)}
             required={true}
             labelText="Create A Password"
             placeholder="Create A Password"
+            type="password"
+          />
+        </div>
+        <div className="col-12">
+          <TextInput
+            name="password"
+            onChange={(event) => handleInputChange(event, setConfirmPassword)}
+            required={true}
+            labelText="Confirm Password"
+            placeholder="Confirm Password"
             type="password"
           />
         </div>

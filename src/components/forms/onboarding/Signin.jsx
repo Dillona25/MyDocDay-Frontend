@@ -1,7 +1,7 @@
 import { useState } from "react";
-import FormWrapper from "../common/FormWrapper";
-import { TextInput } from "../common/Inputs";
-import Button from "../common/Button";
+import FormWrapper from "../../common/FormWrapper";
+import { TextInput } from "../../common/Inputs";
+import Button from "../../common/Button";
 
 const SigninForm = () => {
   const [email, setEmail] = useState("");
