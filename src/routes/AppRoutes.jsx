@@ -7,12 +7,11 @@ import DashboardLayout from "../pages/dashboard/DashboardLayout";
 import DashboardHome from "../pages/dashboard/DashboardHome";
 import DashboardDoctors from "../pages/dashboard/DashboardDoctors";
 import DashboardAppointments from "../pages/dashboard/DashboardAppointments";
-import Signin from "../pages/auth/Signin";
 import OnboardingLayout from "../pages/onboarding/OnboardingLayout";
-import Signup from "../pages/auth/Signup";
 import OnboardingDoctors from "../pages/onboarding/OnboardingDoctors";
 import OnBoardingUserInfo from "../pages/onboarding/OnBoardingUserInfo";
 import OnboardingAppointments from "../pages/onboarding/OnboardingAppointments";
+import Auth from "../pages/auth/Auth";
 
 export const AppRoutes = () => {
   return (
@@ -21,11 +20,9 @@ export const AppRoutes = () => {
         {/* Home Route (Marketing LP) */}
         <Route path="/" element={<Home />} />
 
-        <Route path="/signin" element={<Signin />} />
-
         {/* Onboarding Routes */}
         <Route path="/onboarding" element={<OnboardingLayout />}>
-          <Route index element={<Signup />} />
+          <Route index element={<Auth />} />
           <Route path="userInformation" element={<OnBoardingUserInfo />} />
           <Route path="doctors" element={<OnboardingDoctors />} />
           <Route path="appointments" element={<OnboardingAppointments />} />

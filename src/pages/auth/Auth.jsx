@@ -6,7 +6,7 @@ import { Input, TextInput } from "../../components/common/Inputs";
 import SignupForm from "../../components/forms/onboarding/Signup";
 import SigninForm from "../../components/forms/onboarding/Signin";
 
-const Signup = () => {
+const Auth = () => {
   const [isActive, setIsActive] = useState(false);
   const [activeForm, setActiveForm] = useState("signup");
 
@@ -52,4 +52,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Auth;

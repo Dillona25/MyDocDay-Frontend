@@ -30,7 +30,7 @@ const TextInput = ({
     >
       <div className="input-field__wrapper position-relative">
         {required && (
-          <span className="h5 text-warning position-absolute input-field__required">
+          <span className="h5 text-danger position-absolute input-field__required">
             *
           </span>
         )}

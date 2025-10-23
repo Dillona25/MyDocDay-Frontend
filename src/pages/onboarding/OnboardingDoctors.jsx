@@ -1,8 +1,21 @@
+import Button from "../../components/common/Button";
+import ModalAddDoctor from "../../components/modals/ModalAddDoctor";
+
 const OnboardingDoctors = () => {
   return (
-    <div>
-      <h2>OnboardingDoctors</h2>
-    </div>
+    <>
+      <div className="row">
+        <div className="col-12">
+          <Button
+            buttonText="Add A Doctor"
+            dataTarget="add-doctor"
+            dataToggle="modal"
+            type="button"
+          />
+        </div>
+      </div>
+      <ModalAddDoctor />
+    </>
   );
 };
 
