@@ -23,10 +23,18 @@ const AddDoctors = () => {
             </div>
             <div className="row mb-4">
               <div className="col-6">
-                <TextInput labelText="First Name" placeholder="First Name" />
+                <TextInput
+                  labelText="First Name"
+                  placeholder="First Name"
+                  required
+                />
               </div>
               <div className="col-6">
-                <TextInput labelText="Last Name" placeholder="Last Name" />
+                <TextInput
+                  labelText="Last Name"
+                  placeholder="Last Name"
+                  required
+                />
               </div>
             </div>
             <div className="row mb-4">
@@ -34,6 +42,7 @@ const AddDoctors = () => {
                 <TextInput
                   labelText="Doctors Specialty"
                   placeholder="Doctors Speacialty"
+                  required
                 />
               </div>
             </div>
@@ -63,7 +72,11 @@ const AddDoctors = () => {
             </div>
             <div className="row mb-4">
               <div className="col-12">
-                <TextInput labelText="Clinic Name" placeholder="Clinic Name" />
+                <TextInput
+                  labelText="Clinic Name"
+                  placeholder="Clinic Name"
+                  required
+                />
               </div>
             </div>
             <div className="row mb-4">
@@ -72,16 +85,17 @@ const AddDoctors = () => {
                   labelText="Street Address"
                   placeholder="Street Address"
                   className="mb-4"
+                  required
                 />
               </div>
               <div className="col-4">
-                <TextInput labelText="City" placeholder="City" />
+                <TextInput labelText="City" placeholder="City" required />
               </div>
               <div className="col-4">
-                <TextInput labelText="State" placeholder="State" />
+                <TextInput labelText="State" placeholder="State" required />
               </div>
               <div className="col-4">
-                <TextInput labelText="Zipcode" placeholder="Zipcode" />
+                <TextInput labelText="Zipcode" placeholder="Zipcode" required />
               </div>
             </div>
             <div className="row mb-4">

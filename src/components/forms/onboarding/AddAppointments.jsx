@@ -11,6 +11,7 @@ const AddAppointments = () => {
             <TextInput
               labelText="Appointment Title"
               placeholder="Appointment Title"
+              required
             />
           </div>
         </div>
@@ -21,10 +22,10 @@ const AddAppointments = () => {
         </div>
         <div className="row mb-4">
           <div className="col-6">
-            <TextInput type="date" labelText="Appointment Date" />
+            <TextInput type="date" labelText="Appointment Date" required />
           </div>
           <div className="col-6">
-            <TextInput type="time" labelText="Appointment Time" />
+            <TextInput type="time" labelText="Appointment Time" required />
           </div>
         </div>
         <div className="row mb-4">
@@ -35,7 +36,7 @@ const AddAppointments = () => {
       </FormWrapper>
       <div className="row">
         <div className="col-12 text-end">
-          <Button buttonText="Add Appointment" type="submit" />
+          <Button buttonText="Add Appointment" type="submit" data />
         </div>
       </div>
     </>
