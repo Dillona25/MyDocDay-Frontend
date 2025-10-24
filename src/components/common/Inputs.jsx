@@ -1,4 +1,3 @@
-import { bool } from "prop-types";
 import { useId } from "react";
 
 // ** TEXT INPUT
@@ -66,18 +65,20 @@ const Input = ({
   placeholder,
   onChange,
   className,
+  id,
 }) => {
   return (
-    <div className="d-flex flex-column gap-2">
-      {labelText ? <label>{labelText}</label> : ""}
+    <div className="d-flex flex-column gap-2 form-floating">
       <input
         type={type}
         value={value}
         name={name}
         placeholder={placeholder}
         onChange={onChange}
-        className={`rounded-2 p-2 border-1 ${className}`}
+        onInvalid={id}
+        className={`form-control ${className}`}
       ></input>
+      {labelText ? <label for={id}>{labelText}</label> : ""}
     </div>
   );
 };

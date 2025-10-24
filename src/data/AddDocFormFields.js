@@ -1,41 +1,54 @@
-export const doctorFields = [
+export const addAppointmentFields = [
   {
-    label: "Doctor's First Name",
-    name: "firstName",
-    colSize: "col-6",
-    type: "text",
-  },
-  {
-    label: "Doctor's Last Name",
-    name: "lastName",
-    colSize: "col-6",
-    type: "text",
-  },
-  {
-    label: "Doctor's Specialty",
-    name: "specialty",
+    label: "Appointment Title",
+    name: "appointment-title",
     colSize: "col-12",
     type: "text",
   },
-  { label: "Doctor's Image", name: "image", type: "file", colSize: "col-12" },
+  {
+    label: "Doctor",
+    name: "doctor",
+    colSize: "col-12",
+    type: "text",
+  },
+  {
+    label: "Date",
+    name: "date",
+    colSize: "col-6",
+    type: "date",
+  },
+  {
+    label: "Time",
+    name: "time",
+    colSize: "col-6",
+    type: "time",
+  },
+  {
+    label: "Appointment Type",
+    name: "appointment-type",
+    colSize: "col-6",
+    type: "time",
+  },
 ];
 
-export const clinicFields = [
-  {
-    label: "Clinic Name",
-    name: "clinicName",
-    colSize: "col-12",
-    type: "text",
-  },
-  {
-    label: "Street Address",
-    name: "address",
-    colSize: "col-12",
-    type: "text",
-  },
-  { label: "City", name: "city", colSize: "col-6", type: "text" },
-  { label: "State", name: "state", colSize: "col-6", type: "text" },
-  { label: "Zipcode", name: "zipcode", colSize: "col-6", type: "text" },
-  { label: "Clinic Phone", name: "phone", colSize: "col-12", type: "text" },
-  { label: "Clinic Email", name: "email", colSize: "col-12", type: "text" },
-];
+// Fields (per appointment):
+
+// Appointment Title (“Annual Checkup,” “Dental Cleaning,” etc.)
+
+// Doctor (dropdown from Step 2 list)
+
+// Date
+
+// Time
+
+// Location / Address (optional, can be used for map reminders later)
+
+// Appointment Type (In-Person / Telehealth)
+
+// Notes (reason for visit, pre-visit prep, etc.)
+
+// Optional Additions:
+
+// “Sync with Calendar?” (Google / Apple / Outlook toggle)
+
+// “Add Reminder” (checkbox — with time options: 1 day before, 1 hour before, etc.)

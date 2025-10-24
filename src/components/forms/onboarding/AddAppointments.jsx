@@ -1,31 +1,45 @@
+import FormWrapper from "../../../components/common/FormWrapper";
+import { TextInput } from "../../../components/common/Inputs";
+import Button from "../../common/Button";
+
 const AddAppointments = () => {
   return (
-    <div>
-      <h2>AddAppointments</h2>
-    </div>
+    <>
+      <FormWrapper className="mb-5">
+        <div className="row mb-4">
+          <div className="col-12">
+            <TextInput
+              labelText="Appointment Title"
+              placeholder="Appointment Title"
+            />
+          </div>
+        </div>
+        <div className="row mb-4">
+          <div className="col-12">
+            <span>Create Select Field</span>
+          </div>
+        </div>
+        <div className="row mb-4">
+          <div className="col-6">
+            <TextInput type="date" labelText="Appointment Date" />
+          </div>
+          <div className="col-6">
+            <TextInput type="time" labelText="Appointment Time" />
+          </div>
+        </div>
+        <div className="row mb-4">
+          <div className="col-12">
+            <span>Create Radio Input</span>
+          </div>
+        </div>
+      </FormWrapper>
+      <div className="row">
+        <div className="col-12 text-end">
+          <Button buttonText="Add Appointment" type="submit" />
+        </div>
+      </div>
+    </>
   );
 };
 
 export default AddAppointments;
-
-// Fields (per appointment):
-
-// Appointment Title (“Annual Checkup,” “Dental Cleaning,” etc.)
-
-// Doctor (dropdown from Step 2 list)
-
-// Date
-
-// Time
-
-// Location / Address (optional, can be used for map reminders later)
-
-// Appointment Type (In-Person / Telehealth)
-
-// Notes (reason for visit, pre-visit prep, etc.)
-
-// Optional Additions:
-
-// “Sync with Calendar?” (Google / Apple / Outlook toggle)
-
-// “Add Reminder” (checkbox — with time options: 1 day before, 1 hour before, etc.)

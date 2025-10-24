@@ -1,9 +1,9 @@
 const Button = ({
   dataToggle,
   dataTarget,
-  buttonText,
+  buttonText = "",
   className = "",
-  type = "submit",
+  type = "",
   onClick,
   disabled = false,
 }) => {
