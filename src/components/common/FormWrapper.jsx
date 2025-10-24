@@ -1,5 +1,9 @@
-const FormWrapper = ({ className, children }) => {
-  return <form className={`${className}`}>{children}</form>;
+const FormWrapper = ({ className, onSubmit, children }) => {
+  return (
+    <form className={`${className}`} onSubmit={onSubmit}>
+      {children}
+    </form>
+  );
 };
 
 export default FormWrapper;

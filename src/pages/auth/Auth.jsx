@@ -1,8 +1,5 @@
 import { useState } from "react";
-import DashboardImage from "../../assets/Dashboard-Screenshot.png";
-import Logo from "../../assets/NavLogo.svg";
 import Button from "../../components/common/Button";
-import { Input, TextInput } from "../../components/common/Inputs";
 import SignupForm from "../../components/forms/onboarding/Signup";
 import SigninForm from "../../components/forms/onboarding/Signin";
 

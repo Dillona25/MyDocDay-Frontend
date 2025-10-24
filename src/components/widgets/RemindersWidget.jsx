@@ -1,5 +1,4 @@
 import ReminderIcon from "../../assets/Reminders-icon.svg";
-import Reminders from "../common/Reminders";
 
 const RemindersWidget = () => {
   return (
@@ -10,7 +9,7 @@ const RemindersWidget = () => {
         src={ReminderIcon}
       />
       <h3>Reminders</h3>
-      <Reminders />
+      {/* <Reminders /> */}
     </section>
   );
 };

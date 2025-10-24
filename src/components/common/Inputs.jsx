@@ -57,30 +57,64 @@ const TextInput = ({
   );
 };
 
-const Input = ({
-  labelText,
-  type,
+const SelectInput = ({
   value,
   name,
-  placeholder,
+  defaultOptionText = "",
+  options,
   onChange,
-  className,
+  className = "",
   id,
+  disabled = false,
 }) => {
   return (
-    <div className="d-flex flex-column gap-2 form-floating">
-      <input
-        type={type}
-        value={value}
+    <div className="d-flex flex-column gap-2">
+      <select
+        id={id}
         name={name}
-        placeholder={placeholder}
+        value={value}
         onChange={onChange}
-        onInvalid={id}
-        className={`form-control ${className}`}
-      ></input>
-      {labelText ? <label for={id}>{labelText}</label> : ""}
+        disabled={disabled}
+        className={`rounded-2 p-2 border-1 w-100 input-field__control ${className}`}
+      >
+        <option>{defaultOptionText}</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
 
-export { TextInput, Input };
+const RadioInput = ({
+  value,
+  defaultOptionText = "",
+  options,
+  onChange,
+  className = "",
+  id,
+  disabled = false,
+}) => {
+  return (
+    <div className="d-flex flex-column gap-2">
+      <select
+        id={id}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        disabled={disabled}
+        className={`rounded-2 p-2 border-1 w-100 input-field__control ${className}`}
+      >
+        <option>{defaultOptionText}</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+export { TextInput, SelectInput };

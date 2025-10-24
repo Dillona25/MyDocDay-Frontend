@@ -1,5 +1,5 @@
 import FormWrapper from "../../common/FormWrapper";
-import { Input, TextInput } from "../../common/Inputs";
+import { TextInput } from "../../common/Inputs";
 import Button from "../../common/Button";
 import { useState } from "react";
 
