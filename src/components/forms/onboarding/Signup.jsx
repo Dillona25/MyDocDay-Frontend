@@ -4,38 +4,37 @@ import FormWrapper from "../../common/FormWrapper";
 import { TextInput } from "../../common/Inputs";
 import { useNavigate } from "react-router-dom";
 import { mockApi, registerUser } from "../../../api/authApi";
+import { useForm } from "react-hook-form";
 
 const SignupForm = () => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    password: "",
-  });
   const navigate = useNavigate();
 
-  // Handle our input change
-  const handleChange = (event) => {
-    // Destructure our form name
-    const { name, value } = event.target;
-    // Update our state immutably (new copy)
-    setFormData((prev) => ({
-      // New copy of prev state, so empty strings ""
-      ...prev,
-      // Updte state; time: "22:34"
-      [name]: value,
-    }));
-  };
+  const {
+    register,
+    handleSubmit, // ✅ This is the proper function from RHF
+    setError,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "onChange", // validates on each input change
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      password: "",
+    },
+  });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  // ✅ This is the callback RHF will call when valid
+  const onSubmit = async (values) => {
     try {
-      const res = await registerUser(formData);
+      const res = await registerUser(values);
       console.log("User registered successfully:", res);
       navigate("/onboarding/doctors/");
     } catch (error) {
       console.error("Registration failed:", error);
+      setError("api", { message: "Something went wrong. Try again." });
     }
   };
 
@@ -43,63 +42,115 @@ const SignupForm = () => {
     <FormWrapper
       className="mt-5 d-flex flex-column"
       id="sign-up-form"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <div className="row mb-4">
         <div className="col-6">
           <TextInput
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required={true}
             labelText="First Name"
             placeholder="First Name"
+            {...register("firstName", {
+              required: "First name is required",
+              minLength: {
+                value: 2,
+                message: "Use 2 or more characters",
+              },
+            })}
+            onChange={(evt) => {
+              const target = evt.target;
+              setValue("firstName", target.value, { shouldValidate: true });
+            }}
           />
+          {errors.firstName && (
+            <span className="text-danger small">
+              {errors.firstName.message}
+            </span>
+          )}
         </div>
         <div className="col-6">
           <TextInput
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required={true}
             labelText="Last Name"
             placeholder="Last Name"
+            {...register("lastName", {
+              required: "Last name is required",
+              minLength: {
+                value: 2,
+                message: "Use 2 or more characters",
+              },
+            })}
+            onChange={(evt) => {
+              const target = evt.target;
+              setValue("lastName", target.value, { shouldValidate: true });
+            }}
           />
+          {errors.lastName && (
+            <span className="text-danger small">{errors.lastName.message}</span>
+          )}
         </div>
       </div>
       <div className="row mb-4">
         <div className="col-12 mb-4">
           <TextInput
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required={true}
             type="email"
             labelText="Your Email"
             placeholder="Your Email"
+            {...register("email", {
+              required: "Your email is required",
+              pattern: {
+                value: /[\w\-.]+@([\w-]+\.)+[\w-]{2,4}/,
+                message: "Invalid Email",
+              },
+            })}
+            onChange={(evt) => {
+              const target = evt.target;
+              setValue("email", target.value, { shouldValidate: true });
+            }}
           />
+          {errors.email && (
+            <span className="text-danger small">{errors.email.message}</span>
+          )}
         </div>
         <div className="col-12 mb-4">
           <TextInput
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required={true}
             labelText="Your Phone Number"
             placeholder="Your Phone Number"
+            {...register("phone", {
+              required: "Phone number is required",
+              minLength: {
+                value: 10,
+                message: "Invalid Phone Number",
+              },
+            })}
+            onChange={(evt) => {
+              const target = evt.target;
+              setValue("phone", target.value, { shouldValidate: true });
+            }}
           />
+          {errors.phone && (
+            <span className="text-danger small">{errors.phone.message}</span>
+          )}
         </div>
 
         <div className="col-12 mb-4">
           <TextInput
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required={true}
             labelText="Create A Password"
             placeholder="Create A Password"
             type="password"
+            {...register("password", {
+              required: "A Secure Password is required",
+              minLength: {
+                value: 8,
+                message: "Please use at least 8 characters",
+              },
+            })}
+            onChange={(evt) => {
+              const target = evt.target;
+              setValue("password", target.value, { shouldValidate: true });
+            }}
           />
+          {errors.password && (
+            <span className="text-danger small">{errors.password.message}</span>
+          )}
         </div>
         {/* <div className="col-12">
           <TextInput
@@ -112,9 +163,12 @@ const SignupForm = () => {
         </div> */}
       </div>
       <Button
+        disabled={!isValid}
         buttonText="Next"
         type="submit"
-        className="max-w-fit bg-primary-light text-white align-self-end"
+        className={`${
+          isValid ? "bg-primary-light" : "bg-light text-body"
+        } max-w-fit bg-primary-light text-white align-self-end`}
       />
     </FormWrapper>
   );

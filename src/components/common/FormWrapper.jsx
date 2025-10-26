@@ -1,6 +1,6 @@
-const FormWrapper = ({ className, onSubmit, children }) => {
+const FormWrapper = ({ className, ref, onSubmit, children }) => {
   return (
-    <form className={`${className}`} onSubmit={onSubmit}>
+    <form className={`${className}`} ref={ref} onSubmit={onSubmit}>
       {children}
     </form>
   );
