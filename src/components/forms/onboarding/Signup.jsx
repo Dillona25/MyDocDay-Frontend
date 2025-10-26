@@ -3,26 +3,41 @@ import Button from "../../common/Button";
 import FormWrapper from "../../common/FormWrapper";
 import { TextInput } from "../../common/Inputs";
 import { useNavigate } from "react-router-dom";
+import { mockApi, registerUser } from "../../../api/authApi";
 
 const SignupForm = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
   const navigate = useNavigate();
 
-  // Function to handle when the input changes
-  function handleInputChange(event, inputState) {
-    console.log(event.target.value);
-    inputState(event.target.value);
-  }
+  // Handle our input change
+  const handleChange = (event) => {
+    // Destructure our form name
+    const { name, value } = event.target;
+    // Update our state immutably (new copy)
+    setFormData((prev) => ({
+      // New copy of prev state, so empty strings ""
+      ...prev,
+      // Updte state; time: "22:34"
+      [name]: value,
+    }));
+  };
 
-  function handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate("/onboarding/doctors/");
-  }
+    try {
+      const res = await registerUser(formData);
+      console.log("User registered successfully:", res);
+      navigate("/onboarding/doctors/");
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
+  };
 
   return (
     <FormWrapper
@@ -34,7 +49,8 @@ const SignupForm = () => {
         <div className="col-6">
           <TextInput
             name="firstName"
-            onChange={(event) => handleInputChange(event, setFirstName)}
+            value={formData.firstName}
+            onChange={handleChange}
             required={true}
             labelText="First Name"
             placeholder="First Name"
@@ -43,7 +59,8 @@ const SignupForm = () => {
         <div className="col-6">
           <TextInput
             name="lastName"
-            onChange={(event) => handleInputChange(event, setLastName)}
+            value={formData.lastName}
+            onChange={handleChange}
             required={true}
             labelText="Last Name"
             placeholder="Last Name"
@@ -54,7 +71,8 @@ const SignupForm = () => {
         <div className="col-12 mb-4">
           <TextInput
             name="email"
-            onChange={(event) => handleInputChange(event, setEmail)}
+            value={formData.email}
+            onChange={handleChange}
             required={true}
             type="email"
             labelText="Your Email"
@@ -64,7 +82,8 @@ const SignupForm = () => {
         <div className="col-12 mb-4">
           <TextInput
             name="phone"
-            onChange={(event) => handleInputChange(event, setPhone)}
+            value={formData.phone}
+            onChange={handleChange}
             required={true}
             labelText="Your Phone Number"
             placeholder="Your Phone Number"
@@ -74,25 +93,29 @@ const SignupForm = () => {
         <div className="col-12 mb-4">
           <TextInput
             name="password"
-            onChange={(event) => handleInputChange(event, setPassword)}
+            value={formData.password}
+            onChange={handleChange}
             required={true}
             labelText="Create A Password"
             placeholder="Create A Password"
             type="password"
           />
         </div>
-        <div className="col-12">
+        {/* <div className="col-12">
           <TextInput
             name="password"
-            onChange={(event) => handleInputChange(event, setConfirmPassword)}
             required={true}
             labelText="Confirm Password"
             placeholder="Confirm Password"
             type="password"
           />
-        </div>
+        </div> */}
       </div>
-      <Button buttonText="Create Account" type="submit" />
+      <Button
+        buttonText="Next"
+        type="submit"
+        className="max-w-fit bg-primary-light text-white align-self-end"
+      />
     </FormWrapper>
   );
 };

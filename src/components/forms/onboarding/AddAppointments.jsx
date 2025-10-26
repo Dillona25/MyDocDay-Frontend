@@ -2,7 +2,7 @@ import { useState } from "react";
 import FormWrapper from "../../../components/common/FormWrapper";
 import { SelectInput, TextInput } from "../../../components/common/Inputs";
 import Button from "../../common/Button";
-import { mockApi } from "../../../api/api";
+import { mockApi } from "../../../api/authApi";
 
 const AddAppointments = () => {
   // Dummy select options

@@ -1,17 +1,26 @@
+body {
+  font-family: "Inter", sans-serif;
+  color: #757575;
+}
+
 .bg-primary {
-  background-color: #1f3557 !important;
+  background-color: map-get($theme-colors, "primary");
+}
+
+.bg-primary-light {
+  background-color: map-get($theme-colors, "primary-light");
+}
+
+.text-primary {
+  color: map-get($theme-colors, "primary");
+}
+
+.text-secondary {
+  color: map-get($theme-colors, "secondary");
 }
 
 .bg-light {
   background-color: #c5c5c5 !important;
-}
-
-.bg-active {
-  background-color: #3c65a6 !important;
-}
-
-.text-primary {
-  color: #1f3557 !important;
 }
 
 .text-body {

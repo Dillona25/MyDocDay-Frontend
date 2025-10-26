@@ -1,33 +1,14 @@
-.onboarding-layout {
-  min-height: 100vh;
-}
-
 .onboarding-container {
   min-height: 100vh;
 }
 
-.signup-logo {
-  height: 50px;
-}
+#signup-page {
+  h3 {
+    letter-spacing: 3px;
+  }
 
-.signup-toggle {
-  min-width: clamp(14rem, 45vw, 20rem);
-}
-
-.signup-toggle-indicator {
-  width: 50%;
-  background: #3c65a6;
-  transition: transform 0.35s ease;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.signup-toggle-button {
-  background-color: transparent;
-  transition: color 0.35s ease, background-color 0.35s ease;
-  z-index: 1;
-}
-
-.signup-toggle-button--active {
-  color: #ffffff;
+  h1 {
+    font-size: 64px;
+    line-height: 70px;
+  }
 }
