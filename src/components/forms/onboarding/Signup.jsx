@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../../common/Button";
 import FormWrapper from "../../common/FormWrapper";
 import { TextInput } from "../../common/Inputs";
+import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -10,6 +11,7 @@ const SignupForm = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   // Function to handle when the input changes
   function handleInputChange(event, inputState) {
@@ -17,8 +19,17 @@ const SignupForm = () => {
     inputState(event.target.value);
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    navigate("/onboarding/doctors/");
+  }
+
   return (
-    <FormWrapper className="mt-5 d-flex flex-column" id="sign-up-form">
+    <FormWrapper
+      className="mt-5 d-flex flex-column"
+      id="sign-up-form"
+      onSubmit={handleSubmit}
+    >
       <div className="row mb-4">
         <div className="col-6">
           <TextInput
@@ -57,8 +68,6 @@ const SignupForm = () => {
             required={true}
             labelText="Your Phone Number"
             placeholder="Your Phone Number"
-            type="tel"
-            pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
           />
         </div>
 
@@ -83,7 +92,7 @@ const SignupForm = () => {
           />
         </div>
       </div>
-      <Button disabled buttonText="Create Account" type="submit" />
+      <Button buttonText="Create Account" type="submit" />
     </FormWrapper>
   );
 };

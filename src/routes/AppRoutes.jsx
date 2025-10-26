@@ -11,7 +11,8 @@ import OnboardingLayout from "../pages/onboarding/OnboardingLayout";
 import OnboardingDoctors from "../pages/onboarding/OnboardingDoctors";
 import OnBoardingUserInfo from "../pages/onboarding/OnBoardingUserInfo";
 import OnboardingAppointments from "../pages/onboarding/OnboardingAppointments";
-import Auth from "../pages/auth/Auth";
+import Signup from "../pages/auth/Signup";
+import Signin from "../pages/auth/Signin";
 
 export const AppRoutes = () => {
   return (
@@ -19,10 +20,11 @@ export const AppRoutes = () => {
       <Routes>
         {/* Home Route (Marketing LP) */}
         <Route path="/" element={<Home />} />
+        <Route path="signin" element={<Signin />} />
 
         {/* Onboarding Routes */}
         <Route path="/onboarding" element={<OnboardingLayout />}>
-          <Route index element={<Auth />} />
+          <Route index element={<Signup />} />
           <Route path="userInformation" element={<OnBoardingUserInfo />} />
           <Route path="doctors" element={<OnboardingDoctors />} />
           <Route path="appointments" element={<OnboardingAppointments />} />
