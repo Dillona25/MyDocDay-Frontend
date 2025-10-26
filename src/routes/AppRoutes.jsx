@@ -13,6 +13,7 @@ import OnBoardingUserInfo from "../pages/onboarding/OnBoardingUserInfo";
 import OnboardingAppointments from "../pages/onboarding/OnboardingAppointments";
 import Signup from "../pages/auth/Signup";
 import Signin from "../pages/auth/Signin";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const AppRoutes = () => {
   return (
@@ -20,11 +21,14 @@ export const AppRoutes = () => {
       <Routes>
         {/* Home Route (Marketing LP) */}
         <Route path="/" element={<Home />} />
+
+        {/* Auth Routes */}
         <Route path="signin" element={<Signin />} />
+        <Route path="signup" element={<Signup />} />
 
         {/* Onboarding Routes */}
         <Route path="/onboarding" element={<OnboardingLayout />}>
-          <Route index element={<Signup />} />
+          <Route index element={<OnboardingDoctors />} />
           <Route path="userInformation" element={<OnBoardingUserInfo />} />
           <Route path="doctors" element={<OnboardingDoctors />} />
           <Route path="appointments" element={<OnboardingAppointments />} />

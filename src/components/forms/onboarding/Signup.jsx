@@ -5,18 +5,20 @@ import { TextInput } from "../../common/Inputs";
 import { useNavigate } from "react-router-dom";
 import { mockApi, registerUser } from "../../../api/authApi";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../../../store/AuthContext.jsx";
 
 const SignupForm = () => {
   const navigate = useNavigate();
+  const [userCreated, setUserCreated] = useState(false);
+  const { login } = useAuth();
 
   const {
     register,
-    handleSubmit, // ✅ This is the proper function from RHF
+    handleSubmit,
     setError,
     setValue,
     formState: { errors, isValid },
   } = useForm({
-    mode: "onChange", // validates on each input change
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -26,15 +28,23 @@ const SignupForm = () => {
     },
   });
 
-  // ✅ This is the callback RHF will call when valid
-  const onSubmit = async (values) => {
+  const handleSignup = async (values) => {
     try {
       const res = await registerUser(values);
-      console.log("User registered successfully:", res);
-      navigate("/onboarding/doctors/");
+      if (res) {
+        localStorage.setItem("jwt", res.token);
+        setUserCreated(true);
+        login();
+      }
     } catch (error) {
       console.error("Registration failed:", error);
-      setError("api", { message: "Something went wrong. Try again." });
+    }
+  };
+
+  const onSubmit = async (values) => {
+    handleSignup(values);
+    if (userCreated) {
+      navigate("/onboarding/doctors/");
     }
   };
 
