@@ -28,23 +28,17 @@ const SignupForm = () => {
     },
   });
 
-  const handleSignup = async (values) => {
+  const onSubmit = async (values) => {
     try {
       const res = await registerUser(values);
-      if (res) {
+      if (res?.user && res?.token) {
         localStorage.setItem("jwt", res.token);
-        setUserCreated(true);
-        login();
+        localStorage.setItem("user", JSON.stringify(res.user));
+        login(res.user, res.token);
+        navigate("/onboarding/doctors/");
       }
     } catch (error) {
       console.error("Registration failed:", error);
-    }
-  };
-
-  const onSubmit = async (values) => {
-    handleSignup(values);
-    if (userCreated) {
-      navigate("/onboarding/doctors/");
     }
   };
 

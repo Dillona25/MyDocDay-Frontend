@@ -1,25 +1,59 @@
 import Button from "../../components/common/Button";
 import ModalAddDoctor from "../../components/modals/ModalAddDoctor";
+import { useAuth } from "../../store/AuthContext";
+import Doctors from "../../assets/Two-Doctors.svg";
+import { Link, useNavigate } from "react-router-dom";
 
 const OnboardingDoctors = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handlePrevious = () => {
+    navigate(-1); // 👈 goes back one entry in history
+  };
+
   return (
     <>
-      <div className="row justify-content-center">
-        <div className="col-8 d-flex flex-column">
-          <h1 className="font-poppins fw-bold text-body text-center mb-4">
-            Now, Let's Add Your Doctors!
+      <div className="row justify-content-between" id="onboarding-doctors">
+        <div className="col-5 d-flex flex-column">
+          <h4 className="font-poppins text-secondary text-center text-md-start preheading">
+            Hey there, {user?.first_name}
+          </h4>
+          <h1 className="font-poppins text-primary fw-bold text-center text-md-start">
+            Let's Add Your Doctors!
           </h1>
-          <h3 className="lead text-center">
-            Press the button below to add your first doctor. You can add all of
-            your healthcare providers now, or just one and add the others later.
-          </h3>
-          <Button
-            buttonText="Add A Doctor"
-            dataTarget="add-doctor"
-            dataToggle="modal"
-            type="button"
-            className="mt-5 max-w-fit mx-auto"
+          <p className="font-inter mt-4 text-center text-md-start">
+            Here, we can go ahead and begin adding your current healthcare
+            providers. Or, you can skip this step and add them later!
+          </p>
+          <img
+            alt="Two Doctors Standing Together"
+            src={Doctors}
+            className="mt-5"
           />
+        </div>
+        <div className="col-6 d-flex flex-column">
+          <h4 className="font-poppins text-primary fw-semibold doctors-heading pb-2">
+            Your Doctors
+          </h4>
+          <ul className="list-unstyled"></ul>
+          <Button
+            buttonText="Add Doctor"
+            className="bg-primary-light text-white mt-5 max-w-fit mx-auto"
+            dataToggle="modal"
+            dataTarget="add-doctor"
+          />
+          <div className="d-flex justify-content-between mt-auto">
+            <Button
+              buttonText="Previous Step"
+              className="bg-transparent text-body max-w-fit mt-5"
+              onClick={handlePrevious}
+            />
+            <Button
+              buttonText="Next Step"
+              className="bg-primary-light text-white mt-5 max-w-fit"
+            />
+          </div>
         </div>
       </div>
       <ModalAddDoctor />
