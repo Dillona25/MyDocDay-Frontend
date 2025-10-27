@@ -29,7 +29,6 @@ export const AppRoutes = () => {
         {/* Onboarding Routes */}
         <Route path="/onboarding" element={<OnboardingLayout />}>
           <Route index element={<OnboardingDoctors />} />
-          <Route path="userInformation" element={<OnBoardingUserInfo />} />
           <Route path="doctors" element={<OnboardingDoctors />} />
           <Route path="appointments" element={<OnboardingAppointments />} />
         </Route>
