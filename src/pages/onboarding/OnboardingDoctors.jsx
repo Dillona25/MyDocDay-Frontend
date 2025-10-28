@@ -3,14 +3,11 @@ import ModalAddDoctor from "../../components/modals/ModalAddDoctor";
 import { useAuth } from "../../store/AuthContext";
 import Doctors from "../../assets/Two-Doctors.svg";
 import { Link, useNavigate } from "react-router-dom";
+import { useOnboarding } from "../../store/onboardingStepsContext";
 
 const OnboardingDoctors = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
-
-  const handlePrevious = () => {
-    navigate(-1); // 👈 goes back one entry in history
-  };
+  const { nextStep, prevStep } = useOnboarding();
 
   return (
     <>
@@ -43,15 +40,11 @@ const OnboardingDoctors = () => {
             dataToggle="modal"
             dataTarget="add-doctor"
           />
-          <div className="d-flex justify-content-between mt-auto">
-            <Button
-              buttonText="Previous Step"
-              className="bg-transparent text-body max-w-fit mt-5"
-              onClick={handlePrevious}
-            />
+          <div className="d-flex justify-content-end mt-auto">
             <Button
               buttonText="Next Step"
               className="bg-primary-light text-white mt-5 max-w-fit"
+              onClick={nextStep}
             />
           </div>
         </div>
