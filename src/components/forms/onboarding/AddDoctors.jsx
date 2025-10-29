@@ -4,18 +4,11 @@ import Button from "../../common/Button";
 import { useState } from "react";
 
 const AddDoctors = () => {
-  const [step, setStep] = useState("doctor");
-
-  const handleChangeStep = (e) => {
-    e.preventDefault();
-    step === "doctor" ? setStep("clinic") : setStep("doctor");
-  };
-
   return (
     <>
       <FormWrapper id="add-doctor-form">
-        {step === "doctor" && (
-          <>
+        <div className="row">
+          <div className="col-12 col-lg-6">
             <div className="row mb-3">
               <div className="col-12">
                 <h5 className="border-bottom pb-2">Doctor's Information</h5>
@@ -58,11 +51,9 @@ const AddDoctors = () => {
                 </span>
               </div>
             </div>
-          </>
-        )}
+          </div>
 
-        {step === "clinic" && (
-          <>
+          <div className="col-12 col-lg-6">
             <div className="row mb-3">
               <div className="col-12">
                 <h5 className="border-bottom pb-2">
@@ -112,23 +103,17 @@ const AddDoctors = () => {
                 />
               </div>
             </div>
-          </>
-        )}
-      </FormWrapper>
-      <div className="row">
-        <div className="col-6 d-flex justify-content-start">
-          <Button
-            type="submit"
-            onClick={handleChangeStep}
-            buttonText={`${step === "doctor" ? "Next Step" : "Previous Step"}`}
-          />
-        </div>
-        {step === "clinic" && (
-          <div className="col-6 d-flex justify-content-end">
-            <Button type="submit" buttonText="Add Doctor" />
           </div>
-        )}
-      </div>
+        </div>
+        <div className="row">
+          <div className="col-12 d-flex justify-content-end">
+            <Button
+              buttonText="Submit"
+              className="bg-primary-light text-white mt-5 max-w-fit"
+            />
+          </div>
+        </div>
+      </FormWrapper>
     </>
   );
 };

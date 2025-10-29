@@ -1,4 +1,10 @@
-const ModalWrapper = ({ modalId, ariaLabel, ariaHidden = true, children }) => {
+const ModalWrapper = ({
+  modalId,
+  ariaLabel,
+  className,
+  ariaHidden = true,
+  children,
+}) => {
   return (
     <div
       className="modal fade"
@@ -8,7 +14,7 @@ const ModalWrapper = ({ modalId, ariaLabel, ariaHidden = true, children }) => {
       aria-hidden={ariaHidden}
       role="dialog"
     >
-      <div className="modal-dialog" role="document">
+      <div className={`modal-dialog ${className}`} role="document">
         <div className="modal-content">{children}</div>
       </div>
     </div>
