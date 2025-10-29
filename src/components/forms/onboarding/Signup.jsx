@@ -9,7 +9,6 @@ import { useAuth } from "../../../store/AuthContext.jsx";
 
 const SignupForm = () => {
   const navigate = useNavigate();
-  const [userCreated, setUserCreated] = useState(false);
   const { login } = useAuth();
 
   const {

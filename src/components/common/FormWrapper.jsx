@@ -1,4 +1,6 @@
-const FormWrapper = ({ className, ref, onSubmit, children }) => {
+import { forwardRef } from "react";
+
+const FormWrapper = ({ className, onSubmit, children }, ref) => {
   return (
     <form className={`${className}`} ref={ref} onSubmit={onSubmit}>
       {children}
