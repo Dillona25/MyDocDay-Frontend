@@ -5,9 +5,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { addDoctor } from "../../../api/doctorApi";
 import { useAuth } from "../../../store/AuthContext";
+import { useDoctors } from "../../../store/usersDoctorsContext";
 
 const AddDoctors = () => {
   const { user } = useAuth();
+  const { addDoctorToList } = useDoctors();
   const {
     register,
     handleSubmit,
@@ -41,6 +43,9 @@ const AddDoctors = () => {
 
     try {
       const response = await addDoctor(doctorPayload);
+
+      // Add the doctor to our users doctors context
+      addDoctorToList(response);
       console.log("Doctor added:", response);
     } catch (error) {
       console.error("Registration failed:", error);
@@ -161,10 +166,7 @@ const AddDoctors = () => {
                 <TextInput
                   labelText="Clinic's Email"
                   placeholder="Clinic's Email"
-                  required
-                  {...register("clinicEmail", {
-                    required: "Specialty is required",
-                  })}
+                  {...register("clinicEmail")}
                   onChange={(evt) => {
                     const target = evt.target;
                     setValue("clinicEmail", target.value, {
@@ -177,10 +179,7 @@ const AddDoctors = () => {
                 <TextInput
                   labelText="Clinic's Phone"
                   placeholder="Clinic's Phone"
-                  required
-                  {...register("clinicPhone", {
-                    required: "Specialty is required",
-                  })}
+                  {...register("clinicPhone")}
                   onChange={(evt) => {
                     const target = evt.target;
                     setValue("clinicPhone", target.value, {
@@ -196,10 +195,7 @@ const AddDoctors = () => {
                   labelText="Street Address"
                   placeholder="Street Address"
                   className="mb-4"
-                  required
-                  {...register("street", {
-                    required: "Specialty is required",
-                  })}
+                  {...register("street")}
                   onChange={(evt) => {
                     const target = evt.target;
                     setValue("street", target.value, {
@@ -212,10 +208,7 @@ const AddDoctors = () => {
                 <TextInput
                   labelText="City"
                   placeholder="City"
-                  required
-                  {...register("city", {
-                    required: "Specialty is required",
-                  })}
+                  {...register("city")}
                   onChange={(evt) => {
                     const target = evt.target;
                     setValue("city", target.value, {
@@ -228,10 +221,7 @@ const AddDoctors = () => {
                 <TextInput
                   labelText="State"
                   placeholder="State"
-                  required
-                  {...register("state", {
-                    required: "Specialty is required",
-                  })}
+                  {...register("state")}
                   onChange={(evt) => {
                     const target = evt.target;
                     setValue("state", target.value, {
@@ -244,10 +234,7 @@ const AddDoctors = () => {
                 <TextInput
                   labelText="Zipcode"
                   placeholder="Zipcode"
-                  required
-                  {...register("zipcode", {
-                    required: "Specialty is required",
-                  })}
+                  {...register("zipcode")}
                   onChange={(evt) => {
                     const target = evt.target;
                     setValue("zipcode", target.value, {

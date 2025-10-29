@@ -12,7 +12,7 @@ const OnboardingDoctors = () => {
   return (
     <>
       <div className="row justify-content-between" id="onboarding-doctors">
-        <div className="col-5 d-flex flex-column">
+        <div className="col-12 col-md-5 d-flex flex-column mb-5 md-md-0">
           <h4 className="font-poppins text-secondary text-center text-md-start preheading">
             Hey there, {user?.first_name}
           </h4>
@@ -29,14 +29,14 @@ const OnboardingDoctors = () => {
             className="mt-5"
           />
         </div>
-        <div className="col-6 d-flex flex-column">
+        <div className="col-12 col-md-6 d-flex flex-column">
           <h4 className="font-poppins text-primary fw-semibold doctors-heading pb-2">
             Your Doctors
           </h4>
           <ul className="list-unstyled"></ul>
           <Button
             buttonText="Add Doctor"
-            className="bg-primary-light text-white mt-5 max-w-fit mx-auto"
+            className="bg-primary-light text-white mt-3 mb-5 max-w-fit mx-auto"
             dataToggle="modal"
             dataTarget="add-doctor"
           />

@@ -28,3 +28,19 @@ export const addDoctor = ({
       throw err;
     });
 };
+
+export const getUsersDoctors = () => {
+  const token = localStorage.getItem("jwt");
+  return fetch("http://localhost:5500/api/doctors", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  })
+    .then(processServerResponse)
+    .catch((err) => {
+      console.error(err);
+      throw err;
+    });
+};
