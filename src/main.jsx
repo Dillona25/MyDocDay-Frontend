@@ -5,12 +5,15 @@ import "./styles/init.scss";
 import App from "./App.jsx";
 import { AuthProvider } from "./store/AuthContext.jsx";
 import { DoctorProvider } from "./store/usersDoctorsContext.jsx";
+import { ModalProvider } from "./store/modalContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
       <DoctorProvider>
-        <App />
+        <ModalProvider>
+          <App />
+        </ModalProvider>
       </DoctorProvider>
     </AuthProvider>
   </StrictMode>

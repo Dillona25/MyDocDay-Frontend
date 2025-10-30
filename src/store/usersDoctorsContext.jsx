@@ -29,7 +29,7 @@ export const DoctorProvider = ({ children }) => {
 
   // Add a new doctor after a successful request
   const addDoctorToList = (doctor) => {
-    setDoctors((prev) => [doctor, ...prev]);
+    setDoctors((prev) => [...prev, doctor]);
   };
 
   return (

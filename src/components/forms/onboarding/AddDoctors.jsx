@@ -1,5 +1,5 @@
 import FormWrapper from "../../common/FormWrapper";
-import { TextInput } from "../../common/Inputs";
+import { SelectInput, TextInput } from "../../common/Inputs";
 import Button from "../../common/Button";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -7,10 +7,14 @@ import { addDoctor, createDoctorWithClinic } from "../../../api/doctorApi";
 import { useAuth } from "../../../store/AuthContext";
 import { useDoctors } from "../../../store/usersDoctorsContext";
 import { addClinic } from "../../../api/clinicApi";
+import { useModal } from "../../../store/modalContext";
+import { US_STATES } from "../../../data/constants";
 
 const AddDoctors = () => {
   const { user } = useAuth();
   const { addDoctorToList } = useDoctors();
+  const { closeModal } = useModal();
+
   const {
     register,
     handleSubmit,
@@ -53,8 +57,13 @@ const AddDoctors = () => {
       // Add the doctor to our users doctors context
       addDoctorToList({
         ...res.doctor,
-        clinic: res.clinic,
+        clinic_name: res.clinic?.clinic_name ?? values.clinicName,
+        city: res.clinic?.city ?? values.city,
+        state: res.clinic?.state ?? values.state,
       });
+
+      closeModal();
+
       console.log("Doctor added:", res);
     } catch (error) {
       console.error("Registration failed:", error);
@@ -227,9 +236,11 @@ const AddDoctors = () => {
                 />
               </div>
               <div className="col-4">
-                <TextInput
+                <SelectInput
                   labelText="State"
                   placeholder="State"
+                  options={US_STATES}
+                  defaultOptionText="State"
                   {...register("state")}
                   onChange={(evt) => {
                     const target = evt.target;

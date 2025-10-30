@@ -1,5 +1,5 @@
 import AppointmentCard from "../common/AppointmentCard";
-import { currentUser } from "../../data/user";
+import { currentUser } from "../../data/constants";
 import Button from "../common/Button";
 import SleepingDog from "../../assets/Sleeping-Dog-Icon.png";
 import { Link } from "react-router-dom";

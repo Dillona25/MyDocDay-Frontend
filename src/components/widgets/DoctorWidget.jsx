@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { currentUser } from "../../data/user";
+import { currentUser } from "../../data/constants";
 
 const DoctorWidget = () => {
   const doctors = currentUser.usersDoctors ?? [];

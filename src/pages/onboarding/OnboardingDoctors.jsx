@@ -6,11 +6,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useOnboarding } from "../../store/onboardingStepsContext";
 import { useDoctors } from "../../store/usersDoctorsContext";
 import DoctorCard from "../../components/common/DoctorCard";
+import { useModal } from "../../store/modalContext";
 
 const OnboardingDoctors = () => {
   const { user } = useAuth();
   const { doctors } = useDoctors();
   const { nextStep, prevStep } = useOnboarding();
+  const { openModal } = useModal();
 
   return (
     <>
@@ -37,7 +39,7 @@ const OnboardingDoctors = () => {
             Your Doctors
           </h4>
           <div className="row">
-            <ul className="list-unstyled">
+            <ul className="list-unstyled mt-4 doctors-list">
               {doctors.map((doc) => {
                 return (
                   <li className="col-12 mb-3" key={doc.id}>
@@ -47,6 +49,8 @@ const OnboardingDoctors = () => {
                       image={doc.image_url}
                       specialty={doc.specialty}
                       clinicName={doc.clinic_name}
+                      city={doc.city}
+                      state={doc.state}
                     />
                   </li>
                 );
@@ -56,8 +60,7 @@ const OnboardingDoctors = () => {
           <Button
             buttonText="Add Doctor"
             className="bg-primary-light text-white mt-3 mb-5 max-w-fit mx-auto"
-            dataToggle="modal"
-            dataTarget="add-doctor"
+            onClick={openModal}
           />
           <div className="d-flex justify-content-end mt-auto">
             <Button

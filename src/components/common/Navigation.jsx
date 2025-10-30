@@ -1,6 +1,6 @@
 import { useState } from "react";
 import MyDocDayLogo from "../../assets/NavLogo.svg";
-import { currentUser } from "../../data/user";
+import { currentUser } from "../../data/constants";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
