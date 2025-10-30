@@ -5,8 +5,10 @@ import { getUsersDoctors } from "../api/doctorApi";
 export const DoctorContext = createContext();
 export const DoctorProvider = ({ children }) => {
   const { user } = useAuth();
+  // A user can have multiple doctors so doctors needs to be an array
   const [doctors, setDoctors] = useState([]);
 
+  // Fetch the current users doctors on page load, but ONLY if we have a user.id
   useEffect(() => {
     if (!user?.id) return;
 
@@ -14,6 +16,7 @@ export const DoctorProvider = ({ children }) => {
       try {
         const res = await getUsersDoctors();
         if (!res.ok) throw new Error(`Error ${res.status}`);
+        // Update our state
         setDoctors(res);
       } catch (err) {
         console.log("Error fetching doctors:", err);
@@ -21,9 +24,10 @@ export const DoctorProvider = ({ children }) => {
     };
 
     fetchDoctors();
+    // Our dependency array tells this to only run when something about the user changes
   }, [user]);
 
-  // Add new doctor to state (after successful POST)
+  // Add a new doctor after a successful request
   const addDoctorToList = (doctor) => {
     setDoctors((prev) => [doctor, ...prev]);
   };

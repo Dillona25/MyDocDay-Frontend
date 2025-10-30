@@ -6,23 +6,30 @@ const OnboardingContext = createContext();
 export const OnboardingProvider = ({ children }) => {
   const navigate = useNavigate();
 
-  // Map step numbers to routes
+  // An array of the steps
   const stepRoutes = ["/onboarding/doctors", "/onboarding/appointments"];
 
+  // Start on step 1
+  // get the total steps
   const [step, setStep] = useState(1);
   const totalSteps = stepRoutes.length;
 
+  // Go to a new step but only under the provided condition
   const goToStep = (newStep) => {
     if (newStep >= 1 && newStep <= totalSteps) {
       setStep(newStep);
+      // Use React Router to navigate to the new step
+      // We use the - 1 because of 0 indexing in JS
       navigate(stepRoutes[newStep - 1]);
     }
   };
 
+  // Next Step
   const nextStep = () => {
     goToStep(step + 1);
   };
 
+  // Prev Step
   const prevStep = () => {
     goToStep(step - 1);
   };

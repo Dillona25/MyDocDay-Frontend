@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { addDoctor } from "../../../api/doctorApi";
 import { useAuth } from "../../../store/AuthContext";
 import { useDoctors } from "../../../store/usersDoctorsContext";
+import { addClinic } from "../../../api/clinicApi";
 
 const AddDoctors = () => {
   const { user } = useAuth();
@@ -41,12 +42,28 @@ const AddDoctors = () => {
       image_url: values.imageURL,
     };
 
-    try {
-      const response = await addDoctor(doctorPayload);
+    const clinicPayload = {
+      clinicName: values.clinicName,
+      clinicEmail: values.clinicEmail,
+      clinicPhone: values.clinicPhone,
+      street: values.street,
+      city: values.city,
+      state: values.state,
+      zipcode: values.zipcode,
+    };
 
+    try {
+      const addDoctorResponse = await addDoctor(doctorPayload);
       // Add the doctor to our users doctors context
-      addDoctorToList(response);
-      console.log("Doctor added:", response);
+      addDoctorToList(addDoctorResponse);
+      console.log("Doctor added:", addDoctorResponse);
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
+
+    try {
+      const addClinicResponse = await addClinic(clinicPayload);
+      console.log("clinic added:", addClinicResponse);
     } catch (error) {
       console.error("Registration failed:", error);
     }
