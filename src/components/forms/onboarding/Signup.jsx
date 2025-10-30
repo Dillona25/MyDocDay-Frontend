@@ -9,8 +9,10 @@ import { useAuth } from "../../../store/AuthContext.jsx";
 
 const SignupForm = () => {
   const navigate = useNavigate();
+  // Pull in our login function from our user context
   const { login } = useAuth();
 
+  // init our useForm handlers and default values
   const {
     register,
     handleSubmit,
@@ -27,8 +29,10 @@ const SignupForm = () => {
     },
   });
 
+  // Pas values to our onSubmit. Values will be our useForm registered values
   const onSubmit = async (values) => {
     try {
+      // Call our registerUser API route, add data to local storage, login the user with our login function
       const res = await registerUser(values);
       if (res?.user && res?.token) {
         localStorage.setItem("jwt", res.token);

@@ -3,7 +3,7 @@ import { TextInput } from "../../common/Inputs";
 import Button from "../../common/Button";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { addDoctor } from "../../../api/doctorApi";
+import { addDoctor, createDoctorWithClinic } from "../../../api/doctorApi";
 import { useAuth } from "../../../store/AuthContext";
 import { useDoctors } from "../../../store/usersDoctorsContext";
 import { addClinic } from "../../../api/clinicApi";
@@ -34,36 +34,28 @@ const AddDoctors = () => {
   });
 
   const onSubmit = async (values) => {
-    const doctorPayload = {
+    const payload = {
       user_id: user?.id,
       first_name: values.firstName,
       last_name: values.lastName,
       specialty: values.specialty,
       image_url: values.imageURL,
-    };
-
-    const clinicPayload = {
-      clinicName: values.clinicName,
-      clinicEmail: values.clinicEmail,
-      clinicPhone: values.clinicPhone,
+      clinic_name: values.clinicName,
+      clinic_email: values.clinicEmail,
+      clinic_phone: values.clinicPhone,
       street: values.street,
       city: values.city,
       state: values.state,
       zipcode: values.zipcode,
     };
-
     try {
-      const addDoctorResponse = await addDoctor(doctorPayload);
+      const res = await createDoctorWithClinic(payload);
       // Add the doctor to our users doctors context
-      addDoctorToList(addDoctorResponse);
-      console.log("Doctor added:", addDoctorResponse);
-    } catch (error) {
-      console.error("Registration failed:", error);
-    }
-
-    try {
-      const addClinicResponse = await addClinic(clinicPayload);
-      console.log("clinic added:", addClinicResponse);
+      addDoctorToList({
+        ...res.doctor,
+        clinic: res.clinic,
+      });
+      console.log("Doctor added:", res);
     } catch (error) {
       console.error("Registration failed:", error);
     }

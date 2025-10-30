@@ -7,12 +7,6 @@ const SigninForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Function to handle when the input changes
-  function handleInputChange(event, inputState) {
-    console.log(event.target.value);
-    inputState(event.target.value);
-  }
-
   return (
     <FormWrapper className="mt-5 d-flex flex-column" id="sign-in-form">
       <div className="row mb-4">

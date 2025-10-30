@@ -4,9 +4,12 @@ import { useAuth } from "../../store/AuthContext";
 import Doctors from "../../assets/Two-Doctors.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useOnboarding } from "../../store/onboardingStepsContext";
+import { useDoctors } from "../../store/usersDoctorsContext";
+import DoctorCard from "../../components/common/DoctorCard";
 
 const OnboardingDoctors = () => {
   const { user } = useAuth();
+  const { doctors } = useDoctors();
   const { nextStep, prevStep } = useOnboarding();
 
   return (
@@ -33,7 +36,23 @@ const OnboardingDoctors = () => {
           <h4 className="font-poppins text-primary fw-semibold doctors-heading pb-2">
             Your Doctors
           </h4>
-          <ul className="list-unstyled"></ul>
+          <div className="row">
+            <ul className="list-unstyled">
+              {doctors.map((doc) => {
+                return (
+                  <li className="col-12 mb-3" key={doc.id}>
+                    <DoctorCard
+                      firstName={doc.first_name}
+                      lastName={doc.last_name}
+                      image={doc.image_url}
+                      specialty={doc.specialty}
+                      clinicName={doc.clinic_name}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
           <Button
             buttonText="Add Doctor"
             className="bg-primary-light text-white mt-3 mb-5 max-w-fit mx-auto"

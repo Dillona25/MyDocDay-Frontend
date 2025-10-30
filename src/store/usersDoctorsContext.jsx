@@ -15,11 +15,11 @@ export const DoctorProvider = ({ children }) => {
     const fetchDoctors = async () => {
       try {
         const res = await getUsersDoctors();
-        if (!res.ok) throw new Error(`Error ${res.status}`);
+
         // Update our state
         setDoctors(res);
       } catch (err) {
-        console.log("Error fetching doctors:", err);
+        console.error("Error fetching doctors:", err);
       }
     };
 
