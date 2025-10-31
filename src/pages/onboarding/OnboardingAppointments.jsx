@@ -1,26 +1,62 @@
+import AppointmentCard from "../../components/common/AppointmentCard";
 import Button from "../../components/common/Button";
 import ModalAddAppointment from "../../components/modals/ModalAddAppointment";
-import ModalAddDoctor from "../../components/modals/ModalAddDoctor";
+import { useModal } from "../../store/modalContext";
+import { useAppointments } from "../../store/usersAppointmentsContext";
+import { useDoctors } from "../../store/usersDoctorsContext";
 
 const OnboardingAppointments = () => {
+  const { openModal } = useModal();
+  const { appointments } = useAppointments();
+  const { doctors } = useDoctors();
+
   return (
     <>
-      <div className="row justify-content-center">
-        <div className="col-8 d-flex flex-column">
-          <h1 className="font-poppins fw-bold text-body text-center mb-4">
-            Now, Let's Add Any Upcoming Appointments You Have!
+      <div className="row justify-content-between" id="onboarding-doctors">
+        <div className="col-12 col-lg-5 d-flex flex-column mb-5 md-md-0">
+          <h4 className="font-poppins text-secondary text-center text-lg-start preheading">
+            Finally
+          </h4>
+          <h1 className="font-poppins text-primary fw-bold text-center text-lg-start">
+            Let’s Add Your Appointments!
           </h1>
-          <h3 className="lead text-center">
-            Press the button below to add your upcoming appointments. Don't have
-            any? No problem, just skip this step!
-          </h3>
+          <p className="font-inter mt-4 text-center text-lg-start">
+            Here, we can go ahead and begin adding your upcoming appointments.
+            You can also skip this step and add them later if you would prefer.
+          </p>
+        </div>
+        <div className="col-12 col-lg-6 d-flex flex-column">
+          <h4 className="font-poppins text-primary fw-semibold doctors-heading pb-2">
+            Your Upcoming Appointments
+          </h4>
+          <div className="row">
+            {appointments.map((apt) => {
+              const doctor = doctors.find((d) => d.id === apt.doctor_id);
+              const clinicName = doctor?.clinic_name || "Clinic not available";
+              return (
+                <div className="col-12 col-md-6 mb-3" key={apt.id}>
+                  <AppointmentCard
+                    doctorName={apt.doctor_name}
+                    aptType={apt.appointment_type}
+                    aptTitle={apt.appointment_title}
+                    aptTime={apt.appointment_time}
+                    aptlLocation={clinicName}
+                  />
+                </div>
+              );
+            })}
+          </div>
           <Button
             buttonText="Add Appointment"
-            dataTarget="add-appointment"
-            dataToggle="modal"
-            type="button"
-            className="mt-5 max-w-fit mx-auto"
+            className="bg-primary-light text-white mt-3 mb-5 max-w-fit mx-auto"
+            onClick={openModal}
           />
+          <div className="d-flex justify-content-end mt-auto">
+            <Button
+              buttonText="Next Step"
+              className="bg-primary-light text-white mt-5 max-w-fit"
+            />
+          </div>
         </div>
       </div>
       <ModalAddAppointment />

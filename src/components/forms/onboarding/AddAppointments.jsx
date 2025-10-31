@@ -3,120 +3,197 @@ import FormWrapper from "../../../components/common/FormWrapper";
 import { SelectInput, TextInput } from "../../../components/common/Inputs";
 import Button from "../../common/Button";
 import { mockApi } from "../../../api/authApi";
+import { useDoctors } from "../../../store/usersDoctorsContext";
+import { useForm } from "react-hook-form";
+import { useAuth } from "../../../store/AuthContext";
+import { createAppointment } from "../../../api/appointmentsApi";
+import { useModal } from "../../../store/modalContext";
+import { useAppointments } from "../../../store/usersAppointmentsContext";
 
 const AddAppointments = () => {
-  // Dummy select options
-  const fruitOptions = [
-    { value: "apple", label: "Apple" },
-    { value: "banana", label: "Banana" },
-    { value: "orange", label: "Orange" },
-  ];
+  const { doctors } = useDoctors();
+  const { user } = useAuth();
+  const { closeModal } = useModal();
+  const { addAppointmentToList } = useAppointments();
 
-  // Dummy select options
+  const doctorOptions = doctors.map((doc) => ({
+    value: String(doc.id),
+    label: `${doc.first_name} ${doc.last_name}`,
+  }));
+
   const aptTypes = [
-    { value: "In-Person", label: "In-Person" },
-    { value: "Telehealth", label: "Telehealth" },
+    {
+      value: "In-Person",
+      label: "In-Person",
+    },
+    {
+      value: "Telehealth",
+      label: "Telehealth",
+    },
   ];
 
-  // Form Data state, our value for each input is assigned to formData.whatever
-  const [formData, setFormData] = useState({
-    appointmentName: "",
-    doctor: "",
-    date: "",
-    time: "",
-    aptType: "",
+  const {
+    register,
+    handleSubmit,
+    setError,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm({
+    defaultValues: {
+      appointmentTitle: "",
+      doctor: "",
+      appointmentDate: "",
+      appointmentTime: "",
+      appointmentType: "",
+    },
   });
 
-  // Handle our input change
-  const handleChange = (event) => {
-    // Destructure our form name
-    const { name, value } = event.target;
-    // Update our state immutably (new copy)
-    setFormData((prev) => ({
-      // New copy of prev state, so empty strings ""
-      ...prev,
-      // Updte state; time: "22:34"
-      [name]: value,
-    }));
-  };
+  const onSubmit = async (values) => {
+    const selectedDoctor = doctors.find(
+      (doc) => String(doc.id) === values.doctor
+    );
 
-  // Send a request to our fake API
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+    const payload = {
+      user_id: user?.id,
+      doctor_id: Number(values.doctor),
+      doctor_name: selectedDoctor
+        ? `${selectedDoctor.first_name} ${selectedDoctor.last_name}`
+        : "",
+      appointment_title: values.appointmentTitle,
+      appointment_type: values.appointmentType,
+      appointment_date: values.appointmentDate,
+      appointment_time: values.appointmentTime,
+    };
+
     try {
-      const response = await mockApi.post("/appointments", formData);
-      console.log("Submitted appointment:", response);
+      const res = await createAppointment(payload);
+      addAppointmentToList(res);
+      console.log({ ...res.appointment });
+      closeModal();
     } catch (error) {
-      console.error("Submission error:", error);
+      console.error("Registration failed:", error);
     }
   };
 
   return (
     <>
-      <FormWrapper className="mb-5" onSubmit={handleSubmit}>
+      <FormWrapper className="mb-5" onSubmit={handleSubmit(onSubmit)}>
         <div className="row mb-4">
           <div className="col-12">
             <TextInput
-              name="appointmentName"
-              value={formData.appointmentName}
-              onChange={handleChange}
               labelText="Appointment Title"
               placeholder="Appointment Title"
               required
+              {...register("appointmentTitle", {
+                required: "Please add a title for your appointment",
+              })}
+              onChange={(evt) => {
+                const target = evt.target;
+                setValue("appointmentTitle", target.value, {
+                  shouldValidate: true,
+                });
+              }}
             />
+            {errors.appointmentTitle && (
+              <span className="text-danger small">
+                {errors.appointmentTitle.message}
+              </span>
+            )}
           </div>
         </div>
         <div className="row mb-4">
           <div className="col-12">
             <SelectInput
-              name="doctor"
-              value={formData.doctor}
               id="doctor-select"
               labelText="Select Doctor"
-              options={fruitOptions}
-              onChange={handleChange}
+              options={doctorOptions}
               defaultOptionText="Select Doctor"
+              required
+              {...register("doctor", {
+                required: "Please select one of your doctors",
+              })}
+              onChange={(evt) => {
+                const target = evt.target;
+                setValue("doctor", target.value, {
+                  shouldValidate: true,
+                });
+              }}
             />
+            {errors.doctor && (
+              <span className="text-danger small">{errors.doctor.message}</span>
+            )}
           </div>
         </div>
         <div className="row mb-4">
           <div className="col-6">
             <TextInput
               name="date"
-              value={formData.date}
               type="date"
               labelText="Appointment Date"
-              onChange={handleChange}
               required
+              {...register("appointmentDate", {
+                required: "Please add a date for your appointment",
+              })}
+              onChange={(evt) => {
+                const target = evt.target;
+                setValue("appointmentDate", target.value, {
+                  shouldValidate: true,
+                });
+              }}
             />
+            {errors.appointmentDate && (
+              <span className="text-danger small">
+                {errors.appointmentDate.message}
+              </span>
+            )}
           </div>
           <div className="col-6">
             <TextInput
-              name="time"
-              value={formData.time}
               type="time"
               labelText="Appointment Time"
-              onChange={handleChange}
               required
+              {...register("appointmentTime", {
+                required: "Please add a time for your appointment",
+              })}
+              onChange={(evt) => {
+                const target = evt.target;
+                setValue("appointmentTime", target.value, {
+                  shouldValidate: true,
+                });
+              }}
             />
+            {errors.appointmentTime && (
+              <span className="text-danger small">
+                {errors.appointmentTime.message}
+              </span>
+            )}
           </div>
         </div>
         <div className="row mb-4">
           <div className="col-12">
             <SelectInput
-              value={formData.aptType}
               name="aptType"
               id="appointment-type-select"
               labelText="Select appointment type"
               options={aptTypes}
               defaultOptionText="Select Appointment Type"
-              onChange={handleChange}
+              {...register("appointmentType")}
+              onChange={(evt) => {
+                const target = evt.target;
+                setValue("appointmentType", target.value, {
+                  shouldValidate: false,
+                });
+              }}
             />
           </div>
         </div>
         <div className="row">
           <div className="col-12 text-end">
-            <Button buttonText="Add Appointment" type="submit" />
+            <Button
+              buttonText="Add Appointment"
+              type="submit"
+              className="bg-primary-light text-white mt-5 max-w-fit"
+            />
           </div>
         </div>
       </FormWrapper>

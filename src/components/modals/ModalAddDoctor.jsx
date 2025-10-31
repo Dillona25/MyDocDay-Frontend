@@ -1,6 +1,5 @@
 import { useModal } from "../../store/modalContext";
 import ModalWrapper from "../common/ModalWrapper";
-import AddClinic from "../forms/onboarding/AddClinic";
 import AddDoctors from "../forms/onboarding/AddDoctors";
 
 const ModalAddDoctor = () => {

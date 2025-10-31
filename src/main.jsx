@@ -6,14 +6,17 @@ import App from "./App.jsx";
 import { AuthProvider } from "./store/AuthContext.jsx";
 import { DoctorProvider } from "./store/usersDoctorsContext.jsx";
 import { ModalProvider } from "./store/modalContext.jsx";
+import { AppointmentProvider } from "./store/usersAppointmentsContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
       <DoctorProvider>
-        <ModalProvider>
-          <App />
-        </ModalProvider>
+        <AppointmentProvider>
+          <ModalProvider>
+            <App />
+          </ModalProvider>
+        </AppointmentProvider>
       </DoctorProvider>
     </AuthProvider>
   </StrictMode>

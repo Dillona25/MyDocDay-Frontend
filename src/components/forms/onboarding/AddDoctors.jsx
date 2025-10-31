@@ -269,7 +269,6 @@ const AddDoctors = () => {
         <div className="row">
           <div className="col-12 d-flex justify-content-end">
             <Button
-              onClick={() => console.log("clicked")}
               buttonText="Submit"
               className="bg-primary-light text-white mt-5 max-w-fit"
               type="submit"

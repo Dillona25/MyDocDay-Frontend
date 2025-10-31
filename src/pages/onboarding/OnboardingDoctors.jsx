@@ -28,11 +28,6 @@ const OnboardingDoctors = () => {
             Here, we can go ahead and begin adding your current healthcare
             providers. Or, you can skip this step and add them later!
           </p>
-          <img
-            alt="Two Doctors Standing Together"
-            src={Doctors}
-            className="mt-5"
-          />
         </div>
         <div className="col-12 col-md-6 d-flex flex-column">
           <h4 className="font-poppins text-primary fw-semibold doctors-heading pb-2">

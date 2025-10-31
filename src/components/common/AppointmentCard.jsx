@@ -35,18 +35,16 @@ const AppointmentCard = ({
   const formattedTime = formatAppointmentTime(aptTime);
 
   return (
-    <article className="col-12 col-md-6 col-lg-4">
-      <div className={`border border-light rounded-3 p-3 ${className}`}>
-        <div className="d-flex flex-column justify-content-between flex-grow-1 gap-2">
-          <div>
-            <h5 className="m-0 fw-semibold text-body">{doctorName}</h5>
-            <p className="m-0 text-secondary small">{formattedTime}</p>
-            <p className="m-0 text-secondary small fw-semibold">
-              {aptlLocation}
-            </p>
-          </div>
-          <div className="d-flex gap-2">
-            <div className="d-flex flex-wrap gap-2 mt-1">
+    <article className={`border border-light rounded-3 p-3 h-100 ${className}`}>
+      <div className="d-flex flex-column justify-content-between flex-grow-1 gap-2">
+        <div>
+          <h5 className="m-0 fw-semibold text-body">{doctorName}</h5>
+          <p className="m-0 text-secondary small">{formattedTime}</p>
+          <p className="m-0 text-secondary small fw-semibold">{aptlLocation}</p>
+        </div>
+        <div className="d-flex flex-lg-column flex-xl-row gap-2">
+          <div className="d-flex flex-wrap gap-2 mt-1">
+            {aptType && (
               <span
                 className={`${
                   isMuted
@@ -56,18 +54,18 @@ const AppointmentCard = ({
               >
                 {aptType}
               </span>
-            </div>
-            <div className="d-flex flex-wrap gap-2 mt-1">
-              <span
-                className={`${
-                  isMuted
-                    ? "bg-light text-primary border-light"
-                    : "bg-primary-subtle text-primary-emphasis border-primary-subtle"
-                } px-3 py-1 small fw-semibold border rounded-pill`}
-              >
-                {aptTitle}
-              </span>
-            </div>
+            )}
+          </div>
+          <div className="d-flex flex-wrap gap-2 mt-1">
+            <span
+              className={`${
+                isMuted
+                  ? "bg-light text-primary border-light"
+                  : "bg-primary-subtle text-primary-emphasis border-primary-subtle"
+              } px-3 py-1 small fw-semibold border rounded-pill`}
+            >
+              {aptTitle}
+            </span>
           </div>
         </div>
       </div>

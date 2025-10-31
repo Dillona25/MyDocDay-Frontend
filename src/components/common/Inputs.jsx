@@ -1,4 +1,5 @@
 import { useId } from "react";
+import { forwardRef } from "react";
 
 // ** TEXT INPUT
 const TextInput = ({
@@ -57,27 +58,20 @@ const TextInput = ({
   );
 };
 
-const SelectInput = ({
-  value,
-  name,
-  defaultOptionText = "",
-  options,
-  onChange,
-  className = "",
-  id,
-  disabled = false,
-}) => {
+const SelectInput = (
+  { defaultOptionText = "", options, className = "", ...rest },
+  ref
+) => {
   return (
     <div className="d-flex flex-column gap-2">
       <select
-        id={id}
-        name={name}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
+        ref={ref}
+        {...rest}
         className={`rounded-2 p-2 border-1 w-100 input-field__control ${className}`}
       >
-        <option>{defaultOptionText}</option>
+        <option value="" disabled>
+          {defaultOptionText}
+        </option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

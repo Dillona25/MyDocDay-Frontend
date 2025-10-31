@@ -1,9 +1,14 @@
+import { useModal } from "../../store/modalContext";
 import ModalWrapper from "../common/ModalWrapper";
 import AddAppointments from "../forms/onboarding/AddAppointments";
 
 const ModalAddAppointment = () => {
+  const { isOpen, closeModal } = useModal();
+
+  if (!isOpen) return null;
+
   return (
-    <ModalWrapper modalId="add-appointment" ariaLabel="Add-Appointment-Modal">
+    <ModalWrapper isOpen={isOpen} onClose={closeModal}>
       <div className="modal-header">
         <h1 className="modal-title fs-5" id="Add-Appointment-Modal">
           Add Appointment
@@ -11,8 +16,7 @@ const ModalAddAppointment = () => {
         <button
           type="button"
           className="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
+          onClick={closeModal}
         ></button>
       </div>
       <div className="modal-body p-4">
