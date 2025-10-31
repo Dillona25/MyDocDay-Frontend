@@ -67,7 +67,7 @@ const AddAppointments = () => {
 
     try {
       const res = await createAppointment(payload);
-      addAppointmentToList(res);
+      addAppointmentToList(res.appointment);
       console.log({ ...res.appointment });
       closeModal();
     } catch (error) {

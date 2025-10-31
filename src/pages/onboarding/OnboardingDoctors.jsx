@@ -16,41 +16,37 @@ const OnboardingDoctors = () => {
 
   return (
     <>
-      <div className="row justify-content-between" id="onboarding-doctors">
-        <div className="col-12 col-md-5 d-flex flex-column mb-5 md-md-0">
-          <h4 className="font-poppins text-secondary text-center text-md-start preheading">
+      <div className="row justify-content-center" id="onboarding-doctors">
+        <div className="col-12 col-xl-8 d-flex flex-column mb-5 md-md-0">
+          <h4 className="font-poppins text-secondary text-center preheading">
             Hey there, {user?.first_name}
           </h4>
-          <h1 className="font-poppins text-primary fw-bold text-center text-md-start">
+          <h1 className="font-poppins text-primary fw-bold text-center">
             Let's Add Your Doctors!
           </h1>
-          <p className="font-inter mt-4 text-center text-md-start">
+          <p className="font-inter mt-4 text-center w-75 mx-auto mb-5">
             Here, we can go ahead and begin adding your current healthcare
             providers. Or, you can skip this step and add them later!
           </p>
-        </div>
-        <div className="col-12 col-md-6 d-flex flex-column">
           <h4 className="font-poppins text-primary fw-semibold doctors-heading pb-2">
             Your Doctors
           </h4>
           <div className="row">
-            <ul className="list-unstyled mt-4 doctors-list">
-              {doctors.map((doc) => {
-                return (
-                  <li className="col-12 mb-3" key={doc.id}>
-                    <DoctorCard
-                      firstName={doc.first_name}
-                      lastName={doc.last_name}
-                      image={doc.image_url}
-                      specialty={doc.specialty}
-                      clinicName={doc.clinic_name}
-                      city={doc.city}
-                      state={doc.state}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
+            {doctors.map((doc) => {
+              return (
+                <div className="col-12 col-md-6 mb-3" key={doc.id}>
+                  <DoctorCard
+                    firstName={doc.first_name}
+                    lastName={doc.last_name}
+                    image={doc.image_url}
+                    specialty={doc.specialty}
+                    clinicName={doc.clinic_name}
+                    city={doc.city}
+                    state={doc.state}
+                  />
+                </div>
+              );
+            })}
           </div>
           <Button
             buttonText="Add Doctor"

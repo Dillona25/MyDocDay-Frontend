@@ -2,6 +2,7 @@ import AppointmentCard from "../../components/common/AppointmentCard";
 import Button from "../../components/common/Button";
 import ModalAddAppointment from "../../components/modals/ModalAddAppointment";
 import { useModal } from "../../store/modalContext";
+import { useOnboarding } from "../../store/onboardingStepsContext";
 import { useAppointments } from "../../store/usersAppointmentsContext";
 import { useDoctors } from "../../store/usersDoctorsContext";
 
@@ -9,23 +10,23 @@ const OnboardingAppointments = () => {
   const { openModal } = useModal();
   const { appointments } = useAppointments();
   const { doctors } = useDoctors();
+  const { prevStep } = useOnboarding();
 
   return (
     <>
-      <div className="row justify-content-between" id="onboarding-doctors">
-        <div className="col-12 col-lg-5 d-flex flex-column mb-5 md-md-0">
-          <h4 className="font-poppins text-secondary text-center text-lg-start preheading">
+      <div className="row justify-content-center" id="onboarding-appointments">
+        <div className="col-12 col-xl-8 d-flex flex-column mb-5 md-md-0">
+          <h4 className="font-poppins text-secondary text-center preheading">
             Finally
           </h4>
-          <h1 className="font-poppins text-primary fw-bold text-center text-lg-start">
+          <h1 className="font-poppins text-primary fw-bold text-center">
             Let’s Add Your Appointments!
           </h1>
-          <p className="font-inter mt-4 text-center text-lg-start">
+          <p className="font-inter mt-4 text-center w-75 mx-auto mb-5">
             Here, we can go ahead and begin adding your upcoming appointments.
             You can also skip this step and add them later if you would prefer.
           </p>
-        </div>
-        <div className="col-12 col-lg-6 d-flex flex-column">
+
           <h4 className="font-poppins text-primary fw-semibold doctors-heading pb-2">
             Your Upcoming Appointments
           </h4>
@@ -51,7 +52,12 @@ const OnboardingAppointments = () => {
             className="bg-primary-light text-white mt-3 mb-5 max-w-fit mx-auto"
             onClick={openModal}
           />
-          <div className="d-flex justify-content-end mt-auto">
+          <div className="d-flex justify-content-between mt-auto">
+            <Button
+              buttonText="Previous Step"
+              className="bg-transparent text-body text-decoration-underline mt-5 max-w-fit"
+              onClick={prevStep}
+            />
             <Button
               buttonText="Next Step"
               className="bg-primary-light text-white mt-5 max-w-fit"

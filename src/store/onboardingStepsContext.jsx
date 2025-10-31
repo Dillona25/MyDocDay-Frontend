@@ -31,6 +31,7 @@ export const OnboardingProvider = ({ children }) => {
 
   // Prev Step
   const prevStep = () => {
+    console.log("prevStep");
     goToStep(step - 1);
   };
 

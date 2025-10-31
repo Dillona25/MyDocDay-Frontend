@@ -42,7 +42,7 @@ const AppointmentCard = ({
           <p className="m-0 text-secondary small">{formattedTime}</p>
           <p className="m-0 text-secondary small fw-semibold">{aptlLocation}</p>
         </div>
-        <div className="d-flex flex-lg-column flex-xl-row gap-2">
+        <div className="d-flex gap-2">
           <div className="d-flex flex-wrap gap-2 mt-1">
             {aptType && (
               <span
