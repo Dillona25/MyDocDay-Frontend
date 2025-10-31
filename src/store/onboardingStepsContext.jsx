@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OnboardingContext = createContext();
 
@@ -11,8 +11,15 @@ export const OnboardingProvider = ({ children }) => {
 
   // Start on step 1
   // get the total steps
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState();
   const totalSteps = stepRoutes.length;
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const index = stepRoutes.indexOf(location.pathname);
+    if (index !== -1) setStep(index + 1);
+  }, [location.pathname]);
 
   // Go to a new step but only under the provided condition
   const goToStep = (newStep) => {
