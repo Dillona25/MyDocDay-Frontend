@@ -11,7 +11,7 @@ export const OnboardingProvider = ({ children }) => {
 
   // Start on step 1
   // get the total steps
-  const [step, setStep] = useState();
+  const [step, setStep] = useState(1);
   const totalSteps = stepRoutes.length;
 
   const location = useLocation();

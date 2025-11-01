@@ -1,9 +1,10 @@
 import { useState } from "react";
 import MyDocDayLogo from "../../assets/NavLogo.svg";
 import { currentUser } from "../../data/constants";
-import { Link } from "react-router-dom";
+import { useAuth } from "../../store/AuthContext";
 
 const Navigation = () => {
+  const { user } = useAuth();
   const navItems = [
     { label: "Overview", href: "dashboard" },
     { label: "Your Doctors", href: "doctors" },
@@ -25,7 +26,7 @@ const Navigation = () => {
             <img src={MyDocDayLogo} alt="MyDocDay Logo" className="navlogo" />
             <div className="d-flex align-items-center gap-3">
               <h2 className="h5 m-0 font-inter fw-semibold text-body d-none d-sm-block">
-                Hello, {currentUser.firstName}
+                Hello, {user?.first_name}
               </h2>
               {currentUser.profilePhoto ? (
                 <img

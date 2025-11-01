@@ -1,10 +1,7 @@
-import currentUserImage from "../assets/currentUser.png";
-
 export const currentUser = {
   firstName: "Dave",
   lastName: "Henderson",
-  profilePhoto:
-    "https://images.unsplash.com/photo-1551847812-f815b31ae67c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2VsZmllfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=500",
+  profilePhoto: "",
   usersDoctors: [
     {
       drFirstName: "Dr. Ruth",

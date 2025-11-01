@@ -11,7 +11,7 @@ import { useModal } from "../../store/modalContext";
 const OnboardingDoctors = () => {
   const { user } = useAuth();
   const { doctors } = useDoctors();
-  const { nextStep, prevStep } = useOnboarding();
+  const { nextStep } = useOnboarding();
   const { openModal } = useModal();
 
   return (

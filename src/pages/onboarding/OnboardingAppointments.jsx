@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import AppointmentCard from "../../components/common/AppointmentCard";
 import Button from "../../components/common/Button";
 import ModalAddAppointment from "../../components/modals/ModalAddAppointment";
@@ -27,7 +28,7 @@ const OnboardingAppointments = () => {
             You can also skip this step and add them later if you would prefer.
           </p>
 
-          <h4 className="font-poppins text-primary fw-semibold doctors-heading pb-2">
+          <h4 className="font-poppins text-primary fw-semibold doctors-heading pb-2 mb-4">
             Your Upcoming Appointments
           </h4>
           <div className="row">
@@ -41,6 +42,7 @@ const OnboardingAppointments = () => {
                     aptType={apt.appointment_type}
                     aptTitle={apt.appointment_title}
                     aptTime={apt.appointment_time}
+                    aptDate={apt.appointment_date}
                     aptlLocation={clinicName}
                   />
                 </div>
@@ -58,10 +60,12 @@ const OnboardingAppointments = () => {
               className="bg-transparent text-body text-decoration-underline mt-5 max-w-fit"
               onClick={prevStep}
             />
-            <Button
-              buttonText="Next Step"
-              className="bg-primary-light text-white mt-5 max-w-fit"
-            />
+            <Link to="/dashboard/" className="mt-5">
+              <Button
+                buttonText="Next Step"
+                className="bg-primary-light text-white max-w-fit"
+              />
+            </Link>
           </div>
         </div>
       </div>

@@ -1,18 +1,21 @@
+import locationDot from "../../assets/location-dot.svg";
+
 const AppointmentCard = ({
   className = "",
   doctorName,
   aptTime,
   aptlLocation,
   aptType,
+  aptDate,
   aptTitle,
   isMuted = false,
 }) => {
-  const formatAppointmentTime = (isoString) => {
-    if (!isoString) {
+  const formatAppointmentTime = (date) => {
+    if (!date) {
       return "";
     }
 
-    const parsedDate = new Date(isoString);
+    const parsedDate = new Date(date);
 
     if (Number.isNaN(parsedDate.getTime())) {
       return isoString;
@@ -24,39 +27,49 @@ const AppointmentCard = ({
       day: "numeric",
     });
 
-    const timeLabel = parsedDate.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-    });
+    // const timeLabel = parsedDate.toLocaleTimeString("en-US", {
+    //   hour: "numeric",
+    //   minute: "2-digit",
+    // });
 
-    return `${dayLabel} • ${timeLabel}`;
+    return `${dayLabel}`;
   };
 
-  const formattedTime = formatAppointmentTime(aptTime);
+  const formattedDate = formatAppointmentTime(aptDate);
 
   return (
     <article className={`border border-light rounded-3 p-3 h-100 ${className}`}>
       <div className="d-flex flex-column justify-content-between flex-grow-1 gap-2">
-        <div>
-          <h5 className="m-0 fw-semibold text-body">{doctorName}</h5>
-          <p className="m-0 text-secondary small">{formattedTime}</p>
-          <p className="m-0 text-secondary small fw-semibold">{aptlLocation}</p>
+        <div className="d-flex justify-content-between">
+          <div className="d-flex flex-column">
+            <h5 className="m-0 fw-semibold text-body">{aptTitle}</h5>
+            <p className="m-0">{doctorName}</p>
+          </div>
+          <div className="d-flex flex-column">
+            <h5 className="m-0 text-body">{formattedDate}</h5>
+            <p className="m-0 text-end">{aptTime}</p>
+          </div>
         </div>
         <div className="d-flex gap-2">
-          <div className="d-flex flex-wrap gap-2 mt-1">
-            {aptType && (
+          <div className="d-flex flex-wrap gap-2 mt-3">
+            {aptlLocation && (
               <span
                 className={`${
                   isMuted
                     ? "bg-light text-primary border-light"
                     : "bg-primary-subtle text-primary-emphasis border-primary-subtle"
-                } px-3 py-1 small fw-semibold border rounded-pill`}
+                } px-3 py-1 extra-small fw-semibold border rounded-pill d-flex gap-1 align-items-center`}
               >
-                {aptType}
+                <img
+                  src={locationDot}
+                  alt="Dot Icon"
+                  className="img-fluid dot-icon"
+                />
+                {aptlLocation}
               </span>
             )}
           </div>
-          <div className="d-flex flex-wrap gap-2 mt-1">
+          {/* <div className="d-flex flex-wrap gap-2 mt-1">
             <span
               className={`${
                 isMuted
@@ -66,7 +79,7 @@ const AppointmentCard = ({
             >
               {aptTitle}
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
     </article>

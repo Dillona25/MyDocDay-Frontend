@@ -37,7 +37,7 @@ const DashboardHome = () => {
       <div className="row">
         <div className="col-12 col-lg-9 d-flex flex-column gap-4">
           <AppointmentsWidget />
-          <RemindersWidget />
+          {/* <RemindersWidget /> */}
         </div>
         <div className="col-12 col-lg-3 ms-lg-auto mt-4 mt-lg-0">
           <DoctorWidget />

@@ -9,7 +9,7 @@ const Signup = () => {
         className="row justify-content-center justify-content-md-between align-items-center"
         id="signup-page"
       >
-        <div className="col-11 col-md-7 mb-5 md-md-0">
+        <div className="col-11 col-md-6 mb-5 md-md-0">
           <h4 className="font-poppins text-capitalize text-secondary text-center text-md-start">
             Welcome to
           </h4>

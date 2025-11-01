@@ -1,13 +1,18 @@
 import AppointmentCard from "../common/AppointmentCard";
-import { currentUser } from "../../data/constants";
 import Button from "../common/Button";
 import SleepingDog from "../../assets/Sleeping-Dog-Icon.png";
 import { Link } from "react-router-dom";
+import { useAppointments } from "../../store/usersAppointmentsContext";
+import { useDoctors } from "../../store/usersDoctorsContext";
 
 const AppointmentsWidget = () => {
-  const limitedApts = currentUser.upcomingAppointments.slice(0, 3);
+  const { appointments } = useAppointments();
+  const { doctors } = useDoctors();
 
-  // Get our date and start at midnight
+  // Only show 3 apts, even if in next 30 days.
+  // TODO: handle UI if user has more than 3 apts in next 30 days. ("see all") etc.
+  const limitedApts = appointments.slice(0, 3);
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -17,14 +22,14 @@ const AppointmentsWidget = () => {
 
   // Find todays appointments
   const todaysApts = limitedApts.filter((apt) => {
-    const aptDate = new Date(apt.start);
+    const aptDate = new Date(apt.appointment_date);
     aptDate.setHours(0, 0, 0, 0);
     return aptDate.getTime() === today.getTime();
   });
 
   // Find appointments within the next 30 days
   const aptsInMonth = limitedApts.filter((apt) => {
-    const aptDate = new Date(apt.start);
+    const aptDate = new Date(apt.appointment_date);
     aptDate.setHours(0, 0, 0, 0);
     return aptDate >= today && aptDate <= in30Days;
   });
@@ -53,11 +58,11 @@ const AppointmentsWidget = () => {
             {todaysApts.map((apt) => (
               <AppointmentCard
                 key={apt.id}
-                doctorName={apt.doctorName}
-                aptTime={apt.start}
+                doctorName={apt.doctor_name}
+                aptTime={apt.appointment_time}
                 aptlLocation={apt.location}
-                aptType={apt.type}
-                aptTitle={apt.title}
+                aptType={apt.appointment_type}
+                aptTitle={apt.appointment_title}
               />
             ))}
           </div>
@@ -78,19 +83,22 @@ const AppointmentsWidget = () => {
           </div>
 
           <div className="row mt-2 g-3">
-            {aptsInMonth.length > 0
-              ? aptsInMonth.map((apt) => (
+            {aptsInMonth.map((apt) => {
+              const doctor = doctors.find((d) => d.id === apt.doctor_id);
+              const clinicName = doctor?.clinic_name || "Clinic not available";
+              return (
+                <div className="col-12 col-md-6 mb-3" key={apt.id}>
                   <AppointmentCard
-                    key={apt.id}
-                    doctorName={apt.doctorName}
-                    aptTime={apt.start}
-                    aptlLocation={apt.location}
-                    aptType={apt.type}
-                    aptTitle={apt.title}
-                    isMuted={true}
+                    doctorName={apt.doctor_name}
+                    aptType={apt.appointment_type}
+                    aptTitle={apt.appointment_title}
+                    aptTime={apt.appointment_time}
+                    aptDate={apt.appointment_date}
+                    aptlLocation={clinicName}
                   />
-                ))
-              : ""}
+                </div>
+              );
+            })}
           </div>
         </>
       )}
