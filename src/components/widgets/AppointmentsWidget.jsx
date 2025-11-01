@@ -13,6 +13,7 @@ const AppointmentsWidget = () => {
   // TODO: handle UI if user has more than 3 apts in next 30 days. ("see all") etc.
   const limitedApts = appointments.slice(0, 3);
 
+  // TODO: Maybe show appointments for "this week" VS "today"..
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 

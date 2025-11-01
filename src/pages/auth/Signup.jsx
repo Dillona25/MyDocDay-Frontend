@@ -1,10 +1,9 @@
 import SignupForm from "../../components/forms/onboarding/Signup";
-import MyDocDayDash from "../../assets/Dashboard-Screenshot.png";
 import Check from "../../assets/Circle-Check.svg";
 
 const Signup = () => {
   return (
-    <div className="container signup-container py-5 py-md-0 d-flex align-items-center justify-content-center">
+    <div className="container auth-container py-5 py-md-0 d-flex align-items-center justify-content-center">
       <div
         className="row justify-content-center justify-content-md-between align-items-center"
         id="signup-page"

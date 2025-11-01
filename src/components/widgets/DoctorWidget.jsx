@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
-import { currentUser } from "../../data/constants";
 import { useDoctors } from "../../store/usersDoctorsContext";
 
 const DoctorWidget = () => {
   const { doctors } = useDoctors();
-  // const doctors = currentUser.usersDoctors ?? [];
   const topDoctors = doctors.slice(0, 4);
   const hasMoreDoctors = doctors.length > topDoctors.length;
 

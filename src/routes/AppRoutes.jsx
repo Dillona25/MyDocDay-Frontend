@@ -9,7 +9,6 @@ import DashboardDoctors from "../pages/dashboard/DashboardDoctors";
 import DashboardAppointments from "../pages/dashboard/DashboardAppointments";
 import OnboardingLayout from "../pages/onboarding/OnboardingLayout";
 import OnboardingDoctors from "../pages/onboarding/OnboardingDoctors";
-import OnBoardingUserInfo from "../pages/onboarding/OnBoardingUserInfo";
 import OnboardingAppointments from "../pages/onboarding/OnboardingAppointments";
 import Signup from "../pages/auth/Signup";
 import Signin from "../pages/auth/Signin";
@@ -34,7 +33,14 @@ export const AppRoutes = () => {
         </Route>
 
         {/* Dashboard Routes */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<DashboardHome />} />
           <Route path="doctors" element={<DashboardDoctors />} />
           <Route path="appointments" element={<DashboardAppointments />} />
