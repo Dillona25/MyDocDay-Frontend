@@ -25,7 +25,7 @@ const AddDoctors = () => {
     defaultValues: {
       firstName: "",
       lastName: "",
-      speacialty: "",
+      specialty: "",
       imageURL: "",
       clinicName: "",
       clinicEmail: "",
@@ -87,7 +87,7 @@ const AddDoctors = () => {
                   placeholder="First Name"
                   required
                   {...register("firstName", {
-                    required: "First name is required",
+                    required: "This field is required",
                   })}
                   onChange={(evt) => {
                     const target = evt.target;
@@ -95,7 +95,13 @@ const AddDoctors = () => {
                       shouldValidate: true,
                     });
                   }}
+                  isValid
                 />
+                {errors.firstName && (
+                  <span className="text-danger small">
+                    {errors.firstName.message}
+                  </span>
+                )}
               </div>
               <div className="col-6">
                 <TextInput
@@ -103,7 +109,7 @@ const AddDoctors = () => {
                   placeholder="Last Name"
                   required
                   {...register("lastName", {
-                    required: "Last name is required",
+                    required: "This field is required",
                   })}
                   onChange={(evt) => {
                     const target = evt.target;
@@ -112,6 +118,11 @@ const AddDoctors = () => {
                     });
                   }}
                 />
+                {errors.lastName && (
+                  <span className="text-danger small">
+                    {errors.lastName.message}
+                  </span>
+                )}
               </div>
             </div>
             <div className="row mb-4">
@@ -121,7 +132,7 @@ const AddDoctors = () => {
                   placeholder="Doctors Speacialty"
                   required
                   {...register("specialty", {
-                    required: "Specialty is required",
+                    required: "This field is required",
                   })}
                   onChange={(evt) => {
                     const target = evt.target;
@@ -130,6 +141,11 @@ const AddDoctors = () => {
                     });
                   }}
                 />
+                {errors.specialty && (
+                  <span className="text-danger small">
+                    {errors.specialty.message}
+                  </span>
+                )}
               </div>
             </div>
             <div className="row mb-4">
@@ -168,7 +184,7 @@ const AddDoctors = () => {
                   placeholder="Clinic Name"
                   required
                   {...register("clinicName", {
-                    required: "Specialty is required",
+                    required: "This field is required",
                   })}
                   onChange={(evt) => {
                     const target = evt.target;
@@ -177,6 +193,11 @@ const AddDoctors = () => {
                     });
                   }}
                 />
+                {errors.clinicName && (
+                  <span className="text-danger small">
+                    {errors.clinicName.message}
+                  </span>
+                )}
               </div>
             </div>
             <div className="row mb-4">
@@ -269,9 +290,12 @@ const AddDoctors = () => {
         <div className="row">
           <div className="col-12 d-flex justify-content-end">
             <Button
+              disabled={!isValid}
               buttonText="Submit"
-              className="bg-primary-light text-white mt-5 max-w-fit"
               type="submit"
+              className={`${
+                isValid ? "bg-primary-light" : "bg-light text-body"
+              } max-w-fit bg-primary-light text-white align-self-end`}
             />
           </div>
         </div>

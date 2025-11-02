@@ -71,6 +71,7 @@ const SignupForm = () => {
         <div className="col-6">
           <TextInput
             labelText="First Name"
+            required
             placeholder="First Name"
             {...register("firstName", {
               required: "First name is required",
@@ -93,6 +94,7 @@ const SignupForm = () => {
         <div className="col-6">
           <TextInput
             labelText="Last Name"
+            required
             placeholder="Last Name"
             {...register("lastName", {
               required: "Last name is required",
@@ -115,6 +117,7 @@ const SignupForm = () => {
         <div className="col-12 mb-4">
           <TextInput
             type="email"
+            required
             labelText="Your Email"
             placeholder="Your Email"
             {...register("email", {
@@ -137,6 +140,7 @@ const SignupForm = () => {
           <TextInput
             labelText="Your Phone Number"
             placeholder="Your Phone Number"
+            required
             {...register("phone", {
               required: "Phone number is required",
               minLength: {
@@ -158,6 +162,7 @@ const SignupForm = () => {
           <TextInput
             labelText="Create A Password"
             placeholder="Create A Password"
+            required
             type="password"
             {...register("password", {
               required: "A Secure Password is required",

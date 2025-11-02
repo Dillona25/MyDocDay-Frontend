@@ -85,7 +85,7 @@ const AddAppointments = () => {
               placeholder="Appointment Title"
               required
               {...register("appointmentTitle", {
-                required: "Please add a title for your appointment",
+                required: "This field is required",
               })}
               onChange={(evt) => {
                 const target = evt.target;
@@ -110,7 +110,7 @@ const AddAppointments = () => {
               defaultOptionText="Select Doctor"
               required
               {...register("doctor", {
-                required: "Please select one of your doctors",
+                required: "This field is required",
               })}
               onChange={(evt) => {
                 const target = evt.target;
@@ -132,7 +132,7 @@ const AddAppointments = () => {
               labelText="Appointment Date"
               required
               {...register("appointmentDate", {
-                required: "Please add a date for your appointment",
+                required: "This field is required",
               })}
               onChange={(evt) => {
                 const target = evt.target;
@@ -153,7 +153,7 @@ const AddAppointments = () => {
               labelText="Appointment Time"
               required
               {...register("appointmentTime", {
-                required: "Please add a time for your appointment",
+                required: "This field is required",
               })}
               onChange={(evt) => {
                 const target = evt.target;
@@ -190,9 +190,12 @@ const AddAppointments = () => {
         <div className="row">
           <div className="col-12 text-end">
             <Button
+              disabled={!isValid}
               buttonText="Add Appointment"
               type="submit"
-              className="bg-primary-light text-white mt-5 max-w-fit"
+              className={`${
+                isValid ? "bg-primary-light" : "bg-light text-body"
+              } max-w-fit bg-primary-light text-white align-self-end`}
             />
           </div>
         </div>

@@ -6,12 +6,30 @@ import { useModal } from "../../store/modalContext";
 import { useOnboarding } from "../../store/onboardingStepsContext";
 import { useAppointments } from "../../store/usersAppointmentsContext";
 import { useDoctors } from "../../store/usersDoctorsContext";
+import { completeOnboardingStatus } from "../../api/authApi";
+import { useAuth } from "../../store/AuthContext";
 
 const OnboardingAppointments = () => {
   const { openModal } = useModal();
   const { appointments } = useAppointments();
   const { doctors } = useDoctors();
   const { prevStep } = useOnboarding();
+  const { user, updateUser } = useAuth();
+
+  const completeOnboarding = async () => {
+    if (!user?.id) return;
+
+    try {
+      const res = await completeOnboardingStatus({ user_id: user.id });
+      if (res?.user) {
+        updateUser(res.user);
+      } else {
+        updateUser({ completed_onboarding: true });
+      }
+    } catch (err) {
+      console.error("Failed to complete onboarding:", err);
+    }
+  };
 
   return (
     <>
@@ -72,7 +90,8 @@ const OnboardingAppointments = () => {
             />
             <Link to="/dashboard/" className="mt-5">
               <Button
-                buttonText="Next Step"
+                onClick={completeOnboarding}
+                buttonText="Complete Onboarding"
                 className="bg-primary-light text-white max-w-fit"
               />
             </Link>

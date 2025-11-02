@@ -72,3 +72,22 @@ export const validateDupCreds = ({ email, phone }) => {
       throw err;
     });
 };
+
+export const completeOnboardingStatus = ({ user_id }) => {
+  const token = localStorage.getItem("jwt");
+  return fetch("http://localhost:5500/api/users/onboardingComplete", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      user_id,
+    }),
+  })
+    .then(processServerResponse)
+    .catch((err) => {
+      console.error(err);
+      throw err;
+    });
+};

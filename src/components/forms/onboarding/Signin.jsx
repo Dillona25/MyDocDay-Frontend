@@ -50,6 +50,7 @@ const SigninForm = () => {
             type="email"
             name="email"
             labelText="Your Account Email"
+            required
             placeholder="Your Account Email"
             {...register("email", {
               required: "Your email is required",
@@ -73,6 +74,7 @@ const SigninForm = () => {
           <TextInput
             type="password"
             name="password"
+            required
             labelText="Your Account Password"
             placeholder="Your Account Password"
             {...register("password", {
@@ -99,6 +101,7 @@ const SigninForm = () => {
         </span>
       )}
       <Button
+        disabled={!isValid}
         buttonText="Sign In"
         type="submit"
         className={`${
