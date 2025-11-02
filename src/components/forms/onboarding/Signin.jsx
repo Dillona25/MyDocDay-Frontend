@@ -41,7 +41,7 @@ const SigninForm = () => {
 
   return (
     <FormWrapper
-      className="mt-5 d-flex flex-column"
+      className="mt-4 d-flex flex-column"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="row mb-4">
@@ -68,7 +68,7 @@ const SigninForm = () => {
           )}
         </div>
       </div>
-      <div className="row mb-2">
+      <div className="row mb-4">
         <div className="col-12">
           <TextInput
             type="password"
@@ -94,7 +94,7 @@ const SigninForm = () => {
       </div>
 
       {credsError && (
-        <span className="text-danger text-center small my-4">
+        <span className="text-danger text-center small mb-4">
           * Invalid email or password
         </span>
       )}
