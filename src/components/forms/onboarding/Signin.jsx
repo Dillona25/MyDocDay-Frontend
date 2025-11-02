@@ -10,6 +10,8 @@ import { useAuth } from "../../../store/AuthContext";
 const SigninForm = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [credsError, setCredsError] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -30,7 +32,10 @@ const SigninForm = () => {
       login(res.user, res.token);
       navigate("/dashboard/");
     } catch (error) {
-      console.error("Registration failed:", error);
+      if (error.includes("401")) {
+        // Unauthorized — wrong email or password
+        setCredsError(true);
+      }
     }
   };
 
@@ -63,7 +68,7 @@ const SigninForm = () => {
           )}
         </div>
       </div>
-      <div className="row mb-4">
+      <div className="row mb-2">
         <div className="col-12">
           <TextInput
             type="password"
@@ -87,6 +92,12 @@ const SigninForm = () => {
           )}
         </div>
       </div>
+
+      {credsError && (
+        <span className="text-danger text-center small my-4">
+          * Invalid email or password
+        </span>
+      )}
       <Button
         buttonText="Sign In"
         type="submit"
