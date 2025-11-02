@@ -24,7 +24,7 @@ const OnboardingAppointments = () => {
       if (res?.user) {
         updateUser(res.user);
       } else {
-        updateUser({ completed_onboarding: true });
+        updateUser({ onboarding_complete: true });
       }
     } catch (err) {
       console.error("Failed to complete onboarding:", err);

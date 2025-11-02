@@ -91,3 +91,25 @@ export const completeOnboardingStatus = ({ user_id }) => {
       throw err;
     });
 };
+
+export const getCurrentUser = () => {
+  const token = localStorage.getItem("jwt");
+
+  return fetch("http://localhost:5500/api/users/me", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`Failed to fetch current user: ${res.status}`);
+      }
+      return res.json();
+    })
+    .catch((err) => {
+      console.error("Error fetching current user:", err);
+      throw err;
+    });
+};

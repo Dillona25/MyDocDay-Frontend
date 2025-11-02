@@ -12,7 +12,6 @@ import OnboardingDoctors from "../pages/onboarding/OnboardingDoctors";
 import OnboardingAppointments from "../pages/onboarding/OnboardingAppointments";
 import Signup from "../pages/auth/Signup";
 import Signin from "../pages/auth/Signin";
-import ProtectedRoute from "./ProtectedRoute";
 
 export const AppRoutes = () => {
   return (
@@ -33,14 +32,7 @@ export const AppRoutes = () => {
         </Route>
 
         {/* Dashboard Routes */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashboardLayout />
-            </ProtectedRoute>
-          }
-        >
+        <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} />
           <Route path="doctors" element={<DashboardDoctors />} />
           <Route path="appointments" element={<DashboardAppointments />} />

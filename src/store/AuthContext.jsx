@@ -1,6 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { getUsersDoctors } from "../api/doctorApi";
-import { getUsersAppointments } from "../api/appointmentsApi";
+import { getCurrentUser } from "../api/authApi";
 
 const AuthContext = createContext();
 
@@ -9,34 +8,48 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [isAuthLoaded, setIsAuthLoaded] = useState(false);
 
-  // Load our saved data on refresh
   useEffect(() => {
-    const storedToken = localStorage.getItem("jwt");
-    const storedUser = localStorage.getItem("user");
+    const initAuth = async () => {
+      const storedToken = localStorage.getItem("jwt");
 
-    // If we have a JWT and a User, then set our token and user states
-    if (storedToken && storedUser) {
+      // If no token, mark auth as loaded and exit
+      if (!storedToken) {
+        setIsAuthLoaded(true);
+        return;
+      }
+
       setToken(storedToken);
-      setUser(JSON.parse(storedUser));
-    }
-    // Change the state of our loaded state
-    setIsAuthLoaded(true);
+
+      try {
+        // Fetch fresh data from backend to get new fields (like onboarding_complete)
+        const userData = await getCurrentUser();
+        setUser(userData);
+        localStorage.setItem("user", JSON.stringify(userData));
+      } catch (error) {
+        console.error("Failed to refresh user:", error);
+        // If token expired, clear everything
+        localStorage.removeItem("jwt");
+        localStorage.removeItem("user");
+        setUser(null);
+        setToken(null);
+      } finally {
+        setIsAuthLoaded(true);
+      }
+    };
+
+    initAuth();
   }, []);
 
-  // This allows us to update the user
-  // Updates is the object passed to this function containing the updates arguments
+  // Allows local updates to user state
   const updateUser = (updates) => {
     setUser((prev) => {
-      // Our updates user. A copy of prev is created then overwrited by any updates
       const updatedUser = { ...prev, ...updates };
-      // Update our local store with JSON.stringify because local storage can only store text
       localStorage.setItem("user", JSON.stringify(updatedUser));
       return updatedUser;
     });
   };
 
-  // Login function accepts two parameters
-  // Update states and update local storage
+  // Handles login
   const login = (userData, jwtToken) => {
     setUser(userData);
     setToken(jwtToken);
