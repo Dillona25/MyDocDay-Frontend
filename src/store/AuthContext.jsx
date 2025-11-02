@@ -1,4 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
+import { getUsersDoctors } from "../api/doctorApi";
+import { getUsersAppointments } from "../api/appointmentsApi";
 
 const AuthContext = createContext();
 

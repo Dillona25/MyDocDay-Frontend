@@ -32,8 +32,8 @@ const OnboardingDoctors = () => {
             Your Doctors
           </h4>
           <div className="row">
-            {doctors.map((doc) => {
-              return (
+            {doctors.length > 0 ? (
+              doctors.map((doc) => (
                 <div className="col-12 col-md-6 mb-3" key={doc.id}>
                   <DoctorCard
                     firstName={doc.first_name}
@@ -45,8 +45,14 @@ const OnboardingDoctors = () => {
                     state={doc.state}
                   />
                 </div>
-              );
-            })}
+              ))
+            ) : (
+              <div className="col-12">
+                <h5 className="text-body fw-semibold text-center my-5">
+                  Add your first doctor to see it here
+                </h5>
+              </div>
+            )}
           </div>
           <Button
             buttonText="Add Doctor"

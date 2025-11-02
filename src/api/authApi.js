@@ -17,7 +17,7 @@ export const registerUser = ({
   phone,
   password,
 }) => {
-  return fetch("http://localhost:5500/api/users", {
+  return fetch("http://localhost:5500/api/users/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -28,6 +28,42 @@ export const registerUser = ({
       email,
       phone,
       password,
+    }),
+  })
+    .then(processServerResponse)
+    .catch((err) => {
+      console.error(err);
+      throw err;
+    });
+};
+
+export const loginUser = ({ email, password }) => {
+  return fetch("http://localhost:5500/api/users/signin", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  })
+    .then(processServerResponse)
+    .catch((err) => {
+      console.error(err);
+      throw err;
+    });
+};
+
+export const validateDupCreds = ({ email, phone }) => {
+  return fetch("http://localhost:5500/api/users/validateDupCreds", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      phone,
     }),
   })
     .then(processServerResponse)

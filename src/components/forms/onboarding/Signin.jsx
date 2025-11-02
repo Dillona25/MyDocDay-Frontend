@@ -2,23 +2,65 @@ import { useState } from "react";
 import FormWrapper from "../../common/FormWrapper";
 import { TextInput } from "../../common/Inputs";
 import Button from "../../common/Button";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../../api/authApi";
+import { useAuth } from "../../../store/AuthContext";
 
 const SigninForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    setError,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (values) => {
+    try {
+      // Call our registerUser API route, add data to local storage, login the user with our login function
+      const res = await loginUser(values);
+      login(res.user, res.token);
+      navigate("/dashboard/");
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
+  };
 
   return (
-    <FormWrapper className="mt-5 d-flex flex-column" id="sign-in-form">
+    <FormWrapper
+      className="mt-5 d-flex flex-column"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="row mb-4">
         <div className="col-12">
           <TextInput
             type="email"
             name="email"
-            onChange={(event) => handleInputChange(event, setEmail)}
-            required={true}
             labelText="Your Account Email"
             placeholder="Your Account Email"
+            {...register("email", {
+              required: "Your email is required",
+              pattern: {
+                value: /[\w\-.]+@([\w-]+\.)+[\w-]{2,4}/,
+                message: "Invalid Email",
+              },
+            })}
+            onChange={(evt) => {
+              const target = evt.target;
+              setValue("email", target.value, { shouldValidate: true });
+            }}
           />
+          {errors.email && (
+            <span className="text-danger small">{errors.email.message}</span>
+          )}
         </div>
       </div>
       <div className="row mb-4">
@@ -26,14 +68,32 @@ const SigninForm = () => {
           <TextInput
             type="password"
             name="password"
-            onChange={(event) => handleInputChange(event, setPassword)}
-            required={true}
             labelText="Your Account Password"
             placeholder="Your Account Password"
+            {...register("password", {
+              required: "Your Password is required",
+              minLength: {
+                value: 8,
+                message: "Your password should be at least 8 characters",
+              },
+            })}
+            onChange={(evt) => {
+              const target = evt.target;
+              setValue("password", target.value, { shouldValidate: true });
+            }}
           />
+          {errors.password && (
+            <span className="text-danger small">{errors.password.message}</span>
+          )}
         </div>
       </div>
-      <Button disabled buttonText="Sign In" type="submit" />
+      <Button
+        buttonText="Sign In"
+        type="submit"
+        className={`${
+          isValid ? "bg-primary-light" : "bg-light text-body"
+        } max-w-fit bg-primary-light text-white align-self-end`}
+      />
     </FormWrapper>
   );
 };

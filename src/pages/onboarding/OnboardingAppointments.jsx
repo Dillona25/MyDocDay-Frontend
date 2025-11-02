@@ -32,22 +32,32 @@ const OnboardingAppointments = () => {
             Your Upcoming Appointments
           </h4>
           <div className="row">
-            {appointments.map((apt) => {
-              const doctor = doctors.find((d) => d.id === apt.doctor_id);
-              const clinicName = doctor?.clinic_name || "Clinic not available";
-              return (
-                <div className="col-12 col-md-6 mb-3" key={apt.id}>
-                  <AppointmentCard
-                    doctorName={apt.doctor_name}
-                    aptType={apt.appointment_type}
-                    aptTitle={apt.appointment_title}
-                    aptTime={apt.appointment_time}
-                    aptDate={apt.appointment_date}
-                    aptlLocation={clinicName}
-                  />
-                </div>
-              );
-            })}
+            {appointments.length > 0 ? (
+              appointments.map((apt) => {
+                const doctor = doctors.find((d) => d.id === apt.doctor_id);
+                const clinicName =
+                  doctor?.clinic_name || "Clinic not available";
+
+                return (
+                  <div className="col-12 col-md-6 mb-3" key={apt.id}>
+                    <AppointmentCard
+                      doctorName={apt.doctor_name}
+                      aptType={apt.appointment_type}
+                      aptTitle={apt.appointment_title}
+                      aptTime={apt.appointment_time}
+                      aptDate={apt.appointment_date}
+                      aptLocation={clinicName}
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              <div className="col-12">
+                <h5 className="text-body fw-semibold text-center my-5">
+                  Add your first doctor appointment to see it here
+                </h5>
+              </div>
+            )}
           </div>
           <Button
             buttonText="Add Appointment"

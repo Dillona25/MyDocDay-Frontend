@@ -3,7 +3,7 @@ import Button from "../../common/Button";
 import FormWrapper from "../../common/FormWrapper";
 import { TextInput } from "../../common/Inputs";
 import { useNavigate } from "react-router-dom";
-import { mockApi, registerUser } from "../../../api/authApi";
+import { registerUser, validateDupCreds } from "../../../api/authApi";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../../store/AuthContext.jsx";
 
@@ -11,6 +11,7 @@ const SignupForm = () => {
   const navigate = useNavigate();
   // Pull in our login function from our user context
   const { login } = useAuth();
+  const [duplicateCreds, setDuplicateCreds] = useState(false);
 
   // init our useForm handlers and default values
   const {
@@ -32,8 +33,23 @@ const SignupForm = () => {
   // Pas values to our onSubmit. Values will be our useForm registered values
   const onSubmit = async (values) => {
     try {
+      const duplicateCredsRes = await validateDupCreds({
+        email: values.email,
+        phone: values.phone,
+      });
+
+      if (
+        duplicateCredsRes.emailExists === true ||
+        duplicateCreds.phoneExists === true
+      ) {
+        setDuplicateCreds(true);
+        console.log("Setting error...");
+        return;
+      }
+
       // Call our registerUser API route, add data to local storage, login the user with our login function
       const res = await registerUser(values);
+
       if (res?.user && res?.token) {
         localStorage.setItem("jwt", res.token);
         localStorage.setItem("user", JSON.stringify(res.user));
@@ -95,7 +111,7 @@ const SignupForm = () => {
           )}
         </div>
       </div>
-      <div className="row mb-4">
+      <div className="row">
         <div className="col-12 mb-4">
           <TextInput
             type="email"
@@ -159,16 +175,13 @@ const SignupForm = () => {
             <span className="text-danger small">{errors.password.message}</span>
           )}
         </div>
-        {/* <div className="col-12">
-          <TextInput
-            name="password"
-            required={true}
-            labelText="Confirm Password"
-            placeholder="Confirm Password"
-            type="password"
-          />
-        </div> */}
       </div>
+      {duplicateCreds && (
+        <span className="small text-danger text-center mb-4">
+          * Email or phone number already in use. Please login or provide a
+          different email or phone number.
+        </span>
+      )}
       <Button
         disabled={!isValid}
         buttonText="Next"
