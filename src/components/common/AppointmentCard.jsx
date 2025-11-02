@@ -37,6 +37,15 @@ const AppointmentCard = ({
 
   const formattedDate = formatAppointmentTime(aptDate);
 
+  // Format our time to 12 hour format
+  function formattedTime(time) {
+    const [hoursStr, minutes] = time.split(":");
+    let hours = parseInt(hoursStr, 10);
+    const format = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+    return `${hours}:${minutes}${format.toLowerCase()}`;
+  }
+
   return (
     <article className={`border border-light rounded-3 p-3 h-100 ${className}`}>
       <div className="d-flex flex-column justify-content-between flex-grow-1 gap-2">
@@ -47,7 +56,7 @@ const AppointmentCard = ({
           </div>
           <div className="d-flex flex-column">
             <h5 className="m-0 text-body">{formattedDate}</h5>
-            <p className="m-0 text-end">{aptTime}</p>
+            <p className="m-0 text-end">{formattedTime(aptTime)}</p>
           </div>
         </div>
         <div className="d-flex gap-2">
