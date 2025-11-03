@@ -47,7 +47,6 @@ const AppointmentsWidget = () => {
       </div>
 
       {todaysApts.length === 0 && aptsInMonth.length === 0 ? (
-        // 💤 No appointments at all
         <div className="d-flex flex-column align-items-center">
           <div className="d-flex align-items-center justify-content-center gap-2 mt-4">
             <img src={SleepingDog} height={120} alt="Relaxing Dog" />
@@ -63,7 +62,6 @@ const AppointmentsWidget = () => {
         </div>
       ) : (
         <>
-          {/* ===== Today Section ===== */}
           {todaysApts.length > 0 ? (
             <>
               <div className="d-flex align-items-center gap-3 mt-3 today-divider">

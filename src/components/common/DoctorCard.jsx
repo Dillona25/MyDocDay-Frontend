@@ -1,3 +1,7 @@
+import editIcon from "../../assets/user-edit.svg";
+import removeIcon from "../../assets/user-remove.svg";
+import Button from "./Button";
+
 const DoctorCard = ({
   firstName,
   lastName,
@@ -36,6 +40,9 @@ const DoctorCard = ({
           <span className="font-body text-body small text-end">
             {city}, {state}
           </span>
+          <button className="extra-small text-decoration-underline border-0 bg-transparent text-body mt-auto align-self-end p-0">
+            Edit Doctor
+          </button>
         </div>
       </div>
     </div>

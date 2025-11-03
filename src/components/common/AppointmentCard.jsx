@@ -59,8 +59,8 @@ const AppointmentCard = ({
             <p className="m-0 text-end">{formattedTime(aptTime)}</p>
           </div>
         </div>
-        <div className="d-flex gap-2">
-          <div className="d-flex flex-wrap gap-2 mt-3">
+        <div className="d-flex justify-content-between align-items-center gap-2">
+          <div className="d-flex mt-3">
             {aptlLocation && (
               <span
                 className={`${
@@ -78,17 +78,9 @@ const AppointmentCard = ({
               </span>
             )}
           </div>
-          {/* <div className="d-flex flex-wrap gap-2 mt-1">
-            <span
-              className={`${
-                isMuted
-                  ? "bg-light text-primary border-light"
-                  : "bg-primary-subtle text-primary-emphasis border-primary-subtle"
-              } px-3 py-1 small fw-semibold border rounded-pill`}
-            >
-              {aptTitle}
-            </span>
-          </div> */}
+          <button className="extra-small text-decoration-underline border-0 bg-transparent text-body mt-auto align-self-end p-0">
+            Edit Appointment
+          </button>
         </div>
       </div>
     </article>

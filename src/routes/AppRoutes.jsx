@@ -1,6 +1,3 @@
-// Defines all our app routes
-// <Route path="profile" element={<ProfileStep />} />
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Home } from "../pages/Home";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";

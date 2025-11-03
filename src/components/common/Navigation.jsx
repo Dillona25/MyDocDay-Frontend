@@ -1,22 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import MyDocDayLogo from "../../assets/NavLogo.svg";
 import { currentUser } from "../../data/constants";
 import { useAuth } from "../../store/AuthContext";
 
 const Navigation = () => {
   const { user } = useAuth();
+
   const navItems = [
-    { label: "Overview", href: "dashboard" },
-    { label: "Your Doctors", href: "doctors" },
-    { label: "Appointments", href: "appointments" },
-    { label: "Calendar" },
-    { label: "Reminders" },
-    { label: "Account" },
+    { label: "Overview", href: "/dashboard/" },
+    { label: "Your Doctors", href: "/dashboard/doctors" },
+    { label: "Appointments", href: "/dashboard/appointments" },
+    { label: "Reminders", href: "/dashboard/reminders" },
+    { label: "Account", href: "/dashboard/account" },
   ];
-  const [activeLabel, setActiveLabel] = useState(navItems[0].label);
-  const handleNavItemClick = (label) => {
-    setActiveLabel(label);
-  };
 
   return (
     <>
@@ -30,7 +27,7 @@ const Navigation = () => {
               </h2>
               {currentUser.profilePhoto ? (
                 <img
-                  alt="User Profile Image"
+                  alt="User Profile"
                   src={currentUser.profilePhoto}
                   className="nav-profile-image rounded-circle"
                 />
@@ -45,32 +42,28 @@ const Navigation = () => {
           </div>
         </div>
       </div>
+
       <div className="bg-primary">
         <div className="container">
           <div className="row py-3 justify-content-center">
-            <ul className="d-none d-md-flex justify-content-end justify-content-md-center gap-2 list-unstyled m-0 align-items-center">
-              <button className="d-md-none nav-menu"></button>
-              {navItems.map((item) => {
-                const isActive = item.label === activeLabel;
-                return (
-                  <li
-                    key={item.label}
-                    className={`${
-                      isActive ? "bg-active" : ""
-                    } py-1 px-3 rounded-2`}
+            <ul className="d-none d-md-flex justify-content-center gap-2 list-unstyled m-0 align-items-center">
+              {navItems.map((item) => (
+                <li key={item.label}>
+                  <NavLink
+                    to={item.href}
+                    end={item.href === "/dashboard/"}
+                    className={({ isActive }) =>
+                      `py-2 px-3 rounded-2 cursor-pointer text-decoration-none ${
+                        isActive ? "bg-primary-light" : ""
+                      }`
+                    }
                   >
-                    <a
-                      className="text-white text-decoration-none font-inter font-body cursor-pointer"
-                      onClick={(event) => {
-                        event.preventDefault();
-                        handleNavItemClick(item.label);
-                      }}
-                    >
+                    <span className="text-white font-inter font-body">
                       {item.label}
-                    </a>
-                  </li>
-                );
-              })}
+                    </span>
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
