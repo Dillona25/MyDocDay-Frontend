@@ -38,7 +38,7 @@ const AppointmentsWidget = () => {
   return (
     <section className="border border-light rounded-3 p-3">
       <div className="d-flex flex-column flex-md-row justify-content-center justify-content-md-between">
-        <h3 className="mt-0 mb-3 mb-md-0 text-center text-md-left">
+        <h3 className="mt-0 mb-3 mb-md-0 text-center text-md-left text-primary">
           Your Appointments
         </h3>
         <Link to="appointments" className="mx-auto mx-md-0 mb-3 mb-md-0">
@@ -46,61 +46,88 @@ const AppointmentsWidget = () => {
         </Link>
       </div>
 
-      {todaysApts.length > 0 ? (
-        <>
-          <div className="d-flex align-items-center gap-3 mt-3 today-divider">
-            <span className="text-uppercase fw-semibold text-body small">
-              Today
-            </span>
-            <div className="divider-line flex-grow-1 bg-black" />
-          </div>
-
-          <div className="row mt-2 g-3">
-            {todaysApts.map((apt) => (
-              <AppointmentCard
-                key={apt.id}
-                doctorName={apt.doctor_name}
-                aptTime={apt.appointment_time}
-                aptlLocation={apt.location}
-                aptType={apt.appointment_type}
-                aptTitle={apt.appointment_title}
-              />
-            ))}
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="mx-auto d-flex flex-column flex-md-row align-items-center gap-2">
-            <img src={SleepingDog} height={100} alt="Relaxing Dog" />
-            <h5 className="text-body fw-semibold text-center mb-5 mb-md-0">
-              It's a great day to relax. You have no appointments today!
+      {todaysApts.length === 0 && aptsInMonth.length === 0 ? (
+        // 💤 No appointments at all
+        <div className="d-flex flex-column align-items-center">
+          <div className="d-flex align-items-center justify-content-center gap-2 mt-4">
+            <img src={SleepingDog} height={120} alt="Relaxing Dog" />
+            <h5 className="text-body fw-semibold text-center">
+              No appointments on the calendar. It’s a perfect day to take it
+              easy!
             </h5>
           </div>
-          <div className="d-flex align-items-center gap-3 mt-3 today-divider">
-            <span className="text-uppercase fw-semibold text-body small">
-              In the next 30 days
-            </span>
-            <div className="divider-line flex-grow-1 bg-black" />
-          </div>
+          <Button
+            buttonText="Add Appointment"
+            className="max-w-fit bg-primary-light text-white"
+          />
+        </div>
+      ) : (
+        <>
+          {/* ===== Today Section ===== */}
+          {todaysApts.length > 0 ? (
+            <>
+              <div className="d-flex align-items-center gap-3 mt-3 today-divider">
+                <span className="text-uppercase fw-semibold text-body small">
+                  Today
+                </span>
+                <div className="divider-line flex-grow-1 bg-black" />
+              </div>
 
-          <div className="row mt-2 g-3">
-            {aptsInMonth.map((apt) => {
-              const doctor = doctors.find((d) => d.id === apt.doctor_id);
-              const clinicName = doctor?.clinic_name || "Clinic not available";
-              return (
-                <div className="col-12 col-md-6 mb-3" key={apt.id}>
+              <div className="row mt-2 g-3">
+                {todaysApts.map((apt) => (
                   <AppointmentCard
+                    key={apt.id}
                     doctorName={apt.doctor_name}
+                    aptTime={apt.appointment_time}
+                    aptlLocation={apt.location}
                     aptType={apt.appointment_type}
                     aptTitle={apt.appointment_title}
-                    aptTime={apt.appointment_time}
-                    aptDate={apt.appointment_date}
-                    aptlLocation={clinicName}
                   />
-                </div>
-              );
-            })}
-          </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="mx-auto d-flex flex-column flex-md-row align-items-center gap-2">
+                <img src={SleepingDog} height={100} alt="Relaxing Dog" />
+                <h5 className="text-body fw-semibold text-center mb-5 mb-md-0">
+                  It's a great day to relax. You have no appointments today!
+                </h5>
+              </div>
+            </>
+          )}
+
+          {/* ===== Next 30 Days Section ===== */}
+          {aptsInMonth.length > 0 && (
+            <>
+              <div className="d-flex align-items-center gap-3 mt-3 today-divider">
+                <span className="text-uppercase fw-semibold text-body small">
+                  In the next 30 days
+                </span>
+                <div className="divider-line flex-grow-1 bg-black" />
+              </div>
+
+              <div className="row mt-2 g-3">
+                {aptsInMonth.map((apt) => {
+                  const doctor = doctors.find((d) => d.id === apt.doctor_id);
+                  const clinicName =
+                    doctor?.clinic_name || "Clinic not available";
+                  return (
+                    <div className="col-12 col-md-6 mb-3" key={apt.id}>
+                      <AppointmentCard
+                        doctorName={apt.doctor_name}
+                        aptType={apt.appointment_type}
+                        aptTitle={apt.appointment_title}
+                        aptTime={apt.appointment_time}
+                        aptDate={apt.appointment_date}
+                        aptlLocation={clinicName}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
         </>
       )}
     </section>
