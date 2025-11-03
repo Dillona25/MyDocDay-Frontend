@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
     const initAuth = async () => {
       const storedToken = localStorage.getItem("jwt");
 
-      // If no token, mark auth as loaded and exit
       if (!storedToken) {
         setIsAuthLoaded(true);
         return;
@@ -21,13 +20,11 @@ export const AuthProvider = ({ children }) => {
       setToken(storedToken);
 
       try {
-        // Fetch fresh data from backend to get new fields (like onboarding_complete)
         const userData = await getCurrentUser();
         setUser(userData);
         localStorage.setItem("user", JSON.stringify(userData));
       } catch (error) {
         console.error("Failed to refresh user:", error);
-        // If token expired, clear everything
         localStorage.removeItem("jwt");
         localStorage.removeItem("user");
         setUser(null);

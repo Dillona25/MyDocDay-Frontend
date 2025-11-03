@@ -1,27 +1,28 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../store/AuthContext";
 
-const ProtectedRoute = ({
-  children,
-  requireOnboardingIncomplete = false,
-  redirectIfComplete = "/dashboard/",
-  redirectIfIncomplete = "/signup/",
-}) => {
+const ProtectedRoute = ({ children, type }) => {
   const { user, token, isAuthLoaded } = useAuth();
+  const location = useLocation();
 
   if (!isAuthLoaded) return null;
-  if (!token || !user) return <Navigate to="/signin" replace />;
 
-  const hasFinishedOnboarding = Boolean(user.onboarding_complete);
-
-  if (requireOnboardingIncomplete && hasFinishedOnboarding) {
-    return <Navigate to={redirectIfComplete} replace />;
+  // Block access to private routes if not logged in
+  if ((type === "dashboard" || type === "onboarding") && (!token || !user)) {
+    return <Navigate to="/signup" replace />;
   }
 
-  if (!requireOnboardingIncomplete && !hasFinishedOnboarding) {
-    return <Navigate to={redirectIfIncomplete} replace />;
+  // If onboarding is complete, block onboarding route
+  if (type === "onboarding" && user?.onboarding_complete) {
+    return <Navigate to="/dashboard" replace />;
   }
 
+  // If user is signed in, block auth routes
+  if (type === "auth" && user && token) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  // Otherwise, let it render
   return children ?? <Outlet />;
 };
 

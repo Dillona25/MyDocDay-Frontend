@@ -12,6 +12,7 @@ import OnboardingDoctors from "../pages/onboarding/OnboardingDoctors";
 import OnboardingAppointments from "../pages/onboarding/OnboardingAppointments";
 import Signup from "../pages/auth/Signup";
 import Signin from "../pages/auth/Signin";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const AppRoutes = () => {
   return (
@@ -21,18 +22,46 @@ export const AppRoutes = () => {
         <Route path="/" element={<Home />} />
 
         {/* Auth Routes */}
-        <Route path="signin" element={<Signin />} />
-        <Route path="signup" element={<Signup />} />
+        <Route
+          path="signin"
+          element={
+            <ProtectedRoute type="auth">
+              <Signin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="signup"
+          element={
+            <ProtectedRoute type="auth">
+              <Signup />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Onboarding Routes */}
-        <Route path="/onboarding" element={<OnboardingLayout />}>
+        <Route
+          path="/onboarding"
+          element={
+            <ProtectedRoute type="onboarding">
+              <OnboardingLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<OnboardingDoctors />} />
           <Route path="doctors" element={<OnboardingDoctors />} />
           <Route path="appointments" element={<OnboardingAppointments />} />
         </Route>
 
         {/* Dashboard Routes */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute type="dashboard">
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<DashboardHome />} />
           <Route path="doctors" element={<DashboardDoctors />} />
           <Route path="appointments" element={<DashboardAppointments />} />
