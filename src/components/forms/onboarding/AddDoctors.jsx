@@ -5,13 +5,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { addDoctor, createDoctorWithClinic } from "../../../api/doctorApi";
 import { useAuthStore } from "../../../store/useAuth";
-import { useDoctors } from "../../../store/useDoctors";
+import { useDoctorStore } from "../../../store/useDoctors";
 import { useModal } from "../../../store/modalContext";
 import { US_STATES } from "../../../data/constants";
 
 const AddDoctors = () => {
   const { user } = useAuthStore();
-  const { addDoctorToList } = useDoctors();
+  const { addDoctorToList } = useDoctorStore();
   const { closeModal } = useModal();
 
   const {

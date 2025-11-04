@@ -2,15 +2,20 @@ import Button from "../../components/common/Button";
 import ModalAddDoctor from "../../components/modals/ModalAddDoctor";
 import { useAuthStore } from "../../store/useAuth";
 import { useOnboarding } from "../../store/onboardingStepsContext";
-import { useDoctors } from "../../store/useDoctors";
+import { useDoctorStore } from "../../store/useDoctors";
 import DoctorCard from "../../components/common/DoctorCard";
 import { useModal } from "../../store/modalContext";
+import { useEffect } from "react";
 
 const OnboardingDoctors = () => {
   const { user } = useAuthStore();
-  const { doctors } = useDoctors();
+  const { doctors, initDoctors } = useDoctorStore();
   const { nextStep } = useOnboarding();
   const { openModal } = useModal();
+
+  useEffect(() => {
+    initDoctors();
+  }, [initDoctors]);
 
   return (
     <>

@@ -1,13 +1,18 @@
 import AppointmentCard from "../../components/common/AppointmentCard";
 import { useAuthStore } from "../../store/useAuth";
-import { useAppointments } from "../../store/useAppointments";
+import { useAppointmentStore } from "../../store/useAppointments";
 import Button from "../../components/common/Button";
-import { useDoctors } from "../../store/useDoctors";
+import { useDoctorStore } from "../../store/useDoctors";
+import { useEffect } from "react";
 
 const DashboardAppointments = () => {
-  const { appointments } = useAppointments();
+  const { appointments, initAppointments } = useAppointmentStore();
   const { user } = useAuthStore();
-  const { doctors } = useDoctors();
+  const { doctors } = useDoctorStore();
+
+  useEffect(() => {
+    initAppointments();
+  }, [initAppointments]);
 
   return (
     <>

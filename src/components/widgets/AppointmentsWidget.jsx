@@ -2,12 +2,17 @@ import AppointmentCard from "../common/AppointmentCard";
 import Button from "../common/Button";
 import SleepingDog from "../../assets/Sleeping-Dog-Icon.png";
 import { Link } from "react-router-dom";
-import { useAppointments } from "../../store/useAppointments";
-import { useDoctors } from "../../store/useDoctors";
+import { useAppointmentStore } from "../../store/useAppointments";
+import { useDoctorStore } from "../../store/useDoctors";
+import { useEffect } from "react";
 
 const AppointmentsWidget = () => {
-  const { appointments } = useAppointments();
-  const { doctors } = useDoctors();
+  const { appointments, initAppointments } = useAppointmentStore();
+  const { doctors } = useDoctorStore();
+
+  useEffect(() => {
+    initAppointments();
+  }, [initAppointments]);
 
   // Only show 3 apts, even if in next 30 days.
   // TODO: handle UI if user has more than 3 apts in next 30 days. ("see all") etc.

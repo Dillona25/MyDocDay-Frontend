@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
-import { useDoctors } from "../../store/useDoctors";
+import { useDoctorStore } from "../../store/useDoctors";
 import Button from "../common/Button";
+import { useEffect } from "react";
 
 const DoctorWidget = () => {
-  const { doctors } = useDoctors();
+  const { doctors, initDoctors } = useDoctorStore();
   const topDoctors = doctors.slice(0, 4);
   const hasMoreDoctors = doctors.length > topDoctors.length;
+
+  useEffect(() => {
+    initDoctors();
+  }, [initDoctors]);
 
   return (
     <section className="rounded-3 border-light p-3 h-100">

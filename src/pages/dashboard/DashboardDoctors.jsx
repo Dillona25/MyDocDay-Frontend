@@ -1,11 +1,16 @@
+import { useEffect } from "react";
 import Button from "../../components/common/Button";
 import DoctorCard from "../../components/common/DoctorCard";
 import { useAuthStore } from "../../store/useAuth";
-import { useDoctors } from "../../store/useDoctors";
+import { useDoctorStore } from "../../store/useDoctors";
 
 const DashboardDoctors = () => {
-  const { doctors } = useDoctors();
+  const { doctors, initDoctors } = useDoctorStore();
   const { user } = useAuthStore();
+
+  useEffect(() => {
+    initDoctors();
+  }, [initDoctors]);
 
   return (
     <>

@@ -1,44 +1,33 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { useAuthStore } from "./useAuth";
+import { create } from "zustand";
 import { getUsersAppointments } from "../api/appointmentsApi";
+import { useAuthStore } from "./useAuth";
 
-export const AppointmentContext = createContext();
+export const useAppointmentStore = create((set, get) => ({
+  appointments: [],
 
-export const AppointmentProvider = ({ children }) => {
-  const { user } = useAuthStore();
-  const [appointments, setAppointments] = useState([]);
+  initAppointments: async () => {
+    const user = useAuthStore.getState().user;
 
-  useEffect(() => {
     if (!user?.id) return;
 
-    const fetchAppointments = async () => {
-      try {
-        const res = await getUsersAppointments();
-        // Update our state
-        setAppointments(res);
-      } catch (err) {
-        console.error("Error fetching doctors:", err);
-      }
-    };
+    try {
+      const appointments = await getUsersAppointments();
+      set({
+        appointments: appointments,
+      });
+    } catch (error) {
+      console.error("Failed to catch appointments:", error);
 
-    fetchAppointments();
-    // Our dependency array tells this to only run when something about the user changes
-  }, [user]);
+      set({
+        appointments: [],
+      });
+    }
+  },
 
-  const addAppointmentToList = (appointments) => {
-    setAppointments((prev) => [...prev, appointments]);
-  };
-
-  return (
-    <AppointmentContext.Provider
-      value={{
-        appointments,
-        addAppointmentToList,
-      }}
-    >
-      {children}
-    </AppointmentContext.Provider>
-  );
-};
-
-export const useAppointments = () => useContext(AppointmentContext);
+  // Add new appointment to the list
+  addAppointmentToList: (appointment) => {
+    set((state) => ({
+      appointments: [...state.appointments, appointment],
+    }));
+  },
+}));
