@@ -1,10 +1,10 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { useAuth } from "./AuthContext";
+import { useAuthStore } from "./useAuth";
 import { getUsersDoctors } from "../api/doctorApi";
 
 export const DoctorContext = createContext();
 export const DoctorProvider = ({ children }) => {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   // A user can have multiple doctors so doctors needs to be an array
   const [doctors, setDoctors] = useState([]);
 

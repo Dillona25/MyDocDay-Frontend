@@ -4,14 +4,13 @@ import Button from "../../common/Button";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { addDoctor, createDoctorWithClinic } from "../../../api/doctorApi";
-import { useAuth } from "../../../store/AuthContext";
-import { useDoctors } from "../../../store/usersDoctorsContext";
-import { addClinic } from "../../../api/clinicApi";
+import { useAuthStore } from "../../../store/useAuth";
+import { useDoctors } from "../../../store/useDoctors";
 import { useModal } from "../../../store/modalContext";
 import { US_STATES } from "../../../data/constants";
 
 const AddDoctors = () => {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const { addDoctorToList } = useDoctors();
   const { closeModal } = useModal();
 

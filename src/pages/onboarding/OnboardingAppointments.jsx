@@ -4,17 +4,17 @@ import Button from "../../components/common/Button";
 import ModalAddAppointment from "../../components/modals/ModalAddAppointment";
 import { useModal } from "../../store/modalContext";
 import { useOnboarding } from "../../store/onboardingStepsContext";
-import { useAppointments } from "../../store/usersAppointmentsContext";
-import { useDoctors } from "../../store/usersDoctorsContext";
+import { useAppointments } from "../../store/useAppointments";
+import { useDoctors } from "../../store/useDoctors";
 import { completeOnboardingStatus } from "../../api/authApi";
-import { useAuth } from "../../store/AuthContext";
+import { useAuthStore } from "../../store/useAuth";
 
 const OnboardingAppointments = () => {
   const { openModal } = useModal();
   const { appointments } = useAppointments();
   const { doctors } = useDoctors();
   const { prevStep } = useOnboarding();
-  const { user, updateUser } = useAuth();
+  const { user, updateUser } = useAuthStore();
 
   const completeOnboarding = async () => {
     if (!user?.id) return;

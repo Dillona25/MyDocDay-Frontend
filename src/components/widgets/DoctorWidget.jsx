@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useDoctors } from "../../store/usersDoctorsContext";
+import { useDoctors } from "../../store/useDoctors";
 import Button from "../common/Button";
 
 const DoctorWidget = () => {

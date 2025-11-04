@@ -1,11 +1,11 @@
 import Button from "../../components/common/Button";
 import DoctorCard from "../../components/common/DoctorCard";
-import { useAuth } from "../../store/AuthContext";
-import { useDoctors } from "../../store/usersDoctorsContext";
+import { useAuthStore } from "../../store/useAuth";
+import { useDoctors } from "../../store/useDoctors";
 
 const DashboardDoctors = () => {
   const { doctors } = useDoctors();
-  const { user } = useAuth();
+  const { user } = useAuthStore();
 
   return (
     <>

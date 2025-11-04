@@ -1,13 +1,12 @@
 import AppointmentCard from "../../components/common/AppointmentCard";
-import { useAuth } from "../../store/AuthContext";
-import { useAppointments } from "../../store/usersAppointmentsContext";
-import SleepingDog from "../../assets/Sleeping-Dog-Icon.png";
+import { useAuthStore } from "../../store/useAuth";
+import { useAppointments } from "../../store/useAppointments";
 import Button from "../../components/common/Button";
-import { useDoctors } from "../../store/usersDoctorsContext";
+import { useDoctors } from "../../store/useDoctors";
 
 const DashboardAppointments = () => {
   const { appointments } = useAppointments();
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const { doctors } = useDoctors();
 
   return (

@@ -1,15 +1,13 @@
 import Button from "../../components/common/Button";
 import ModalAddDoctor from "../../components/modals/ModalAddDoctor";
-import { useAuth } from "../../store/AuthContext";
-import Doctors from "../../assets/Two-Doctors.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../store/useAuth";
 import { useOnboarding } from "../../store/onboardingStepsContext";
-import { useDoctors } from "../../store/usersDoctorsContext";
+import { useDoctors } from "../../store/useDoctors";
 import DoctorCard from "../../components/common/DoctorCard";
 import { useModal } from "../../store/modalContext";
 
 const OnboardingDoctors = () => {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const { doctors } = useDoctors();
   const { nextStep } = useOnboarding();
   const { openModal } = useModal();

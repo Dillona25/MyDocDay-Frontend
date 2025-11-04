@@ -3,21 +3,18 @@ import { createRoot } from "react-dom/client";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./styles/init.scss";
 import App from "./App.jsx";
-import { AuthProvider } from "./store/AuthContext.jsx";
-import { DoctorProvider } from "./store/usersDoctorsContext.jsx";
+import { DoctorProvider } from "./store/useDoctors.jsx";
 import { ModalProvider } from "./store/modalContext.jsx";
-import { AppointmentProvider } from "./store/usersAppointmentsContext.jsx";
+import { AppointmentProvider } from "./store/useAppointments.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <DoctorProvider>
-        <AppointmentProvider>
-          <ModalProvider>
-            <App />
-          </ModalProvider>
-        </AppointmentProvider>
-      </DoctorProvider>
-    </AuthProvider>
+    <DoctorProvider>
+      <AppointmentProvider>
+        <ModalProvider>
+          <App />
+        </ModalProvider>
+      </AppointmentProvider>
+    </DoctorProvider>
   </StrictMode>
 );

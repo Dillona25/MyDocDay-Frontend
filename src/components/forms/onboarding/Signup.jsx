@@ -5,12 +5,12 @@ import { TextInput } from "../../common/Inputs";
 import { useNavigate } from "react-router-dom";
 import { registerUser, validateDupCreds } from "../../../api/authApi";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../../store/AuthContext.jsx";
+import { useAuthStore } from "../../../store/useAuth";
 
 const SignupForm = () => {
   const navigate = useNavigate();
   // Pull in our login function from our user context
-  const { login } = useAuth();
+  const { login } = useAuthStore();
   const [duplicateCreds, setDuplicateCreds] = useState(false);
 
   // init our useForm handlers and default values

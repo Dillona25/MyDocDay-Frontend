@@ -1,11 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { useAuth } from "./AuthContext";
+import { useAuthStore } from "./useAuth";
 import { getUsersAppointments } from "../api/appointmentsApi";
 
 export const AppointmentContext = createContext();
 
 export const AppointmentProvider = ({ children }) => {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {

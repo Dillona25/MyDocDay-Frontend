@@ -1,8 +1,8 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useAuth } from "../store/AuthContext";
+import { useAuthStore } from "../store/useAuth";
 
 const ProtectedRoute = ({ children, type }) => {
-  const { user, token, isAuthLoaded } = useAuth();
+  const { user, token, isAuthLoaded } = useAuthStore();
   const location = useLocation();
 
   if (!isAuthLoaded) return null;

@@ -2,8 +2,8 @@ import AppointmentCard from "../common/AppointmentCard";
 import Button from "../common/Button";
 import SleepingDog from "../../assets/Sleeping-Dog-Icon.png";
 import { Link } from "react-router-dom";
-import { useAppointments } from "../../store/usersAppointmentsContext";
-import { useDoctors } from "../../store/usersDoctorsContext";
+import { useAppointments } from "../../store/useAppointments";
+import { useDoctors } from "../../store/useDoctors";
 
 const AppointmentsWidget = () => {
   const { appointments } = useAppointments();

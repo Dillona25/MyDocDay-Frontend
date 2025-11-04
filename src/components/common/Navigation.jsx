@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import MyDocDayLogo from "../../assets/NavLogo.svg";
 import { currentUser } from "../../data/constants";
-import { useAuth } from "../../store/AuthContext";
+import { useAuthStore } from "../../store/useAuth";
 
 const Navigation = () => {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
 
   const navItems = [
     { label: "Overview", href: "/dashboard/" },

@@ -5,11 +5,11 @@ import Button from "../../common/Button";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../../api/authApi";
-import { useAuth } from "../../../store/AuthContext";
+import { useAuthStore } from "../../../store/useAuth";
 
 const SigninForm = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login } = useAuthStore();
   const [credsError, setCredsError] = useState(false);
 
   const {

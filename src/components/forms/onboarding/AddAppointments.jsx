@@ -3,16 +3,16 @@ import FormWrapper from "../../../components/common/FormWrapper";
 import { SelectInput, TextInput } from "../../../components/common/Inputs";
 import Button from "../../common/Button";
 import { mockApi } from "../../../api/authApi";
-import { useDoctors } from "../../../store/usersDoctorsContext";
+import { useDoctors } from "../../../store/useDoctors";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../../store/AuthContext";
+import { useAuthStore } from "../../../store/useAuth";
 import { createAppointment } from "../../../api/appointmentsApi";
 import { useModal } from "../../../store/modalContext";
-import { useAppointments } from "../../../store/usersAppointmentsContext";
+import { useAppointments } from "../../../store/useAppointments";
 
 const AddAppointments = () => {
   const { doctors } = useDoctors();
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const { closeModal } = useModal();
   const { addAppointmentToList } = useAppointments();
 

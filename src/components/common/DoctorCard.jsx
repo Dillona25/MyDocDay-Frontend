@@ -1,7 +1,3 @@
-import editIcon from "../../assets/user-edit.svg";
-import removeIcon from "../../assets/user-remove.svg";
-import Button from "./Button";
-
 const DoctorCard = ({
   firstName,
   lastName,
