@@ -10,6 +10,7 @@ import OnboardingAppointments from "../pages/onboarding/OnboardingAppointments";
 import Signup from "../pages/auth/Signup";
 import Signin from "../pages/auth/Signin";
 import ProtectedRoute from "./ProtectedRoute";
+import VerifyEmail from "../pages/auth/VerifyEmail";
 
 export const AppRoutes = () => {
   return (
@@ -35,6 +36,7 @@ export const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="verifyUser" element={<VerifyEmail />} />
 
         {/* Onboarding Routes */}
         <Route
