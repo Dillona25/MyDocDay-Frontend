@@ -30,7 +30,7 @@ const SigninForm = () => {
       // Call our registerUser API route, add data to local storage, login the user with our login function
       const res = await loginUser(values);
       login(res.user, res.token);
-      navigate("/verifyUser/");
+      navigate("/dashboard/");
     } catch (error) {
       if (error.includes("401")) {
         // Unauthorized — wrong email or password

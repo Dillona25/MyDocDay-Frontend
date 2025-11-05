@@ -77,16 +77,23 @@ const AppointmentsWidget = () => {
               </div>
 
               <div className="row mt-2 g-3">
-                {todaysApts.map((apt) => (
-                  <AppointmentCard
-                    key={apt.id}
-                    doctorName={apt.doctor_name}
-                    aptTime={apt.appointment_time}
-                    aptlLocation={apt.location}
-                    aptType={apt.appointment_type}
-                    aptTitle={apt.appointment_title}
-                  />
-                ))}
+                {todaysApts.map((apt) => {
+                  const doctor = doctors.find((d) => d.id === apt.doctor_id);
+                  const clinicName =
+                    doctor?.clinic_name || "Clinic not available";
+                  return (
+                    <div className="col-12 col-md-6 mb-3" key={apt.id}>
+                      <AppointmentCard
+                        doctorName={apt.doctor_name}
+                        aptType={apt.appointment_type}
+                        aptTitle={apt.appointment_title}
+                        aptTime={apt.appointment_time}
+                        aptDate={apt.appointment_date}
+                        aptlLocation={clinicName}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </>
           ) : (
@@ -100,7 +107,6 @@ const AppointmentsWidget = () => {
             </>
           )}
 
-          {/* ===== Next 30 Days Section ===== */}
           {aptsInMonth.length > 0 && (
             <>
               <div className="d-flex align-items-center gap-3 mt-3 today-divider">
@@ -124,6 +130,7 @@ const AppointmentsWidget = () => {
                         aptTime={apt.appointment_time}
                         aptDate={apt.appointment_date}
                         aptlLocation={clinicName}
+                        isMuted={true}
                       />
                     </div>
                   );

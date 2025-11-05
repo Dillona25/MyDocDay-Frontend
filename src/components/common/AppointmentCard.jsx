@@ -1,4 +1,6 @@
 import locationDot from "../../assets/location-dot.svg";
+import { useModal } from "../../store/modalContext";
+import ModalEditAppointment from "../modals/ModalEditAppointment";
 
 const AppointmentCard = ({
   className = "",
@@ -10,6 +12,8 @@ const AppointmentCard = ({
   aptTitle,
   isMuted = false,
 }) => {
+  const { openModal } = useModal();
+
   const formatAppointmentTime = (date) => {
     if (!date) {
       return "";
@@ -47,43 +51,51 @@ const AppointmentCard = ({
   }
 
   return (
-    <article className={`border border-light rounded-3 p-3 h-100 ${className}`}>
-      <div className="d-flex flex-column justify-content-between flex-grow-1 gap-2">
-        <div className="d-flex justify-content-between">
-          <div className="d-flex flex-column">
-            <h5 className="m-0 fw-semibold text-body">{aptTitle}</h5>
-            <p className="m-0">{doctorName}</p>
+    <>
+      <article
+        className={`border border-light rounded-3 p-3 h-100 ${className}`}
+      >
+        <div className="d-flex flex-column justify-content-between flex-grow-1 gap-2">
+          <div className="d-flex justify-content-between">
+            <div className="d-flex flex-column">
+              <h5 className="m-0 fw-semibold text-body">{aptTitle}</h5>
+              <p className="m-0">{doctorName}</p>
+            </div>
+            <div className="d-flex flex-column">
+              <h5 className="m-0 text-body">{formattedDate}</h5>
+              <p className="m-0 text-end">{formattedTime(aptTime)}</p>
+            </div>
           </div>
-          <div className="d-flex flex-column">
-            <h5 className="m-0 text-body">{formattedDate}</h5>
-            <p className="m-0 text-end">{formattedTime(aptTime)}</p>
+          <div className="d-flex justify-content-between align-items-center gap-2">
+            <div className="d-flex mt-3">
+              {aptlLocation && (
+                <span
+                  className={`${
+                    isMuted
+                      ? "bg-light text-primary border-light"
+                      : "bg-primary-subtle text-primary-emphasis border-primary-subtle"
+                  } px-3 py-1 extra-small fw-semibold border rounded-pill d-flex gap-1 align-items-center`}
+                >
+                  <img
+                    src={locationDot}
+                    alt="Dot Icon"
+                    className="img-fluid dot-icon"
+                  />
+                  {aptlLocation}
+                </span>
+              )}
+            </div>
+            <button
+              onClick={openModal}
+              className="extra-small text-decoration-underline border-0 bg-transparent text-body mt-auto align-self-end p-0"
+            >
+              Edit Appointment
+            </button>
           </div>
         </div>
-        <div className="d-flex justify-content-between align-items-center gap-2">
-          <div className="d-flex mt-3">
-            {aptlLocation && (
-              <span
-                className={`${
-                  isMuted
-                    ? "bg-light text-primary border-light"
-                    : "bg-primary-subtle text-primary-emphasis border-primary-subtle"
-                } px-3 py-1 extra-small fw-semibold border rounded-pill d-flex gap-1 align-items-center`}
-              >
-                <img
-                  src={locationDot}
-                  alt="Dot Icon"
-                  className="img-fluid dot-icon"
-                />
-                {aptlLocation}
-              </span>
-            )}
-          </div>
-          <button className="extra-small text-decoration-underline border-0 bg-transparent text-body mt-auto align-self-end p-0">
-            Edit Appointment
-          </button>
-        </div>
-      </div>
-    </article>
+      </article>
+      <ModalEditAppointment />
+    </>
   );
 };
 

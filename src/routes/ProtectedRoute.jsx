@@ -18,15 +18,15 @@ const ProtectedRoute = ({ children, type }) => {
   }
 
   // If user is signed in, block auth routes
-  // if (type === "auth" && user && token) {
-  //   // Here we need to check if onboarding_complete because if we don't then as soon as a
-  //   // user signs up, we kick them to the dashboard since they are authenticated
-  //   return user.onboarding_complete ? (
-  //     <Navigate to="/dashboard" replace />
-  //   ) : (
-  //     <Navigate to="/onboarding/doctors" replace />
-  //   );
-  // }
+  if (type === "auth" && user && token) {
+    // Here we need to check if onboarding_complete because if we don't then as soon as a
+    // user signs up, we kick them to the dashboard since they are authenticated
+    return user.onboarding_complete ? (
+      <Navigate to="/dashboard" replace />
+    ) : (
+      <Navigate to="/onboarding/doctors" replace />
+    );
+  }
 
   // Otherwise, let it render
   return children ?? <Outlet />;

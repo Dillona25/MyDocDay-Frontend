@@ -54,7 +54,7 @@ const SignupForm = () => {
         localStorage.setItem("jwt", res.token);
         localStorage.setItem("user", JSON.stringify(res.user));
         login(res.user, res.token);
-        navigate("/verifyUser/");
+        navigate("/onboarding/doctors");
       }
     } catch (error) {
       console.error("Registration failed:", error);

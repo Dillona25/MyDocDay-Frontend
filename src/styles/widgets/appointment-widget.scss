@@ -1,3 +1,7 @@
 .divider-line {
   height: 1px;
+
+  &.wide {
+    height: 3px;
+  }
 }
