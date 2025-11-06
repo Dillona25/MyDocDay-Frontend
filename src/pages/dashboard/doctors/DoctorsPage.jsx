@@ -4,7 +4,7 @@ import DoctorCard from "../../../components/common/DoctorCard";
 import { useAuthStore } from "../../../store/useAuth";
 import { useDoctorStore } from "../../../store/useDoctors";
 
-const DashboardDoctors = () => {
+const DoctorsPage = () => {
   const { doctors, initDoctors } = useDoctorStore();
   const { user } = useAuthStore();
 
@@ -40,6 +40,7 @@ const DashboardDoctors = () => {
                 clinicName={doc.clinic_name}
                 city={doc.city}
                 state={doc.state}
+                docId={doc.id}
               />
             </div>
           ))
@@ -55,4 +56,4 @@ const DashboardDoctors = () => {
   );
 };
 
-export default DashboardDoctors;
+export default DoctorsPage;

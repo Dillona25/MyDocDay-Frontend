@@ -1,7 +1,7 @@
 import AppointmentsWidget from "../../../components/widgets/AppointmentsWidget";
 import DoctorWidget from "../../../components/widgets/DoctorWidget";
 
-const DashboardHome = () => {
+const OverviewPage = () => {
   const today = new Date();
 
   const formatWithOrdinal = (date) => {
@@ -45,4 +45,4 @@ const DashboardHome = () => {
   );
 };
 
-export default DashboardHome;
+export default OverviewPage;

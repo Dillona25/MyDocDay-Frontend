@@ -8,7 +8,7 @@ import { useModal } from "../../../store/modalContext";
 import ModalAddAppointment from "../../../components/modals/ModalAddAppointment";
 import { Outlet } from "react-router-dom";
 
-const DashboardAppointments = () => {
+const AppointmentsPage = () => {
   const { appointments, initAppointments } = useAppointmentStore();
   const { user } = useAuthStore();
   const { doctors, initDoctors } = useDoctorStore();
@@ -110,4 +110,4 @@ const DashboardAppointments = () => {
   );
 };
 
-export default DashboardAppointments;
+export default AppointmentsPage;

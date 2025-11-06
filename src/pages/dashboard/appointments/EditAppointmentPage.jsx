@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppointmentStore } from "../../../store/useAppointments";
 import { useParams } from "react-router-dom";
 
-const EditAppointment = () => {
+const EditAppointmentPage = () => {
   const { appointments, initAppointments } = useAppointmentStore();
   const { id } = useParams();
 
@@ -25,4 +25,4 @@ const EditAppointment = () => {
   );
 };
 
-export default EditAppointment;
+export default EditAppointmentPage;

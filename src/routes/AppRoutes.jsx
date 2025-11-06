@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Home } from "../pages/Home";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";
-import DashboardHome from "../pages/dashboard/overview/DashboardHome";
-import DashboardDoctors from "../pages/dashboard/doctors/DashboardDoctors";
-import DashboardAppointments from "../pages/dashboard/appointments/DashboardAppointments";
+import DashboardHome from "../pages/dashboard/overview/OverviewPage";
+import DashboardDoctors from "../pages/dashboard/doctors/DoctorsPage";
+import DashboardAppointments from "../pages/dashboard/appointments/AppointmentsPage";
 import OnboardingLayout from "../pages/onboarding/OnboardingLayout";
 import OnboardingDoctors from "../pages/onboarding/OnboardingDoctors";
 import OnboardingAppointments from "../pages/onboarding/OnboardingAppointments";
@@ -11,7 +11,8 @@ import Signup from "../pages/auth/Signup";
 import Signin from "../pages/auth/Signin";
 import ProtectedRoute from "./ProtectedRoute";
 import VerifyEmail from "../pages/auth/VerifyEmail";
-import EditAppointment from "../pages/dashboard/appointments/EditAppointment";
+import EditAppointment from "../pages/dashboard/appointments/EditAppointmentPage";
+import EditDoctorPage from "../pages/dashboard/doctors/EditDoctorPage";
 
 export const AppRoutes = () => {
   return (
@@ -63,7 +64,10 @@ export const AppRoutes = () => {
           }
         >
           <Route index element={<DashboardHome />} />
-          <Route path="doctors" element={<DashboardDoctors />} />
+          <Route path="doctors">
+            <Route index element={<DashboardDoctors />} />
+            <Route path="edit/:id" element={<EditDoctorPage />} />
+          </Route>
           <Route path="appointments">
             <Route index element={<DashboardAppointments />} />
             <Route path="edit/:id" element={<EditAppointment />} />

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const DoctorCard = ({
   firstName,
   lastName,
@@ -6,6 +8,7 @@ const DoctorCard = ({
   clinicName,
   city,
   state,
+  docId,
 }) => {
   return (
     <div className="card rounded-3 p-3 d-flex flex-row gap-3">
@@ -36,9 +39,12 @@ const DoctorCard = ({
           <span className="font-body text-body small text-end">
             {city}, {state}
           </span>
-          <button className="extra-small text-decoration-underline border-0 bg-transparent text-body mt-auto align-self-end p-0">
+          <Link
+            to={`edit/${docId}`}
+            className="extra-small text-decoration-underline border-0 bg-transparent text-body mt-auto align-self-end p-0"
+          >
             Edit Doctor
-          </button>
+          </Link>
         </div>
       </div>
     </div>
