@@ -1,7 +1,5 @@
-import AppointmentsWidget from "../../components/widgets/AppointmentsWidget";
-import DoctorWidget from "../../components/widgets/DoctorWidget";
-import RemindersWidget from "../../components/widgets/RemindersWidget";
-import { currentUser } from "../../data/constants";
+import AppointmentsWidget from "../../../components/widgets/AppointmentsWidget";
+import DoctorWidget from "../../../components/widgets/DoctorWidget";
 
 const DashboardHome = () => {
   const today = new Date();

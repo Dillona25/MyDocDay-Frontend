@@ -10,7 +10,7 @@ const ModalEditAppointment = () => {
   return (
     <ModalWrapper isOpen={isOpen} onClose={closeModal}>
       <div className="modal-header">
-        <h1 className="modal-title fs-5" id="Add-Appointment-Modal">
+        <h1 className="modal-title fs-5" id="Edit-Appointment-Modal">
           Edit Appointment
         </h1>
         <button

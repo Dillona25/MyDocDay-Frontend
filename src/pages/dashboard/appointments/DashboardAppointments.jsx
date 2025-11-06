@@ -1,11 +1,12 @@
-import AppointmentCard from "../../components/common/AppointmentCard";
-import { useAuthStore } from "../../store/useAuth";
-import { useAppointmentStore } from "../../store/useAppointments";
-import Button from "../../components/common/Button";
-import { useDoctorStore } from "../../store/useDoctors";
+import AppointmentCard from "../../../components/common/AppointmentCard";
+import { useAuthStore } from "../../../store/useAuth";
+import { useAppointmentStore } from "../../../store/useAppointments";
+import Button from "../../../components/common/Button";
+import { useDoctorStore } from "../../../store/useDoctors";
 import { useEffect } from "react";
-import { useModal } from "../../store/modalContext";
-import ModalAddAppointment from "../../components/modals/ModalAddAppointment";
+import { useModal } from "../../../store/modalContext";
+import ModalAddAppointment from "../../../components/modals/ModalAddAppointment";
+import { Outlet } from "react-router-dom";
 
 const DashboardAppointments = () => {
   const { appointments, initAppointments } = useAppointmentStore();
@@ -93,6 +94,7 @@ const DashboardAppointments = () => {
                       aptTitle={apt.appointment_title}
                       aptTime={apt.appointment_time}
                       aptDate={apt.appointment_date}
+                      aptId={apt.id}
                       aptlLocation={clinicName}
                     />
                   </div>
@@ -103,6 +105,7 @@ const DashboardAppointments = () => {
         );
       })}
       <ModalAddAppointment />
+      <Outlet />
     </>
   );
 };

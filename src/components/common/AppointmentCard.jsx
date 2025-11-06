@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import locationDot from "../../assets/location-dot.svg";
 import { useModal } from "../../store/modalContext";
 import ModalEditAppointment from "../modals/ModalEditAppointment";
@@ -10,6 +11,7 @@ const AppointmentCard = ({
   aptType,
   aptDate,
   aptTitle,
+  aptId,
   isMuted = false,
 }) => {
   const { openModal } = useModal();
@@ -85,16 +87,15 @@ const AppointmentCard = ({
                 </span>
               )}
             </div>
-            <button
-              onClick={openModal}
+            <Link
+              to={`edit/${aptId}`}
               className="extra-small text-decoration-underline border-0 bg-transparent text-body mt-auto align-self-end p-0"
             >
               Edit Appointment
-            </button>
+            </Link>
           </div>
         </div>
       </article>
-      <ModalEditAppointment />
     </>
   );
 };

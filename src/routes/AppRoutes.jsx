@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Home } from "../pages/Home";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";
-import DashboardHome from "../pages/dashboard/DashboardHome";
-import DashboardDoctors from "../pages/dashboard/DashboardDoctors";
-import DashboardAppointments from "../pages/dashboard/DashboardAppointments";
+import DashboardHome from "../pages/dashboard/overview/DashboardHome";
+import DashboardDoctors from "../pages/dashboard/doctors/DashboardDoctors";
+import DashboardAppointments from "../pages/dashboard/appointments/DashboardAppointments";
 import OnboardingLayout from "../pages/onboarding/OnboardingLayout";
 import OnboardingDoctors from "../pages/onboarding/OnboardingDoctors";
 import OnboardingAppointments from "../pages/onboarding/OnboardingAppointments";
@@ -11,6 +11,7 @@ import Signup from "../pages/auth/Signup";
 import Signin from "../pages/auth/Signin";
 import ProtectedRoute from "./ProtectedRoute";
 import VerifyEmail from "../pages/auth/VerifyEmail";
+import EditAppointment from "../pages/dashboard/appointments/EditAppointment";
 
 export const AppRoutes = () => {
   return (
@@ -63,12 +64,11 @@ export const AppRoutes = () => {
         >
           <Route index element={<DashboardHome />} />
           <Route path="doctors" element={<DashboardDoctors />} />
-          <Route path="appointments" element={<DashboardAppointments />} />
+          <Route path="appointments">
+            <Route index element={<DashboardAppointments />} />
+            <Route path="edit/:id" element={<EditAppointment />} />
+          </Route>
         </Route>
-
-        {/* Auth Routes */}
-        {/* <Route path="signin" element={<Signin />}></Route>
-        <Route path="signup" element={<Signup />}></Route> */}
       </Routes>
     </Router>
   );

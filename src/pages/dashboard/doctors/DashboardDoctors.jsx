@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import Button from "../../components/common/Button";
-import DoctorCard from "../../components/common/DoctorCard";
-import { useAuthStore } from "../../store/useAuth";
-import { useDoctorStore } from "../../store/useDoctors";
+import Button from "../../../components/common/Button";
+import DoctorCard from "../../../components/common/DoctorCard";
+import { useAuthStore } from "../../../store/useAuth";
+import { useDoctorStore } from "../../../store/useDoctors";
 
 const DashboardDoctors = () => {
   const { doctors, initDoctors } = useDoctorStore();
