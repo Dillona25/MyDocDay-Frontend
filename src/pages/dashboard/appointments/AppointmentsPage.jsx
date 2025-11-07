@@ -41,9 +41,13 @@ const AppointmentsPage = () => {
     return `${month} ${day}${suffix}, ${year}`;
   }
 
+  const upcomingAppointments = appointments.filter(
+    (apt) => new Date(apt.appointment_date) >= new Date()
+  );
+
   const uniqueAptDates = Array.from(
     new Set(
-      appointments
+      upcomingAppointments
         .map((apt) => apt.appointment_date)
         .sort((a, b) => new Date(a) - new Date(b))
     )
@@ -67,7 +71,7 @@ const AppointmentsPage = () => {
       </div>
 
       {uniqueAptDates.map((date) => {
-        const appointmentsForDate = appointments.filter(
+        const appointmentsForDate = upcomingAppointments.filter(
           (apt) => apt.appointment_date === date
         );
 

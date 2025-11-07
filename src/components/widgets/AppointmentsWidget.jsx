@@ -16,7 +16,6 @@ const AppointmentsWidget = () => {
 
   // Only show 3 apts, even if in next 30 days.
   // TODO: handle UI if user has more than 3 apts in next 30 days. ("see all") etc.
-  const limitedApts = appointments.slice(0, 3);
 
   // TODO: Maybe show appointments for "this week" VS "today"..
   const today = new Date();
@@ -27,18 +26,22 @@ const AppointmentsWidget = () => {
   in30Days.setDate(today.getDate() + 30);
 
   // Find todays appointments
-  const todaysApts = limitedApts.filter((apt) => {
+  const todaysApts = appointments.filter((apt) => {
     const aptDate = new Date(apt.appointment_date);
     aptDate.setHours(0, 0, 0, 0);
     return aptDate.getTime() === today.getTime();
   });
 
   // Find appointments within the next 30 days
-  const aptsInMonth = limitedApts.filter((apt) => {
+  const aptsInMonth = appointments.filter((apt) => {
     const aptDate = new Date(apt.appointment_date);
     aptDate.setHours(0, 0, 0, 0);
     return aptDate >= today && aptDate <= in30Days;
   });
+
+  const monthlyApts = aptsInMonth
+    .sort((a, b) => a.appointment_date - new Date(b.appointment_date))
+    .slice(0, 2);
 
   return (
     <section className="border border-light rounded-3 p-3">
@@ -107,7 +110,7 @@ const AppointmentsWidget = () => {
             </>
           )}
 
-          {aptsInMonth.length > 0 && (
+          {monthlyApts.length > 0 && (
             <>
               <div className="d-flex align-items-center gap-3 mt-3 today-divider">
                 <span className="text-uppercase fw-semibold text-body small">
@@ -117,7 +120,7 @@ const AppointmentsWidget = () => {
               </div>
 
               <div className="row mt-2 g-3">
-                {aptsInMonth.map((apt) => {
+                {monthlyApts.map((apt) => {
                   const doctor = doctors.find((d) => d.id === apt.doctor_id);
                   const clinicName =
                     doctor?.clinic_name || "Clinic not available";
