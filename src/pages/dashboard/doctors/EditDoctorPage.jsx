@@ -3,6 +3,7 @@ import { useDoctorStore } from "../../../store/useDoctors";
 import { useEffect, useMemo } from "react";
 import AddDoctors from "../../../components/forms/onboarding/AddDoctors";
 import locationDot from "../../../assets/location-dot.svg";
+import EditDoctorsForm from "../../../components/forms/common/EditDoctorForm";
 
 const EditDoctorPage = () => {
   const { id } = useParams();
@@ -12,7 +13,6 @@ const EditDoctorPage = () => {
     initDoctors();
   }, [initDoctors]);
 
-  // We can remove this, just like to have the console
   const doctor = useMemo(
     () => doctors.find((doc) => String(doc.id) === String(id)),
     [doctors, id]
@@ -30,8 +30,8 @@ const EditDoctorPage = () => {
         </div>
       </div>
 
-      <div className="row justify-content-between pt-5">
-        <div className="col-3">
+      <div className="row justify-content-center justify-content-md-between pt-5">
+        <div className="col-10 col-md-3 mb-5 mb-md-0">
           <div className="d-flex flex-column align-items-center">
             {doctor?.image_url ? (
               <img
@@ -71,8 +71,8 @@ const EditDoctorPage = () => {
             )}
           </div>
         </div>
-        <div className="col-8">
-          <AddDoctors />
+        <div className="col-12 col-md-8">
+          <EditDoctorsForm initialValues={doctor} />
         </div>
       </div>
     </>
