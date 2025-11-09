@@ -3,16 +3,18 @@ import { SelectInput, TextInput } from "../../common/Inputs";
 import Button from "../../common/Button";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { addDoctor, createDoctorWithClinic } from "../../../api/doctorApi";
+import { createDoctorWithClinic } from "../../../api/doctorApi";
 import { useAuthStore } from "../../../store/useAuth";
 import { useDoctorStore } from "../../../store/useDoctors";
 import { useModal } from "../../../store/modalContext";
 import { US_STATES } from "../../../data/constants";
+import { useToastStore } from "../../../store/useToast";
 
 const AddDoctors = () => {
   const { user } = useAuthStore();
-  const { addDoctorToList } = useDoctorStore();
+  const { initDoctors, addDoctorToList } = useDoctorStore();
   const { closeModal } = useModal();
+  const showToast = useToastStore((state) => state.showToast);
 
   const {
     register,
@@ -53,6 +55,7 @@ const AddDoctors = () => {
     };
     try {
       const res = await createDoctorWithClinic(payload);
+      await initDoctors();
       // Add the doctor to our users doctors context
       addDoctorToList({
         ...res.doctor,
@@ -65,7 +68,13 @@ const AddDoctors = () => {
 
       console.log("Doctor added:", res);
     } catch (error) {
-      console.error("Registration failed:", error);
+      if (error.status === 500) {
+        showToast(
+          "Error Adding Doctor",
+          "Something went wrong, but this looks to be on our end. Please try again later.",
+          "text-danger"
+        );
+      }
     }
   };
 

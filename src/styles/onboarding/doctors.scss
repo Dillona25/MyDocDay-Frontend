@@ -1,11 +1,13 @@
 .dr-profile-image {
   height: 85px;
   width: 85px;
+  object-position: top;
 }
 
 .dr-profile-image-lg {
   height: 200px;
   width: 200px;
+  object-position: top;
 }
 
 #onboarding-doctors,
@@ -17,10 +19,6 @@
   h1 {
     font-size: 55px;
     line-height: 70px;
-  }
-
-  img {
-    height: 275px;
   }
 
   .doctors-heading {

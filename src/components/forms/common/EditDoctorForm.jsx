@@ -1,19 +1,14 @@
 import FormWrapper from "../../common/FormWrapper";
 import { SelectInput, TextInput } from "../../common/Inputs";
 import Button from "../../common/Button";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { addDoctor, createDoctorWithClinic } from "../../../api/doctorApi";
-import { useAuthStore } from "../../../store/useAuth";
-import { useDoctorStore } from "../../../store/useDoctors";
-import { useModal } from "../../../store/modalContext";
 import { US_STATES } from "../../../data/constants";
 
 const EditDoctorsForm = ({ initialValues }) => {
   const {
     register,
     handleSubmit,
-    setError,
     setValue,
     reset,
     formState: { errors, isValid },
@@ -51,7 +46,9 @@ const EditDoctorsForm = ({ initialValues }) => {
     }
   }, [initialValues, reset]);
 
-  const onSubmit = async (values) => {};
+  const onSubmit = async (values) => {
+    // Call our API here to update our doctor
+  };
 
   return (
     <>

@@ -1,7 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import locationDot from "../../assets/location-dot.svg";
-import { useModal } from "../../store/modalContext";
-import ModalEditAppointment from "../modals/ModalEditAppointment";
 
 const AppointmentCard = ({
   className = "",
@@ -14,7 +12,8 @@ const AppointmentCard = ({
   aptId,
   isMuted = false,
 }) => {
-  const { openModal } = useModal();
+  const location = useLocation();
+  const hideElement = location.pathname.includes("onboarding");
 
   const formatAppointmentTime = (date) => {
     if (!date) {
@@ -87,12 +86,14 @@ const AppointmentCard = ({
                 </span>
               )}
             </div>
-            <Link
-              to={`edit/${aptId}`}
-              className="extra-small text-decoration-underline border-0 bg-transparent text-body mt-auto align-self-end p-0"
-            >
-              Edit Appointment
-            </Link>
+            {!hideElement && (
+              <Link
+                to={`edit/${aptId}`}
+                className="extra-small text-decoration-underline border-0 bg-transparent text-body mt-auto align-self-end p-0"
+              >
+                Edit Appointment
+              </Link>
+            )}
           </div>
         </div>
       </article>

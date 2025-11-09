@@ -20,7 +20,7 @@ const OnboardingDoctors = () => {
   return (
     <>
       <div className="row justify-content-center" id="onboarding-doctors">
-        <div className="col-12 col-xl-8 d-flex flex-column mb-5 md-md-0">
+        <div className="col-12 col-xl-9 d-flex flex-column mb-5 md-md-0">
           <h4 className="font-poppins text-secondary text-center preheading">
             Hey there, {user?.first_name}
           </h4>

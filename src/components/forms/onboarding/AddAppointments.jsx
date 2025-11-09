@@ -9,12 +9,14 @@ import { useAuthStore } from "../../../store/useAuth";
 import { createAppointment } from "../../../api/appointmentsApi";
 import { useModal } from "../../../store/modalContext";
 import { useAppointmentStore } from "../../../store/useAppointments";
+import { useToastStore } from "../../../store/useToast";
 
 const AddAppointments = () => {
   const { doctors } = useDoctorStore();
   const { user } = useAuthStore();
   const { closeModal } = useModal();
   const { addAppointmentToList } = useAppointmentStore();
+  const showToast = useToastStore((state) => state.showToast);
 
   const doctorOptions = doctors.map((doc) => ({
     value: String(doc.id),
@@ -71,7 +73,13 @@ const AddAppointments = () => {
       console.log({ ...res.appointment });
       closeModal();
     } catch (error) {
-      console.error("Registration failed:", error);
+      if (error.status === 500) {
+        showToast(
+          "Error Adding Appointment",
+          "Something went wrong, but this looks to be on our end. Please try again later.",
+          "text-danger"
+        );
+      }
     }
   };
 
