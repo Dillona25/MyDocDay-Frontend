@@ -17,9 +17,9 @@ const DoctorsPage = () => {
       <div className="row">
         <div className="col-12">
           <div className="d-flex justify-content-between align-items-center border-bottom border-3 border-primary pb-3">
-            <h2 className="mt-0 mb-3 mb-md-0 text-left text-primary fw-semibold text-poppins">
+            <h3 className="mt-0 mb-3 mb-md-0 text-left text-primary fw-semibold text-poppins">
               {user.first_name}'s Doctors
-            </h2>
+            </h3>
             <Button
               buttonText="Add Doctor"
               className="max-w-fit bg-primary-light text-white align-self-center"

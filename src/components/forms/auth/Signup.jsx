@@ -32,32 +32,14 @@ const SignupForm = () => {
 
   // Pas values to our onSubmit. Values will be our useForm registered values
   const onSubmit = async (values) => {
-    try {
-      const duplicateCredsRes = await validateDupCreds({
-        email: values.email,
-        phone: values.phone,
-      });
+    // Call our registerUser API route, add data to local storage, login the user with our login function
+    const res = await registerUser(values);
 
-      if (
-        duplicateCredsRes.emailExists === true ||
-        duplicateCreds.phoneExists === true
-      ) {
-        setDuplicateCreds(true);
-        console.log("Setting error...");
-        return;
-      }
-
-      // Call our registerUser API route, add data to local storage, login the user with our login function
-      const res = await registerUser(values);
-
-      if (res?.user && res?.token) {
-        localStorage.setItem("jwt", res.token);
-        localStorage.setItem("user", JSON.stringify(res.user));
-        login(res.user, res.token);
-        navigate("/onboarding/doctors");
-      }
-    } catch (error) {
-      console.error("Registration failed:", error);
+    if (res?.user && res?.token) {
+      localStorage.setItem("jwt", res.token);
+      localStorage.setItem("user", JSON.stringify(res.user));
+      login(res.user, res.token);
+      navigate("/onboarding/doctors");
     }
   };
 

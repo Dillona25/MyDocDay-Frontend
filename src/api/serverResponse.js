@@ -1,6 +1,10 @@
-export const processServerResponse = (res) => {
+export const processServerResponse = async (res) => {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(`Error: ${res.status}`);
+
+  const error = new Error(`Request failed with status ${res.status}`);
+  error.status = res.status;
+
+  throw error;
 };

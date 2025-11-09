@@ -58,9 +58,9 @@ const AppointmentsPage = () => {
       <div className="row">
         <div className="col-12">
           <div className="d-flex justify-content-between align-items-center">
-            <h2 className="mt-0 mb-3 mb-md-0 text-left text-primary fw-semibold text-poppins">
+            <h3 className="mt-0 mb-3 mb-md-0 text-left text-primary fw-semibold text-poppins">
               {user.first_name}'s Scheduled Appointments
-            </h2>
+            </h3>
             <Button
               onClick={openModal}
               buttonText="Add Appointment"
