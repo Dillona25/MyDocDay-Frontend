@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { registerUser, validateDupCreds } from "../../../api/authApi";
 import { useForm } from "react-hook-form";
 import { useAuthStore } from "../../../store/useAuth";
+import { useToastStore } from "../../../store/useToast";
 
 const SignupForm = () => {
   const navigate = useNavigate();
   // Pull in our login function from our user context
   const { login } = useAuthStore();
   const [duplicateCreds, setDuplicateCreds] = useState(false);
+  const showToast = useToastStore((state) => state.showToast);
 
   // init our useForm handlers and default values
   const {
@@ -33,13 +35,35 @@ const SignupForm = () => {
   // Pas values to our onSubmit. Values will be our useForm registered values
   const onSubmit = async (values) => {
     // Call our registerUser API route, add data to local storage, login the user with our login function
-    const res = await registerUser(values);
+    try {
+      const res = await registerUser(values);
 
-    if (res?.user && res?.token) {
-      localStorage.setItem("jwt", res.token);
-      localStorage.setItem("user", JSON.stringify(res.user));
-      login(res.user, res.token);
-      navigate("/onboarding/doctors");
+      if (res?.user && res?.token) {
+        localStorage.setItem("jwt", res.token);
+        localStorage.setItem("user", JSON.stringify(res.user));
+        login(res.user, res.token);
+        navigate("/onboarding/doctors");
+      }
+    } catch (error) {
+      if (error.status === 409) {
+        showToast(
+          "Error Creating Account",
+          "Email or phone number already in use. Try logging in.",
+          "text-danger"
+        );
+      } else if (error.status === 400) {
+        showToast(
+          "Error Creating Account",
+          "Please fill in all required fields",
+          "text-danger"
+        );
+      } else if (error.status === 500 || error.status === 404) {
+        showToast(
+          "Error Creating Account",
+          "There seems to have been on error on our end. Please try again later.",
+          "text-danger"
+        );
+      }
     }
   };
 
@@ -53,8 +77,8 @@ const SignupForm = () => {
         <div className="col-6">
           <TextInput
             labelText="First Name"
-            required
             placeholder="First Name"
+            required
             {...register("firstName", {
               required: "First name is required",
               minLength: {
