@@ -3,7 +3,7 @@ import Button from "../../common/Button";
 import FormWrapper from "../../common/FormWrapper";
 import { TextInput } from "../../common/Inputs";
 import { useNavigate } from "react-router-dom";
-import { registerUser, validateDupCreds } from "../../../api/authApi";
+import { registerUser } from "../../../api/authApi";
 import { useForm } from "react-hook-form";
 import { useAuthStore } from "../../../store/useAuth";
 import { useToastStore } from "../../../store/useToast";
@@ -59,7 +59,7 @@ const SignupForm = () => {
         );
       } else if (error.status === 500 || error.status === 404) {
         showToast(
-          "Error Creating Account",
+          "Server Error",
           "There seems to have been on error on our end. Please try again later.",
           "text-danger"
         );

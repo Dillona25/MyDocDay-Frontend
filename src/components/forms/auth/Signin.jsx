@@ -6,16 +6,17 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../../api/authApi";
 import { useAuthStore } from "../../../store/useAuth";
+import { useToastStore } from "../../../store/useToast";
 
 const SigninForm = () => {
   const navigate = useNavigate();
   const { login } = useAuthStore();
   const [credsError, setCredsError] = useState(false);
+  const showToast = useToastStore((state) => state.showToast);
 
   const {
     register,
     handleSubmit,
-    setError,
     setValue,
     formState: { errors, isValid },
   } = useForm({
@@ -27,14 +28,28 @@ const SigninForm = () => {
 
   const onSubmit = async (values) => {
     try {
-      // Call our registerUser API route, add data to local storage, login the user with our login function
       const res = await loginUser(values);
       login(res.user, res.token);
       navigate("/dashboard/");
     } catch (error) {
-      if (error.includes("401")) {
-        // Unauthorized — wrong email or password
-        setCredsError(true);
+      if (error.status === 401) {
+        showToast(
+          "Error Signing In",
+          "Incorrect email or password",
+          "text-danger"
+        );
+      } else if (error.status === 400) {
+        showToast(
+          "Error Signing In",
+          "Please fill in all required fields",
+          "text-danger"
+        );
+      } else if (error.status === 500 || error.status === 404) {
+        showToast(
+          "Server Error",
+          "There seems to have been on error on our end. Please try again later.",
+          "text-danger"
+        );
       }
     }
   };
