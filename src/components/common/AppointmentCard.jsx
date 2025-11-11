@@ -48,7 +48,7 @@ const AppointmentCard = ({
     let hours = parseInt(hoursStr, 10);
     const format = hours >= 12 ? "PM" : "AM";
     hours = hours % 12 || 12;
-    return `${hours}:${minutes}${format.toLowerCase()}`;
+    return `${hours}:${minutes}${format.toUpperCase()}`;
   }
 
   return (
@@ -80,7 +80,7 @@ const AppointmentCard = ({
                   <img
                     src={locationDot}
                     alt="Dot Icon"
-                    className="img-fluid dot-icon"
+                    className="img-fluid icon"
                   />
                   {aptlLocation}
                 </span>

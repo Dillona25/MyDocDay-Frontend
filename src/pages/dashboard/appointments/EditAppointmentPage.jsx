@@ -3,20 +3,64 @@ import { useAppointmentStore } from "../../../store/useAppointments";
 import { useParams } from "react-router-dom";
 import EditAppointmentsForm from "../../../components/forms/common/EditAppointmentForm";
 import locationDot from "../../../assets/location-dot.svg";
+import doctorIcon from "../../../assets/Doctor-Icon.svg";
+import { useDoctorStore } from "../../../store/useDoctors";
 
 const EditAppointmentPage = () => {
   const { appointments, initAppointments } = useAppointmentStore();
+  const { doctors, initDoctors } = useDoctorStore();
   const { id } = useParams();
 
   useEffect(() => {
     initAppointments();
   }, [initAppointments]);
 
-  // We can remove this, just like to have the console
+  useEffect(() => {
+    initDoctors();
+  }, [initDoctors]);
+
   const appointment = useMemo(
     () => appointments.find((apt) => String(apt.id) === String(id)),
     [appointments, id]
   );
+
+  const doctor = useMemo(() =>
+    doctors.find((doc) => String(doc.id) === String(appointment?.doctor_id))
+  );
+
+  const formatAptTime = (date) => {
+    if (!date) {
+      return "";
+    }
+
+    const parsedDate = new Date(date);
+
+    if (Number.isNaN(parsedDate.getTime())) {
+      return isoString;
+    }
+
+    const dayLabel = parsedDate.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+    });
+
+    return `${dayLabel}`;
+  };
+
+  const formattedDate = formatAptTime(appointment?.appointment_date);
+
+  function formatTime(time) {
+    const [hoursStr, minutes] = time.split(":");
+    let hours = parseInt(hoursStr, 10);
+    const format = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+    return `${hours}:${minutes}${format}`;
+  }
+
+  const formattedTime = appointment?.appointment_time
+    ? formatTime(appointment.appointment_time)
+    : "";
 
   return (
     <>
@@ -34,8 +78,8 @@ const EditAppointmentPage = () => {
         <div className="col-4">
           <div className="d-flex flex-column">
             <h3 className="text-primary">{appointment?.appointment_title}</h3>
-            <h5 className="">Tuesday, 18th, 2025</h5>
-            <span>10:30AM</span>
+            <h5 className="">{formattedDate}</h5>
+            <span>{formattedTime}</span>
             <span className="bg-primary-subtle text-primary-emphasis border-primary-subtle px-3 py-1 extra-small fw-semibold border rounded-pill  max-w-fit mt-3">
               In-Person
             </span>
@@ -43,13 +87,26 @@ const EditAppointmentPage = () => {
 
           <div className="d-flex gap-2 mt-5">
             <img
+              src={doctorIcon}
+              alt="Dot Icon"
+              className="img-fluid icon-lg"
+            />
+            <span className="fw-semibold">
+              {doctor?.first_name} {doctor?.last_name}
+            </span>
+          </div>
+
+          <div className="d-flex gap-2 mt-3">
+            <img
               src={locationDot}
               alt="Dot Icon"
-              className="img-fluid dot-icon-lg"
+              className="img-fluid icon-lg"
             />
             <div className="d-flex flex-column">
-              <span className="fw-semibold">University of Washington</span>
-              <span>Seattle, WA</span>
+              <span className="fw-semibold">{doctor?.clinic_name}</span>
+              <span>
+                {doctor?.city}, {doctor?.state}
+              </span>
             </div>
           </div>
         </div>
