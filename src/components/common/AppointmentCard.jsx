@@ -13,7 +13,9 @@ const AppointmentCard = ({
   isMuted = false,
 }) => {
   const location = useLocation();
-  const hideElement = location.pathname.includes("onboarding");
+  const hideElement =
+    location.pathname.includes("onboarding") ||
+    location.pathname === "/dashboard/";
 
   const formatAppointmentTime = (date) => {
     if (!date) {

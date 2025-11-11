@@ -9,6 +9,9 @@ import { useEffect } from "react";
 const EditAppointmentsForm = ({ initialValues }) => {
   const { doctors } = useDoctorStore();
   const showToast = useToastStore((state) => state.showToast);
+  const formattedDate = initialValues?.appointment_date
+    ? new Date(initialValues.appointment_date).toISOString().split("T")[0]
+    : "";
 
   const doctorOptions = doctors.map((doc) => ({
     value: String(doc.id),
@@ -35,8 +38,8 @@ const EditAppointmentsForm = ({ initialValues }) => {
   } = useForm({
     defaultValues: {
       appointmentTitle: "",
-      doctor: "",
-      appointmentDate: "",
+      doctor: initialValues?.doctor_id ? String(initialValues.doctor_id) : "",
+      appointmentDate: formattedDate,
       appointmentTime: "",
       appointmentType: "",
     },
@@ -46,8 +49,8 @@ const EditAppointmentsForm = ({ initialValues }) => {
     if (initialValues) {
       reset({
         appointmentTitle: initialValues.appointment_title,
-        doctor: "",
-        appointmentDate: initialValues.appointment_date,
+        doctor: initialValues.doctor_id ? String(initialValues.doctor_id) : "",
+        appointmentDate: formattedDate,
         appointmentTime: initialValues.appointment_time,
         appointmentType: initialValues.appointment_type,
       });

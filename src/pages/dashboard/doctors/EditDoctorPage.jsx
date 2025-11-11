@@ -57,7 +57,7 @@ const EditDoctorPage = () => {
                 <img
                   src={locationDot}
                   alt="Dot Icon"
-                  className="img-fluid dot-icon"
+                  className="img-fluid icon"
                 />
                 <span>{doctor?.clinic_name}</span>
               </div>
