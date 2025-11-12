@@ -17,6 +17,7 @@ const AppointmentCard = ({
     location.pathname.includes("onboarding") ||
     location.pathname === "/dashboard/";
 
+  // Formatting our date for a beautiful UI
   const formatAppointmentTime = (date) => {
     if (!date) {
       return "";
@@ -34,17 +35,12 @@ const AppointmentCard = ({
       day: "numeric",
     });
 
-    // const timeLabel = parsedDate.toLocaleTimeString("en-US", {
-    //   hour: "numeric",
-    //   minute: "2-digit",
-    // });
-
     return `${dayLabel}`;
   };
 
   const formattedDate = formatAppointmentTime(aptDate);
 
-  // Format our time to 12 hour format
+  // Formatting our time
   function formattedTime(time) {
     const [hoursStr, minutes] = time.split(":");
     let hours = parseInt(hoursStr, 10);

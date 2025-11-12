@@ -4,23 +4,24 @@ import Button from "../../common/Button";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { US_STATES } from "../../../data/constants";
+import { updateDoctor } from "../../../api/doctorApi";
 
 const EditDoctorsForm = ({ initialValues }) => {
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
-    formState: { errors, isValid },
+    formState: { dirtyFields },
   } = useForm({
+    mode: "onChange",
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
       specialty: "",
-      imageURL: "",
-      clinicName: "",
-      clinicEmail: "",
-      clinicPhone: "",
+      image_url: "",
+      clinic_name: "",
+      clinic_email: "",
+      clinic_phone: "",
       street: "",
       city: "",
       state: "",
@@ -31,13 +32,13 @@ const EditDoctorsForm = ({ initialValues }) => {
   useEffect(() => {
     if (initialValues) {
       reset({
-        firstName: initialValues.first_name || "",
-        lastName: initialValues.last_name || "",
+        first_name: initialValues.first_name || "",
+        last_name: initialValues.last_name || "",
         specialty: initialValues.specialty || "",
-        imageURL: initialValues.image_url || "",
-        clinicName: initialValues.clinic_name || "",
-        clinicEmail: initialValues.clinic_email || "",
-        clinicPhone: initialValues.clinic_phone || "",
+        image_url: initialValues.image_url || "",
+        clinic_name: initialValues.clinic_name || "",
+        clinic_email: initialValues.clinic_email || "",
+        clinic_phone: initialValues.clinic_phone || "",
         street: initialValues.street || "",
         city: initialValues.city || "",
         state: initialValues.state || "",
@@ -46,8 +47,27 @@ const EditDoctorsForm = ({ initialValues }) => {
     }
   }, [initialValues, reset]);
 
-  const onSubmit = async (values) => {
-    // Call our API here to update our doctor
+  const onSubmit = async (data) => {
+    // Get only the fields that were changed
+    const changes = Object.keys(dirtyFields).reduce((acc, key) => {
+      acc[key] = data[key];
+      return acc;
+    }, {});
+
+    if (Object.keys(changes).length === 0) {
+      console.log("No changes detected.");
+      return;
+    }
+
+    try {
+      const result = await updateDoctor({
+        id: initialValues.id,
+        data: changes,
+      });
+      console.log(result);
+    } catch (error) {
+      console.error("PATCH error:", error);
+    }
   };
 
   return (
@@ -65,44 +85,15 @@ const EditDoctorsForm = ({ initialValues }) => {
                 <TextInput
                   labelText="First Name"
                   placeholder="First Name"
-                  required
-                  {...register("firstName", {
-                    required: "This field is required",
-                  })}
-                  onChange={(evt) => {
-                    const target = evt.target;
-                    setValue("firstName", target.value, {
-                      shouldValidate: true,
-                    });
-                  }}
-                  isValid
+                  {...register("first_name")}
                 />
-                {errors.firstName && (
-                  <span className="text-danger small">
-                    {errors.firstName.message}
-                  </span>
-                )}
               </div>
               <div className="col-6">
                 <TextInput
                   labelText="Last Name"
                   placeholder="Last Name"
-                  required
-                  {...register("lastName", {
-                    required: "This field is required",
-                  })}
-                  onChange={(evt) => {
-                    const target = evt.target;
-                    setValue("lastName", target.value, {
-                      shouldValidate: true,
-                    });
-                  }}
+                  {...register("last_name")}
                 />
-                {errors.lastName && (
-                  <span className="text-danger small">
-                    {errors.lastName.message}
-                  </span>
-                )}
               </div>
             </div>
             <div className="row mb-4">
@@ -110,22 +101,8 @@ const EditDoctorsForm = ({ initialValues }) => {
                 <TextInput
                   labelText="Doctors Specialty"
                   placeholder="Doctors Speacialty"
-                  required
-                  {...register("specialty", {
-                    required: "This field is required",
-                  })}
-                  onChange={(evt) => {
-                    const target = evt.target;
-                    setValue("specialty", target.value, {
-                      shouldValidate: true,
-                    });
-                  }}
+                  {...register("specialty")}
                 />
-                {errors.specialty && (
-                  <span className="text-danger small">
-                    {errors.specialty.message}
-                  </span>
-                )}
               </div>
             </div>
             <div className="row mb-4">
@@ -133,13 +110,7 @@ const EditDoctorsForm = ({ initialValues }) => {
                 <TextInput
                   labelText="Doctors Image"
                   placeholder="Doctors Image"
-                  {...register("imageURL")}
-                  onChange={(evt) => {
-                    const target = evt.target;
-                    setValue("imageURL", target.value, {
-                      shouldValidate: true,
-                    });
-                  }}
+                  {...register("image_url")}
                 />
                 <span className="small text-body mt-1">
                   Note: Most doctors have public images on Google. Copy and
@@ -163,21 +134,8 @@ const EditDoctorsForm = ({ initialValues }) => {
                   labelText="Clinic Name"
                   placeholder="Clinic Name"
                   required
-                  {...register("clinicName", {
-                    required: "This field is required",
-                  })}
-                  onChange={(evt) => {
-                    const target = evt.target;
-                    setValue("clinicName", target.value, {
-                      shouldValidate: true,
-                    });
-                  }}
+                  {...register("clinic_name")}
                 />
-                {errors.clinicName && (
-                  <span className="text-danger small">
-                    {errors.clinicName.message}
-                  </span>
-                )}
               </div>
             </div>
             <div className="row mb-4">
@@ -185,26 +143,14 @@ const EditDoctorsForm = ({ initialValues }) => {
                 <TextInput
                   labelText="Clinic's Email"
                   placeholder="Clinic's Email"
-                  {...register("clinicEmail")}
-                  onChange={(evt) => {
-                    const target = evt.target;
-                    setValue("clinicEmail", target.value, {
-                      shouldValidate: true,
-                    });
-                  }}
+                  {...register("clinic_email")}
                 />
               </div>
               <div className="col-6">
                 <TextInput
                   labelText="Clinic's Phone"
                   placeholder="Clinic's Phone"
-                  {...register("clinicPhone")}
-                  onChange={(evt) => {
-                    const target = evt.target;
-                    setValue("clinicPhone", target.value, {
-                      shouldValidate: true,
-                    });
-                  }}
+                  {...register("clinic_phone")}
                 />
               </div>
             </div>
@@ -215,12 +161,6 @@ const EditDoctorsForm = ({ initialValues }) => {
                   placeholder="Street Address"
                   className="mb-4"
                   {...register("street")}
-                  onChange={(evt) => {
-                    const target = evt.target;
-                    setValue("street", target.value, {
-                      shouldValidate: true,
-                    });
-                  }}
                 />
               </div>
               <div className="col-4">
@@ -228,12 +168,6 @@ const EditDoctorsForm = ({ initialValues }) => {
                   labelText="City"
                   placeholder="City"
                   {...register("city")}
-                  onChange={(evt) => {
-                    const target = evt.target;
-                    setValue("city", target.value, {
-                      shouldValidate: true,
-                    });
-                  }}
                 />
               </div>
               <div className="col-4">
@@ -243,12 +177,6 @@ const EditDoctorsForm = ({ initialValues }) => {
                   options={US_STATES}
                   defaultOptionText="State"
                   {...register("state")}
-                  onChange={(evt) => {
-                    const target = evt.target;
-                    setValue("state", target.value, {
-                      shouldValidate: true,
-                    });
-                  }}
                 />
               </div>
               <div className="col-4">
@@ -256,12 +184,6 @@ const EditDoctorsForm = ({ initialValues }) => {
                   labelText="Zipcode"
                   placeholder="Zipcode"
                   {...register("zipcode")}
-                  onChange={(evt) => {
-                    const target = evt.target;
-                    setValue("zipcode", target.value, {
-                      shouldValidate: true,
-                    });
-                  }}
                 />
               </div>
             </div>
@@ -270,12 +192,9 @@ const EditDoctorsForm = ({ initialValues }) => {
         <div className="row">
           <div className="col-12 d-flex justify-content-end">
             <Button
-              disabled={!isValid}
               buttonText="Submit"
               type="submit"
-              className={`${
-                isValid ? "bg-primary-light" : "bg-light text-body"
-              } max-w-fit bg-primary-light text-white align-self-end`}
+              className="bg-primary-light max-w-fit bg-primary-light text-white align-self-end"
             />
           </div>
         </div>

@@ -11,23 +11,29 @@ const EditAppointmentPage = () => {
   const { doctors, initDoctors } = useDoctorStore();
   const { id } = useParams();
 
+  // Initializing our appointment - from our appointment store
   useEffect(() => {
     initAppointments();
   }, [initAppointments]);
 
+  // Initializing our doctors - from our doctor store
   useEffect(() => {
     initDoctors();
   }, [initDoctors]);
 
+  // Finding the appointment ID in which matches the React Router id from the URL
+  // ? Could this be improved with an API endpoint? I feel like it can but for now appointment count is low..
   const appointment = useMemo(
     () => appointments.find((apt) => String(apt.id) === String(id)),
     [appointments, id]
   );
 
+  // Finding the doctor whos ID matches the appointment objects doctor ID - Linking the two
   const doctor = useMemo(() =>
     doctors.find((doc) => String(doc.id) === String(appointment?.doctor_id))
   );
 
+  // Formatting our Appointment date
   const formatAptTime = (date) => {
     if (!date) {
       return "";
@@ -48,8 +54,10 @@ const EditAppointmentPage = () => {
     return `${dayLabel}`;
   };
 
+  // Returning the formatted date that looks nice for the user!
   const formattedDate = formatAptTime(appointment?.appointment_date);
 
+  // Also formatting our time.
   function formatTime(time) {
     const [hoursStr, minutes] = time.split(":");
     let hours = parseInt(hoursStr, 10);
@@ -58,6 +66,7 @@ const EditAppointmentPage = () => {
     return `${hours}:${minutes}${format}`;
   }
 
+  // Again, returning the pretty formatted time!
   const formattedTime = appointment?.appointment_time
     ? formatTime(appointment.appointment_time)
     : "";
@@ -111,6 +120,7 @@ const EditAppointmentPage = () => {
           </div>
         </div>
         <div className="col-6">
+          {/* Passing the entire matched appointment object to the edit form so we can pull its values to be used as default values */}
           <EditAppointmentsForm initialValues={appointment} />
         </div>
       </div>

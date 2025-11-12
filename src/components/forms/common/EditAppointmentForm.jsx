@@ -9,15 +9,10 @@ import { useEffect } from "react";
 const EditAppointmentsForm = ({ initialValues }) => {
   const { doctors } = useDoctorStore();
   const showToast = useToastStore((state) => state.showToast);
+  // Formatting the passed date so we can use it for the default date value on our "date" field
   const formattedDate = initialValues?.appointment_date
     ? new Date(initialValues.appointment_date).toISOString().split("T")[0]
     : "";
-
-  const doctorOptions = doctors.map((doc) => ({
-    value: String(doc.id),
-    label: `${doc.first_name} ${doc.last_name}`,
-  }));
-
   const aptTypes = [
     {
       value: "In-Person",
@@ -29,6 +24,12 @@ const EditAppointmentsForm = ({ initialValues }) => {
     },
   ];
 
+  // Building our doctor options. The label is the doctors name, but the value is their unique ID
+  const doctorOptions = doctors.map((doc) => ({
+    value: String(doc.id),
+    label: `${doc.first_name} ${doc.last_name}`,
+  }));
+
   const {
     register,
     handleSubmit,
@@ -38,13 +39,16 @@ const EditAppointmentsForm = ({ initialValues }) => {
   } = useForm({
     defaultValues: {
       appointmentTitle: "",
-      doctor: initialValues?.doctor_id ? String(initialValues.doctor_id) : "",
+      doctor: "",
       appointmentDate: formattedDate,
       appointmentTime: "",
       appointmentType: "",
     },
   });
 
+  // Here we are setting our form values to
+  // If we have initial values then we need to reset our defaultValues with the appointments details
+  // Our dependency array says reset when initialValues has changed
   useEffect(() => {
     if (initialValues) {
       reset({
