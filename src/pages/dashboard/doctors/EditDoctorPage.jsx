@@ -4,10 +4,15 @@ import { useEffect, useMemo } from "react";
 import AddDoctors from "../../../components/forms/onboarding/AddDoctors";
 import locationDot from "../../../assets/location-dot.svg";
 import EditDoctorsForm from "../../../components/forms/common/EditDoctorForm";
+import Button from "../../../components/common/Button";
+import ModalConfirmationMessage from "../../../components/modals/ModalConfirmationMessage";
+import { useModal } from "../../../store/modalContext";
+import { deleteAppointment } from "../../../api/appointmentsApi";
 
 const EditDoctorPage = () => {
   const { id } = useParams();
   const { doctors, initDoctors } = useDoctorStore();
+  const { openModal } = useModal();
 
   useEffect(() => {
     initDoctors();
@@ -69,12 +74,21 @@ const EditDoctorPage = () => {
             ) : (
               ""
             )}
+            <Button
+              onClick={openModal}
+              buttonText="Remove Doctor"
+              className="mt-5"
+            />
           </div>
         </div>
         <div className="col-12 col-md-8">
           <EditDoctorsForm initialValues={doctor} />
         </div>
       </div>
+      <ModalConfirmationMessage
+        message="Are you sure you want to remove this doctor?"
+        submessage="Note: All data associated with this doctor will be deleted."
+      />
     </>
   );
 };

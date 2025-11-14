@@ -65,3 +65,19 @@ export const editAppointment = ({ data, id }) => {
       throw err;
     });
 };
+
+export const deleteAppointment = ({ id }) => {
+  const token = localStorage.getItem("jwt");
+  return fetch(`http://localhost:5500/api/appointments/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  })
+    .then(processServerResponse)
+    .catch((err) => {
+      console.error(err);
+      throw err;
+    });
+};

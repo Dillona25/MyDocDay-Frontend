@@ -1,15 +1,21 @@
 import { useEffect, useMemo } from "react";
 import { useAppointmentStore } from "../../../store/useAppointments";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import EditAppointmentsForm from "../../../components/forms/common/EditAppointmentForm";
 import locationDot from "../../../assets/location-dot.svg";
 import doctorIcon from "../../../assets/Doctor-Icon.svg";
 import { useDoctorStore } from "../../../store/useDoctors";
+import Button from "../../../components/common/Button";
+import ModalConfirmationMessage from "../../../components/modals/ModalConfirmationMessage";
+import { useModal } from "../../../store/modalContext";
+import { deleteAppointment } from "../../../api/appointmentsApi";
 
 const EditAppointmentPage = () => {
   const { appointments, initAppointments } = useAppointmentStore();
   const { doctors, initDoctors } = useDoctorStore();
   const { id } = useParams();
+  const { openModal, closeModal } = useModal();
+  const navigate = useNavigate();
 
   // Initializing our appointment - from our appointment store
   useEffect(() => {
@@ -71,6 +77,16 @@ const EditAppointmentPage = () => {
     ? formatTime(appointment.appointment_time)
     : "";
 
+  const handleRemoveAppointment = async () => {
+    try {
+      deleteAppointment({ id: id });
+      closeModal();
+      navigate("/dashboard/appointments/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="row">
@@ -118,12 +134,22 @@ const EditAppointmentPage = () => {
               </span>
             </div>
           </div>
+          <Button
+            onClick={openModal}
+            buttonText="Remove Appointment"
+            className="mt-5"
+          />
         </div>
         <div className="col-6">
           {/* Passing the entire matched appointment object to the edit form so we can pull its values to be used as default values */}
           <EditAppointmentsForm initialValues={appointment} />
         </div>
       </div>
+      <ModalConfirmationMessage
+        handleSubmit={handleRemoveAppointment}
+        message="Are you sure you want to remove this appointment?"
+        submessage="Note: All data associated with this appointment will be deleted."
+      />
     </>
   );
 };

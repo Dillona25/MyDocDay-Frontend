@@ -70,44 +70,55 @@ const AppointmentsPage = () => {
         </div>
       </div>
 
-      {uniqueAptDates.map((date) => {
-        const appointmentsForDate = upcomingAppointments.filter(
-          (apt) => apt.appointment_date === date
-        );
+      {upcomingAppointments.length === 0 ? (
+        <div className="row mt-5">
+          <div className="col-12 mt-3 mb-4">
+            <h5 className="text-body fw-semibold text-center my-5">
+              You currently have no scheduled appointments. When you do, they
+              will appear here.
+            </h5>
+          </div>
+        </div>
+      ) : (
+        uniqueAptDates.map((date) => {
+          const appointmentsForDate = upcomingAppointments.filter(
+            (apt) => apt.appointment_date === date
+          );
 
-        return (
-          <div key={date}>
-            <div className="row mt-4">
-              <div className="col-12 d-flex gap-3 align-items-center">
-                <h5 className="font-poppins mb-0">{formatDate(date)}</h5>
-                <div className="divider-line flex-grow-1 bg-primary-extra-light" />
+          return (
+            <div key={date}>
+              <div className="row mt-4">
+                <div className="col-12 d-flex gap-3 align-items-center">
+                  <h5 className="font-poppins mb-0">{formatDate(date)}</h5>
+                  <div className="divider-line flex-grow-1 bg-primary-extra-light" />
+                </div>
+              </div>
+              <div className="row">
+                {appointmentsForDate.map((apt) => {
+                  const doctor = doctors.find(
+                    (doctor) => doctor.id === apt.doctor_id
+                  );
+                  const clinicName =
+                    doctor?.clinic_name || "Clinic not available";
+                  return (
+                    <div className="col-12 col-md-4 mt-3 mb-4" key={apt.id}>
+                      <AppointmentCard
+                        doctorName={apt.doctor_name}
+                        aptType={apt.appointment_type}
+                        aptTitle={apt.appointment_title}
+                        aptTime={apt.appointment_time}
+                        aptDate={apt.appointment_date}
+                        aptId={apt.id}
+                        aptlLocation={clinicName}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
-            <div className="row">
-              {appointmentsForDate.map((apt) => {
-                const doctor = doctors.find(
-                  (doctor) => doctor.id === apt.doctor_id
-                );
-                const clinicName =
-                  doctor?.clinic_name || "Clinic not available";
-                return (
-                  <div className="col-12 col-md-4 mt-3 mb-4" key={apt.id}>
-                    <AppointmentCard
-                      doctorName={apt.doctor_name}
-                      aptType={apt.appointment_type}
-                      aptTitle={apt.appointment_title}
-                      aptTime={apt.appointment_time}
-                      aptDate={apt.appointment_date}
-                      aptId={apt.id}
-                      aptlLocation={clinicName}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
+          );
+        })
+      )}
       <ModalAddAppointment />
       <Outlet />
     </>
