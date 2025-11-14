@@ -5,9 +5,13 @@ import { useDoctorStore } from "../../../store/useDoctors";
 import { useForm } from "react-hook-form";
 import { useToastStore } from "../../../store/useToast";
 import { useEffect } from "react";
+import { editAppointment } from "../../../api/appointmentsApi";
+import { useAppointmentStore } from "../../../store/useAppointments";
 
 const EditAppointmentsForm = ({ initialValues }) => {
   const { doctors } = useDoctorStore();
+  const { initAppointments } = useAppointmentStore();
+
   const showToast = useToastStore((state) => state.showToast);
   // Formatting the passed date so we can use it for the default date value on our "date" field
   const formattedDate = initialValues?.appointment_date
@@ -35,14 +39,15 @@ const EditAppointmentsForm = ({ initialValues }) => {
     handleSubmit,
     setValue,
     reset,
-    formState: { errors, isValid },
+    formState: { errors, isValid, dirtyFields },
   } = useForm({
+    mode: "onChange",
     defaultValues: {
-      appointmentTitle: "",
-      doctor: "",
-      appointmentDate: formattedDate,
-      appointmentTime: "",
-      appointmentType: "",
+      appointment_title: "",
+      doctor_id: "",
+      appointment_date: formattedDate,
+      appointment_time: "",
+      appointment_type: "",
     },
   });
 
@@ -52,16 +57,39 @@ const EditAppointmentsForm = ({ initialValues }) => {
   useEffect(() => {
     if (initialValues) {
       reset({
-        appointmentTitle: initialValues.appointment_title,
-        doctor: initialValues.doctor_id ? String(initialValues.doctor_id) : "",
-        appointmentDate: formattedDate,
-        appointmentTime: initialValues.appointment_time,
-        appointmentType: initialValues.appointment_type,
+        appointment_title: initialValues.appointment_title,
+        doctor_id: initialValues.doctor_id
+          ? String(initialValues.doctor_id)
+          : "",
+        appointment_date: formattedDate,
+        appointment_time: initialValues.appointment_time,
+        appointment_type: initialValues.appointment_type,
       });
     }
   }, [initialValues, reset]);
 
-  const onSubmit = async (values) => {};
+  const onSubmit = async (data) => {
+    // Get only the fields that were changed
+    const changes = Object.keys(dirtyFields).reduce((acc, key) => {
+      acc[key] = data[key];
+      return acc;
+    }, {});
+
+    if (Object.keys(changes).length === 0) {
+      console.log("No changes detected.");
+      return;
+    }
+
+    try {
+      const result = await editAppointment({
+        id: initialValues.id,
+        data: changes,
+      });
+      initAppointments();
+    } catch (error) {
+      console.error("PATCH error:", error);
+    }
+  };
 
   return (
     <>
@@ -71,22 +99,8 @@ const EditAppointmentsForm = ({ initialValues }) => {
             <TextInput
               labelText="Appointment Title"
               placeholder="Appointment Title"
-              required
-              {...register("appointmentTitle", {
-                required: "This field is required",
-              })}
-              onChange={(evt) => {
-                const target = evt.target;
-                setValue("appointmentTitle", target.value, {
-                  shouldValidate: true,
-                });
-              }}
+              {...register("appointment_title")}
             />
-            {errors.appointmentTitle && (
-              <span className="text-danger small">
-                {errors.appointmentTitle.message}
-              </span>
-            )}
           </div>
         </div>
         <div className="row mb-4">
@@ -96,20 +110,8 @@ const EditAppointmentsForm = ({ initialValues }) => {
               labelText="Select Doctor"
               options={doctorOptions}
               defaultOptionText="Select Doctor"
-              required
-              {...register("doctor", {
-                required: "This field is required",
-              })}
-              onChange={(evt) => {
-                const target = evt.target;
-                setValue("doctor", target.value, {
-                  shouldValidate: true,
-                });
-              }}
+              {...register("doctor_id")}
             />
-            {errors.doctor && (
-              <span className="text-danger small">{errors.doctor.message}</span>
-            )}
           </div>
         </div>
         <div className="row mb-4">
@@ -118,43 +120,15 @@ const EditAppointmentsForm = ({ initialValues }) => {
               name="date"
               type="date"
               labelText="Appointment Date"
-              required
-              {...register("appointmentDate", {
-                required: "This field is required",
-              })}
-              onChange={(evt) => {
-                const target = evt.target;
-                setValue("appointmentDate", target.value, {
-                  shouldValidate: true,
-                });
-              }}
+              {...register("appointment_date")}
             />
-            {errors.appointmentDate && (
-              <span className="text-danger small">
-                {errors.appointmentDate.message}
-              </span>
-            )}
           </div>
           <div className="col-6">
             <TextInput
               type="time"
               labelText="Appointment Time"
-              required
-              {...register("appointmentTime", {
-                required: "This field is required",
-              })}
-              onChange={(evt) => {
-                const target = evt.target;
-                setValue("appointmentTime", target.value, {
-                  shouldValidate: true,
-                });
-              }}
+              {...register("appointment_time")}
             />
-            {errors.appointmentTime && (
-              <span className="text-danger small">
-                {errors.appointmentTime.message}
-              </span>
-            )}
           </div>
         </div>
         <div className="row mb-4">
@@ -165,25 +139,16 @@ const EditAppointmentsForm = ({ initialValues }) => {
               labelText="Select appointment type"
               options={aptTypes}
               defaultOptionText="Select Appointment Type"
-              {...register("appointmentType")}
-              onChange={(evt) => {
-                const target = evt.target;
-                setValue("appointmentType", target.value, {
-                  shouldValidate: false,
-                });
-              }}
+              {...register("appointment_type")}
             />
           </div>
         </div>
         <div className="row">
           <div className="col-12 text-end">
             <Button
-              disabled={!isValid}
-              buttonText="Add Appointment"
+              buttonText="Submit"
               type="submit"
-              className={`${
-                isValid ? "bg-primary-light" : "bg-light text-body"
-              } max-w-fit bg-primary-light text-white align-self-end`}
+              className="bg-primary-light max-w-fit bg-primary-light text-white align-self-end"
             />
           </div>
         </div>

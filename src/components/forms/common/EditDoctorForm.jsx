@@ -5,8 +5,11 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { US_STATES } from "../../../data/constants";
 import { updateDoctor } from "../../../api/doctorApi";
+import { useDoctorStore } from "../../../store/useDoctors";
 
 const EditDoctorsForm = ({ initialValues }) => {
+  const { initDoctors } = useDoctorStore();
+
   const {
     register,
     handleSubmit,
@@ -64,7 +67,7 @@ const EditDoctorsForm = ({ initialValues }) => {
         id: initialValues.id,
         data: changes,
       });
-      console.log(result);
+      initDoctors();
     } catch (error) {
       console.error("PATCH error:", error);
     }

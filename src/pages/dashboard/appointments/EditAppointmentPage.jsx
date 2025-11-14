@@ -90,7 +90,7 @@ const EditAppointmentPage = () => {
             <h5 className="">{formattedDate}</h5>
             <span>{formattedTime}</span>
             <span className="bg-primary-subtle text-primary-emphasis border-primary-subtle px-3 py-1 extra-small fw-semibold border rounded-pill  max-w-fit mt-3">
-              In-Person
+              {appointment?.appointment_type}
             </span>
           </div>
 

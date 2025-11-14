@@ -48,3 +48,20 @@ export const getUsersAppointments = () => {
       throw err;
     });
 };
+
+export const editAppointment = ({ data, id }) => {
+  const token = localStorage.getItem("jwt");
+  return fetch(`http://localhost:5500/api/appointments/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  })
+    .then(processServerResponse)
+    .catch((err) => {
+      console.error(err);
+      throw err;
+    });
+};
