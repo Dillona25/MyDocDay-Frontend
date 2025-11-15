@@ -86,14 +86,14 @@ const EditAppointmentsForm = ({ initialValues }) => {
         data: changes,
       });
       initAppointments();
-      showToast(
-        "Appointment Updated",
-        "Appointment Updated Successfully",
-        "text-success",
-        "error"
-      );
+      showToast({
+        title: "Appointment Updated",
+        message: "Appointment Updated Successfully.",
+        titleClass: "text-success",
+      });
     } catch (error) {
       console.error("PATCH error:", error);
+      // TODO: Error handle here
     }
   };
 

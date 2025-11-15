@@ -1,14 +1,33 @@
 import { create } from "zustand";
 
-export const useToastStore = create((set, get) => ({
-  visible: false,
-  title: "",
-  titleClass: "",
-  message: "",
+export const useToastStore = create((set, get) => {
+  let timeoutId;
 
-  showToast: (title, message, titleClass = "") => {
-    set({ visible: true, title, message, titleClass });
-  },
+  const clearExistingTimer = () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+  };
 
-  hideToast: () => set({ visible: false }),
-}));
+  return {
+    visible: false,
+    title: "",
+    titleClass: "",
+    message: "",
+
+    showToast: ({ title, titleClass = "", message }) => {
+      clearExistingTimer();
+      set({ visible: true, title, titleClass, message });
+
+      timeoutId = setTimeout(() => {
+        get().hideToast(); // reuse the existing closer
+      }, 4000);
+    },
+
+    hideToast: () => {
+      clearExistingTimer();
+      set({ visible: false, title: "", titleClass: "", message: "" });
+    },
+  };
+});

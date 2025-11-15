@@ -33,31 +33,32 @@ const SigninForm = () => {
       login(res.user, res.token);
       navigate("/dashboard");
       setTimeout(() => {
-        showToast(
-          `Hey, ${res.user?.first_name}`,
-          "Welcome back. We're glad your here!",
-          "text-success"
-        );
+        showToast({
+          title: `Hey, ${res.user?.first_name}`,
+          message: "Welcome back. We're glad your here!",
+          titleClass: "text-success",
+        });
       }, 250);
     } catch (error) {
       if (error.status === 401) {
-        showToast(
-          "Error Signing In",
-          "Incorrect email or password",
-          "text-danger"
-        );
+        showToast({
+          title: `Error Signing In`,
+          message: "Incorrect email or password",
+          titleClass: "text-danger",
+        });
       } else if (error.status === 400) {
-        showToast(
-          "Error Signing In",
-          "Please fill in all required fields",
-          "text-danger"
-        );
+        showToast({
+          title: `Error Signing In`,
+          message: "Please fill in all required fields",
+          titleClass: "text-danger",
+        });
       } else if (error.status === 500 || error.status === 404) {
-        showToast(
-          "Server Error",
-          "There seems to have been on error on our end. Please try again later.",
-          "text-danger"
-        );
+        showToast({
+          title: `Server Error`,
+          message:
+            "There seems to have been on error on our end. Please try again later.",
+          titleClass: "text-danger",
+        });
       }
     }
   };

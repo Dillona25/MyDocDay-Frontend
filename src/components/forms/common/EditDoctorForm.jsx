@@ -70,13 +70,14 @@ const EditDoctorsForm = ({ initialValues }) => {
         data: changes,
       });
       initDoctors();
-      showToast(
-        "Doctor Updated",
-        `Doctor Updated Successfully`,
-        "text-success"
-      );
+      showToast({
+        title: "Doctor Updated",
+        message: "Doctor Updated Successfully.",
+        titleClass: "text-success",
+      });
     } catch (error) {
       console.error("PATCH error:", error);
+      // TODO: Error handle here
     }
   };
 

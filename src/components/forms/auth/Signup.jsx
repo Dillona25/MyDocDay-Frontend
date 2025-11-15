@@ -45,32 +45,32 @@ const SignupForm = () => {
         login(res.user, res.token);
         navigate("/onboarding/doctors");
         setTimeout(() => {
-          showToast(
-            "Account Created Successfully",
-            `Hey, ${res.user?.first_name}. Welcome, we're glad you're here!`,
-            "text-success"
-          );
+          showToast({
+            title: `Account Created Successfully`,
+            message: `Hey, ${res.user?.first_name}. Welcome, we're glad you're here!`,
+            titleClass: "text-success",
+          });
         }, 250);
       }
     } catch (error) {
       if (error.status === 409) {
-        showToast(
-          "Error Creating Account",
-          "Email or phone number already in use. Try logging in.",
-          "text-danger"
-        );
+        showToast({
+          title: `Error Creating Account`,
+          message: `Email or phone number already in use. Try logging in.`,
+          titleClass: "text-danger",
+        });
       } else if (error.status === 400) {
-        showToast(
-          "Error Creating Account",
-          "Please fill in all required fields",
-          "text-danger"
-        );
+        showToast({
+          title: `Error Creating Account`,
+          message: `Please fill in all required fields`,
+          titleClass: "text-danger",
+        });
       } else if (error.status === 500 || error.status === 404) {
-        showToast(
-          "Server Error",
-          "There seems to have been on error on our end. Please try again later.",
-          "text-danger"
-        );
+        showToast({
+          title: `Server Error`,
+          message: `There seems to have been on error on our end. Please try again later.`,
+          titleClass: "text-danger",
+        });
       }
     }
   };

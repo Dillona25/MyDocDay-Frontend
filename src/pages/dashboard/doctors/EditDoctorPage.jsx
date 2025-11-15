@@ -8,12 +8,14 @@ import Button from "../../../components/common/Button";
 import ModalConfirmationMessage from "../../../components/modals/ModalConfirmationMessage";
 import { useModal } from "../../../store/modalContext";
 import { deleteDoctor } from "../../../api/doctorApi";
+import { useToastStore } from "../../../store/useToast";
 
 const EditDoctorPage = () => {
   const { id } = useParams();
   const { doctors, initDoctors } = useDoctorStore();
   const { openModal, closeModal } = useModal();
   const navigate = useNavigate();
+  const showToast = useToastStore((state) => state.showToast);
 
   useEffect(() => {
     initDoctors();
@@ -29,8 +31,16 @@ const EditDoctorPage = () => {
       deleteDoctor({ id: id });
       closeModal();
       navigate("/dashboard/doctors/");
+      setTimeout(() => {
+        showToast({
+          title: "Doctor Deletde",
+          message: "The doctor was removed successfully.",
+          titleClass: "text-success",
+        });
+      }, 150);
     } catch (error) {
       console.error(error);
+      // TODO: Error handle here
     }
   };
 
@@ -107,7 +117,7 @@ const EditDoctorPage = () => {
       <ModalConfirmationMessage
         handleSubmit={handleRemoveDoctor}
         message="Are you sure you want to remove this doctor?"
-        submessage="Note: All data associated with this doctor will be deleted."
+        submessage="Note: All data and appointments associated with this doctor will be deleted."
       />
     </>
   );

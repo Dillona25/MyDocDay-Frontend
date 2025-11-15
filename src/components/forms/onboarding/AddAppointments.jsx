@@ -71,18 +71,19 @@ const AddAppointments = () => {
       const res = await createAppointment(payload);
       addAppointmentToList(res.appointment);
       closeModal();
-      showToast(
-        "Appointment Added",
-        `Appointment Added Successfully`,
-        "text-success"
-      );
+      showToast({
+        title: "Appointment Added",
+        message: "Appointment added successfully",
+        titleClass: "text-success",
+      });
     } catch (error) {
       if (error.status === 500) {
-        showToast(
-          "Error Adding Appointment",
-          "Something went wrong, but this looks to be on our end. Please try again later.",
-          "text-danger"
-        );
+        showToast({
+          title: "Error Adding Appointment",
+          message:
+            "Something went wrong, but this looks to be on our end. Please try again later",
+          titleClass: "text-danger",
+        });
       }
     }
   };

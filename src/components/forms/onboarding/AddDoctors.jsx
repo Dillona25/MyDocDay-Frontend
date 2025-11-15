@@ -56,7 +56,6 @@ const AddDoctors = () => {
     try {
       const res = await createDoctorWithClinic(payload);
       await initDoctors();
-      // Add the doctor to our users doctors context
       addDoctorToList({
         ...res.doctor,
         clinic_name: res.clinic?.clinic_name ?? values.clinicName,
@@ -65,18 +64,19 @@ const AddDoctors = () => {
       });
 
       closeModal();
-      showToast(
-        "Doctor Added",
-        `The doctor was added to your account successfully`,
-        "text-success"
-      );
+      showToast({
+        title: "Doctor Added",
+        message: "The doctor was added to your account successfully",
+        titleClass: "text-success",
+      });
     } catch (error) {
       if (error.status === 500) {
-        showToast(
-          "Error Adding Doctor",
-          "Something went wrong, but this looks to be on our end. Please try again later.",
-          "text-danger"
-        );
+        showToast({
+          title: "Error Adding Doctor",
+          message:
+            "Something went wrong, but this looks to be on our end. Please try again later.",
+          titleClass: "text-danger",
+        });
       }
     }
   };

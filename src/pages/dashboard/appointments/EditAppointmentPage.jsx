@@ -85,14 +85,15 @@ const EditAppointmentPage = () => {
       closeModal();
       navigate("/dashboard/appointments");
       setTimeout(() => {
-        showToast(
-          "Appointment Deleted",
-          `The appointment was removed successfully.`,
-          "text-success"
-        );
+        showToast({
+          title: "Appointment Deleted",
+          message: "The appointment was removed successfully.",
+          titleClass: "text-success",
+        });
       }, 150);
     } catch (error) {
       console.error(error);
+      // TODO Error handle here
     }
   };
 
