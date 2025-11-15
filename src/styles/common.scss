@@ -71,11 +71,19 @@ body {
   color: red;
 }
 
+.text-success {
+  color: green;
+}
+
 .border-primary {
   border-color: opacify(
     map-get($theme-colors, "primary-extra-light"),
     $amount: 0.4
   );
+}
+
+.border-success {
+  border-color: opacify(map-get($theme-colors, "success"), $amount: 0.4);
 }
 
 .card-icon {

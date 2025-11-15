@@ -6,9 +6,11 @@ import { useForm } from "react-hook-form";
 import { US_STATES } from "../../../data/constants";
 import { updateDoctor } from "../../../api/doctorApi";
 import { useDoctorStore } from "../../../store/useDoctors";
+import { useToastStore } from "../../../store/useToast";
 
 const EditDoctorsForm = ({ initialValues }) => {
   const { initDoctors } = useDoctorStore();
+  const showToast = useToastStore((state) => state.showToast);
 
   const {
     register,
@@ -68,6 +70,11 @@ const EditDoctorsForm = ({ initialValues }) => {
         data: changes,
       });
       initDoctors();
+      showToast(
+        "Doctor Updated",
+        `Doctor Updates Successfully`,
+        "text-success"
+      );
     } catch (error) {
       console.error("PATCH error:", error);
     }

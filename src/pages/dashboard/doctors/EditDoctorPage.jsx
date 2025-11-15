@@ -1,18 +1,19 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDoctorStore } from "../../../store/useDoctors";
 import { useEffect, useMemo } from "react";
-import AddDoctors from "../../../components/forms/onboarding/AddDoctors";
 import locationDot from "../../../assets/location-dot.svg";
+import clinicIcon from "../../../assets/hospital-solid-full.svg";
 import EditDoctorsForm from "../../../components/forms/common/EditDoctorForm";
 import Button from "../../../components/common/Button";
 import ModalConfirmationMessage from "../../../components/modals/ModalConfirmationMessage";
 import { useModal } from "../../../store/modalContext";
-import { deleteAppointment } from "../../../api/appointmentsApi";
+import { deleteDoctor } from "../../../api/doctorApi";
 
 const EditDoctorPage = () => {
   const { id } = useParams();
   const { doctors, initDoctors } = useDoctorStore();
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
+  const navigate = useNavigate();
 
   useEffect(() => {
     initDoctors();
@@ -22,6 +23,16 @@ const EditDoctorPage = () => {
     () => doctors.find((doc) => String(doc.id) === String(id)),
     [doctors, id]
   );
+
+  const handleRemoveDoctor = async () => {
+    try {
+      deleteDoctor({ id: id });
+      closeModal();
+      navigate("/dashboard/doctors/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -37,15 +48,15 @@ const EditDoctorPage = () => {
 
       <div className="row justify-content-center justify-content-md-between pt-5">
         <div className="col-10 col-md-3 mb-5 mb-md-0">
-          <div className="d-flex flex-column align-items-center">
+          <div className="d-flex flex-column">
             {doctor?.image_url ? (
               <img
-                className="dr-profile-image-lg rounded-circle object-fit-cover flex-shrink-0"
+                className="dr-profile-image-lg rounded-circle object-fit-cover flex-shrink-0 mx-auto"
                 alt="Dr Profile Image"
                 src={doctor?.image_url}
               />
             ) : (
-              <div className="bg-light rounded-circle d-flex align-items-center justify-content-center dr-profile-image-lg object-fit-cover flex-shrink-0">
+              <div className="bg-light mx-auto rounded-circle d-flex align-items-center justify-content-center dr-profile-image-lg object-fit-cover flex-shrink-0">
                 <span className="h2 fw-semibold m-0 text-body">
                   {doctor?.first_name[0] && doctor?.last_name[0]
                     ? `${doctor?.first_name[0] + doctor?.last_name[0]}`
@@ -56,24 +67,32 @@ const EditDoctorPage = () => {
             <h5 className="text-body text-center mt-4">
               {doctor?.first_name} {doctor?.last_name}
             </h5>
-            <span>{doctor?.specialty}</span>
+            <span className="text-center">{doctor?.specialty}</span>
             <div className="d-flex flex-column mt-4">
-              <div className="d-flex gap-1 align-items-center">
+              <div className="d-flex gap-2">
                 <img
-                  src={locationDot}
+                  src={clinicIcon}
                   alt="Dot Icon"
                   className="img-fluid icon"
                 />
                 <span>{doctor?.clinic_name}</span>
               </div>
+              {doctor?.city && doctor?.state ? (
+                <div className="d-flex gap-2 mt-2">
+                  <img
+                    src={locationDot}
+                    alt="Dot Icon"
+                    className="img-fluid icon"
+                  />
+                  <span>
+                    {doctor?.city}, {doctor?.state}
+                  </span>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
-            {doctor?.city && doctor?.state ? (
-              <span className="mt-1">
-                {doctor?.city}, {doctor?.state}
-              </span>
-            ) : (
-              ""
-            )}
+
             <Button
               onClick={openModal}
               buttonText="Remove Doctor"
@@ -86,6 +105,7 @@ const EditDoctorPage = () => {
         </div>
       </div>
       <ModalConfirmationMessage
+        handleSubmit={handleRemoveDoctor}
         message="Are you sure you want to remove this doctor?"
         submessage="Note: All data associated with this doctor will be deleted."
       />

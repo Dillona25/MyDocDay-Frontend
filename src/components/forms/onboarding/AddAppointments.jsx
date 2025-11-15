@@ -70,8 +70,12 @@ const AddAppointments = () => {
     try {
       const res = await createAppointment(payload);
       addAppointmentToList(res.appointment);
-      console.log({ ...res.appointment });
       closeModal();
+      showToast(
+        "Appointment Added",
+        `Appointment Added Successfully`,
+        "text-success"
+      );
     } catch (error) {
       if (error.status === 500) {
         showToast(

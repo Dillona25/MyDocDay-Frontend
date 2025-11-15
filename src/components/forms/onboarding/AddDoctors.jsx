@@ -65,8 +65,11 @@ const AddDoctors = () => {
       });
 
       closeModal();
-
-      console.log("Doctor added:", res);
+      showToast(
+        "Doctor Added",
+        `The doctor was added to your account successfully`,
+        "text-success"
+      );
     } catch (error) {
       if (error.status === 500) {
         showToast(

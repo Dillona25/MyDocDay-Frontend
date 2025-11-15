@@ -3,10 +3,13 @@ import Button from "../../../components/common/Button";
 import DoctorCard from "../../../components/common/DoctorCard";
 import { useAuthStore } from "../../../store/useAuth";
 import { useDoctorStore } from "../../../store/useDoctors";
+import { useModal } from "../../../store/modalContext";
+import ModalAddDoctor from "../../../components/modals/ModalAddDoctor";
 
 const DoctorsPage = () => {
   const { doctors, initDoctors } = useDoctorStore();
   const { user } = useAuthStore();
+  const { openModal } = useModal();
 
   useEffect(() => {
     initDoctors();
@@ -21,6 +24,7 @@ const DoctorsPage = () => {
               {user.first_name}'s Doctors
             </h3>
             <Button
+              onClick={openModal}
               buttonText="Add Doctor"
               className="max-w-fit bg-primary-light text-white align-self-center"
             />
@@ -31,7 +35,7 @@ const DoctorsPage = () => {
       <div className="row mt-5">
         {doctors.length > 0 ? (
           doctors.map((doc) => (
-            <div className="col-12 col-md-4 mb-3" key={doc.id}>
+            <div className="col-12 col-md-6 col-xl-4 mb-3" key={doc.id}>
               <DoctorCard
                 firstName={doc.first_name}
                 lastName={doc.last_name}
@@ -47,11 +51,13 @@ const DoctorsPage = () => {
         ) : (
           <div className="col-12">
             <h5 className="text-body fw-semibold text-center my-5">
-              Add your first doctor to see it here
+              You currently have no added doctors. When you do, they will appear
+              here.
             </h5>
           </div>
         )}
       </div>
+      <ModalAddDoctor />
     </>
   );
 };

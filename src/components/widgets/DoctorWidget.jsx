@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDoctorStore } from "../../store/useDoctors";
 import Button from "../common/Button";
 import { useEffect } from "react";
@@ -7,6 +7,7 @@ const DoctorWidget = () => {
   const { doctors, initDoctors } = useDoctorStore();
   const topDoctors = doctors.slice(0, 4);
   const hasMoreDoctors = doctors.length > topDoctors.length;
+  const navigate = useNavigate();
 
   useEffect(() => {
     initDoctors();
@@ -53,6 +54,7 @@ const DoctorWidget = () => {
               You currently have not added any doctors.
             </h5>
             <Button
+              onClick={() => navigate("doctors")}
               buttonText="Add Doctor"
               className="max-w-fit bg-primary-light text-white align-self-center"
             />

@@ -12,6 +12,7 @@ const SignupForm = () => {
   const navigate = useNavigate();
   // Pull in our login function from our user context
   const { login } = useAuthStore();
+  const { user } = useAuthStore();
   const [duplicateCreds, setDuplicateCreds] = useState(false);
   const showToast = useToastStore((state) => state.showToast);
 
@@ -43,6 +44,11 @@ const SignupForm = () => {
         localStorage.setItem("user", JSON.stringify(res.user));
         login(res.user, res.token);
         navigate("/onboarding/doctors");
+        showToast(
+          "Account Created",
+          `We're happy to see you here`,
+          "text-success"
+        );
       }
     } catch (error) {
       if (error.status === 409) {

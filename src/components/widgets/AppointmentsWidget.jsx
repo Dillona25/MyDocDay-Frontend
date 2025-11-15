@@ -1,46 +1,50 @@
 import AppointmentCard from "../common/AppointmentCard";
 import Button from "../common/Button";
 import SleepingDog from "../../assets/Sleeping-Dog-Icon.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppointmentStore } from "../../store/useAppointments";
 import { useDoctorStore } from "../../store/useDoctors";
 import { useEffect } from "react";
+import { isSameDay, parseAptDateTime } from "../../utils/helpers";
 
 const AppointmentsWidget = () => {
   const { appointments, initAppointments } = useAppointmentStore();
   const { doctors } = useDoctorStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     initAppointments();
   }, [initAppointments]);
 
-  // Only show 3 apts, even if in next 30 days.
   // TODO: handle UI if user has more than 3 apts in next 30 days. ("see all") etc.
 
   // TODO: Maybe show appointments for "this week" VS "today"..
   const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const startOfToday = new Date(today);
+  startOfToday.setHours(0, 0, 0, 0);
 
-  // Create our date 30 days out!
-  const in30Days = new Date(today);
-  in30Days.setDate(today.getDate() + 30);
+  const endOf30Days = new Date(startOfToday);
+  endOf30Days.setDate(startOfToday.getDate() + 30);
+  endOf30Days.setHours(23, 59, 59, 999);
 
-  // Find todays appointments
   const todaysApts = appointments.filter((apt) => {
-    const aptDate = new Date(apt.appointment_date);
-    aptDate.setHours(0, 0, 0, 0);
-    return aptDate.getTime() === today.getTime();
+    const aptDateTime = parseAptDateTime(apt);
+    return isSameDay(aptDateTime, startOfToday) && aptDateTime >= today;
   });
 
-  // Find appointments within the next 30 days
   const aptsInMonth = appointments.filter((apt) => {
-    const aptDate = new Date(apt.appointment_date);
-    aptDate.setHours(0, 0, 0, 0);
-    return aptDate >= today && aptDate <= in30Days;
+    const aptDateTime = parseAptDateTime(apt);
+    return (
+      aptDateTime >= today &&
+      aptDateTime <= endOf30Days &&
+      !isSameDay(aptDateTime, startOfToday)
+    );
   });
 
   const monthlyApts = aptsInMonth
-    .sort((a, b) => a.appointment_date - new Date(b.appointment_date))
+    .sort(
+      (a, b) => parseAptDateTime(a).getTime() - parseAptDateTime(b).getTime()
+    )
     .slice(0, 2);
 
   return (
@@ -59,11 +63,11 @@ const AppointmentsWidget = () => {
           <div className="d-flex align-items-center justify-content-center gap-2 mt-4">
             <img src={SleepingDog} height={120} alt="Relaxing Dog" />
             <h5 className="text-body fw-semibold text-center">
-              No appointments on the calendar. It’s a perfect day to take it
-              easy!
+              You have no upcoming appointments
             </h5>
           </div>
           <Button
+            onClick={() => navigate("appointments")}
             buttonText="Add Appointment"
             className="max-w-fit bg-primary-light text-white"
           />
