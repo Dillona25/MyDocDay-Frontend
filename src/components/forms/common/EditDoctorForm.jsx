@@ -72,7 +72,7 @@ const EditDoctorsForm = ({ initialValues }) => {
       initDoctors();
       showToast(
         "Doctor Updated",
-        `Doctor Updates Successfully`,
+        `Doctor Updated Successfully`,
         "text-success"
       );
     } catch (error) {

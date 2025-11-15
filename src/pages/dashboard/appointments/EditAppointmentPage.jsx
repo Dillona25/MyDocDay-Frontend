@@ -9,6 +9,7 @@ import Button from "../../../components/common/Button";
 import ModalConfirmationMessage from "../../../components/modals/ModalConfirmationMessage";
 import { useModal } from "../../../store/modalContext";
 import { deleteAppointment } from "../../../api/appointmentsApi";
+import { useToastStore } from "../../../store/useToast";
 
 const EditAppointmentPage = () => {
   const { appointments, initAppointments } = useAppointmentStore();
@@ -16,6 +17,7 @@ const EditAppointmentPage = () => {
   const { id } = useParams();
   const { openModal, closeModal } = useModal();
   const navigate = useNavigate();
+  const showToast = useToastStore((state) => state.showToast);
 
   // Initializing our appointment - from our appointment store
   useEffect(() => {
@@ -81,7 +83,14 @@ const EditAppointmentPage = () => {
     try {
       deleteAppointment({ id: id });
       closeModal();
-      navigate("/dashboard/appointments/");
+      navigate("/dashboard/appointments");
+      setTimeout(() => {
+        showToast(
+          "Appointment Deleted",
+          `The appointment was removed successfully.`,
+          "text-success"
+        );
+      }, 150);
     } catch (error) {
       console.error(error);
     }

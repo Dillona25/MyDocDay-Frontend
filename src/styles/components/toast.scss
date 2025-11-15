@@ -1,1 +1,14 @@
+.custom-toast {
+  transform: translateX(120%);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
 
+.custom-toast.toast-enter {
+  opacity: 1 !important;
+  transform: translateX(0);
+}
+
+.custom-toast.toast-exit {
+  opacity: 0 !important;
+  transform: translateX(120%);
+}

@@ -8,7 +8,7 @@ const Navigation = () => {
   const { user } = useAuthStore();
 
   const navItems = [
-    { label: "Overview", href: "/dashboard/" },
+    { label: "Overview", href: "/dashboard" },
     { label: "Your Doctors", href: "/dashboard/doctors" },
     { label: "Appointments", href: "/dashboard/appointments" },
     { label: "Reminders", href: "/dashboard/reminders" },
@@ -51,7 +51,7 @@ const Navigation = () => {
                 <li key={item.label}>
                   <NavLink
                     to={item.href}
-                    end={item.href === "/dashboard/"}
+                    end={item.href === "/dashboard"}
                     className={({ isActive }) =>
                       `py-2 px-3 rounded-2 cursor-pointer text-decoration-none ${
                         isActive ? "bg-primary-light" : ""

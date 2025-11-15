@@ -11,6 +11,7 @@ import { useToastStore } from "../../../store/useToast";
 const SigninForm = () => {
   const navigate = useNavigate();
   const { login } = useAuthStore();
+  const { user } = useAuthStore();
   const [credsError, setCredsError] = useState(false);
   const showToast = useToastStore((state) => state.showToast);
 
@@ -30,7 +31,14 @@ const SigninForm = () => {
     try {
       const res = await loginUser(values);
       login(res.user, res.token);
-      navigate("/dashboard/");
+      navigate("/dashboard");
+      setTimeout(() => {
+        showToast(
+          `Hey, ${res.user?.first_name}`,
+          "Welcome back. We're glad your here!",
+          "text-success"
+        );
+      }, 250);
     } catch (error) {
       if (error.status === 401) {
         showToast(

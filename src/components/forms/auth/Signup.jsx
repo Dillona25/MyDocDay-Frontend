@@ -44,11 +44,13 @@ const SignupForm = () => {
         localStorage.setItem("user", JSON.stringify(res.user));
         login(res.user, res.token);
         navigate("/onboarding/doctors");
-        showToast(
-          "Account Created",
-          `We're happy to see you here`,
-          "text-success"
-        );
+        setTimeout(() => {
+          showToast(
+            "Account Created Successfully",
+            `Hey, ${res.user?.first_name}. Welcome, we're glad you're here!`,
+            "text-success"
+          );
+        }, 250);
       }
     } catch (error) {
       if (error.status === 409) {

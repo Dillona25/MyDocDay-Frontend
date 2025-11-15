@@ -15,7 +15,7 @@ const AppointmentCard = ({
   const location = useLocation();
   const hideElement =
     location.pathname.includes("onboarding") ||
-    location.pathname === "/dashboard/";
+    location.pathname === "/dashboard";
 
   // Formatting our date for a beautiful UI
   const formatAppointmentTime = (date) => {

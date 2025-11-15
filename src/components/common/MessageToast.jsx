@@ -1,4 +1,3 @@
-// src/components/common/MessageToast.jsx
 import { useToastStore } from "../../store/useToast";
 
 const MessageToast = () => {
@@ -7,12 +6,14 @@ const MessageToast = () => {
   return (
     <div className="position-fixed bottom-0 end-0 p-3 z-high">
       <div
-        className={`toast ${visible ? "show" : "hide"}`}
+        className={`custom-toast position-relative opacity-0 card ${
+          visible ? "toast-enter" : "toast-exit"
+        }`}
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
       >
-        <div className="toast-header">
+        <div className="toast-header p-2 border-1 border-bottom">
           <strong className={`me-auto ${titleClass}`}>{title}</strong>
           <button
             type="button"
@@ -21,7 +22,7 @@ const MessageToast = () => {
             onClick={hideToast}
           ></button>
         </div>
-        <div className="toast-body">{message}</div>
+        <div className="toast-body p-2 text-body">{message}</div>
       </div>
     </div>
   );
