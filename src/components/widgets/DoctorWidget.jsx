@@ -18,7 +18,7 @@ const DoctorWidget = () => {
       <h3 className="text-primary text-poppins">Your Doctors</h3>
       <ul className="list-unstyled d-flex flex-column gap-4 mt-4">
         {doctors && doctors.length > 0 ? (
-          doctors.map((doctor) => (
+          topDoctors.map((doctor) => (
             <li key={doctor.id} className="d-flex gap-2">
               {doctor.image_url ? (
                 <img

@@ -142,6 +142,12 @@ const AppointmentsWidget = () => {
                     </div>
                   );
                 })}
+                {aptsInMonth.length > 2 && (
+                  <p className="extra-small text-center my-1">
+                    It looks like you have more appointments than we can show.
+                    See them all <Link to="appointments">here</Link>.
+                  </p>
+                )}
               </div>
             </>
           )}
