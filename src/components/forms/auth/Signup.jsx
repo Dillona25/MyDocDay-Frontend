@@ -153,18 +153,24 @@ const SignupForm = () => {
         <div className="col-12 mb-4">
           <TextInput
             labelText="Your Phone Number"
-            placeholder="Your Phone Number"
             required
+            placeholder="Your phone number"
             {...register("phone", {
               required: "Phone number is required",
-              minLength: {
-                value: 10,
-                message: "Invalid Phone Number",
+              validate: (raw) => {
+                const digitsOnly = raw.replace(/[^\d+]/g, "");
+                const normalized = digitsOnly.startsWith("+")
+                  ? digitsOnly
+                  : `+${digitsOnly}`;
+                const isValid = /^\+[1-9]\d{1,14}$/.test(normalized);
+                return isValid || "Please enter a valid phone number";
               },
             })}
             onChange={(evt) => {
-              const target = evt.target;
-              setValue("phone", target.value, { shouldValidate: true });
+              const digits = evt.target.value.replace(/\D/g, "");
+              setValue("phone", digits ? `+${digits}` : "", {
+                shouldValidate: true,
+              });
             }}
           />
           {errors.phone && (
