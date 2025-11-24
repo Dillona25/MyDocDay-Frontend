@@ -176,16 +176,31 @@ const SignupForm = () => {
               });
             }}
           />
-          {errors.phone && (
-            <span className="text-danger small">{errors.phone.message}</span>
-          )}
+          <div className="d-flex flex-column">
+            {errors.phone && (
+              <span className="text-danger small mt-1">
+                {errors.phone.message}
+              </span>
+            )}
+            {!errors.phone && (
+              <span className="small text-body mt-1">
+                Begin your phone number with your country code
+              </span>
+            )}
+          </div>
           <fieldset className="mt-4">
             <legend className="small text-body">
               Would you like to opt in to recieve SMS notifications?
             </legend>
             <div className="d-flex gap-3">
               <div className="d-flex gap-1">
-                <input type="radio" id="true" name="sms_opt_in" value="True" />
+                <input
+                  type="radio"
+                  id="true"
+                  name="sms_opt_in"
+                  value="True"
+                  onChange={() => setValue("smsOptIn", true)}
+                />
                 <label htmlFor="true" className="text-body">
                   Yes
                 </label>
@@ -196,6 +211,7 @@ const SignupForm = () => {
                   id="false"
                   name="sms_opt_in"
                   value="False"
+                  onChange={() => setValue("smsOptIn", false)}
                 />
                 <label htmlFor="false" className="text-body">
                   Not Now
