@@ -15,6 +15,7 @@ export const registerUser = ({
   lastName,
   email,
   phone,
+  smsOptIn,
   password,
 }) => {
   return fetch("http://localhost:5500/api/users/signup", {
@@ -27,6 +28,7 @@ export const registerUser = ({
       last_name: lastName,
       email,
       phone,
+      sms_opt_in: smsOptIn,
       password,
     }),
   })

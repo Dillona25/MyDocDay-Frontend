@@ -13,6 +13,8 @@ import ProtectedRoute from "./ProtectedRoute";
 import VerifyEmail from "../pages/auth/VerifyEmail";
 import EditAppointment from "../pages/dashboard/appointments/EditAppointmentPage";
 import EditDoctorPage from "../pages/dashboard/doctors/EditDoctorPage";
+import Reminders from "../pages/dashboard/reminders/Reminders";
+import Account from "../pages/dashboard/account/Account";
 
 export const AppRoutes = () => {
   return (
@@ -72,6 +74,8 @@ export const AppRoutes = () => {
             <Route index element={<DashboardAppointments />} />
             <Route path="edit/:id" element={<EditAppointment />} />
           </Route>
+          <Route path="reminders" element={<Reminders />} />
+          <Route path="account" element={<Account />} />
         </Route>
       </Routes>
     </Router>

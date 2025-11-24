@@ -22,6 +22,7 @@ const SignupForm = () => {
     handleSubmit,
     setError,
     setValue,
+    watch,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
@@ -29,9 +30,11 @@ const SignupForm = () => {
       lastName: "",
       email: "",
       phone: "",
+      smsOptIn: null,
       password: "",
     },
   });
+  const smsOptIn = watch("smsOptIn");
 
   // Pas values to our onSubmit. Values will be our useForm registered values
   const onSubmit = async (values) => {
@@ -176,6 +179,30 @@ const SignupForm = () => {
           {errors.phone && (
             <span className="text-danger small">{errors.phone.message}</span>
           )}
+          <fieldset className="mt-4">
+            <legend className="small text-body">
+              Would you like to opt in to recieve SMS notifications?
+            </legend>
+            <div className="d-flex gap-3">
+              <div className="d-flex gap-1">
+                <input type="radio" id="true" name="sms_opt_in" value="True" />
+                <label htmlFor="true" className="text-body">
+                  Yes
+                </label>
+              </div>
+              <div className="d-flex gap-1">
+                <input
+                  type="radio"
+                  id="false"
+                  name="sms_opt_in"
+                  value="False"
+                />
+                <label htmlFor="false" className="text-body">
+                  Not Now
+                </label>
+              </div>
+            </div>
+          </fieldset>
         </div>
 
         <div className="col-12 mb-4">
