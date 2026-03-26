@@ -10,15 +10,8 @@ export const mockApi = {
   },
 };
 
-export const registerUser = ({
-  firstName,
-  lastName,
-  email,
-  phone,
-  smsOptIn,
-  password,
-}) => {
-  return fetch("http://localhost:5500/api/users/signup", {
+export const registerUser = ({ firstName, lastName, email, password }) => {
+  return fetch("http://localhost:5000/api/users/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -27,8 +20,6 @@ export const registerUser = ({
       first_name: firstName,
       last_name: lastName,
       email,
-      phone,
-      sms_opt_in: smsOptIn,
       password,
     }),
   })
@@ -40,7 +31,7 @@ export const registerUser = ({
 };
 
 export const loginUser = ({ email, password }) => {
-  return fetch("http://localhost:5500/api/users/signin", {
+  return fetch("http://localhost:5000/api/users/signin", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -58,7 +49,7 @@ export const loginUser = ({ email, password }) => {
 };
 
 export const validateDupCreds = ({ email, phone }) => {
-  return fetch("http://localhost:5500/api/users/validateDupCreds", {
+  return fetch("http://localhost:5000/api/users/validateDupCreds", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -77,7 +68,7 @@ export const validateDupCreds = ({ email, phone }) => {
 
 export const completeOnboardingStatus = ({ user_id }) => {
   const token = localStorage.getItem("jwt");
-  return fetch("http://localhost:5500/api/users/onboardingComplete", {
+  return fetch("http://localhost:5000/api/users/onboardingComplete", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -97,7 +88,7 @@ export const completeOnboardingStatus = ({ user_id }) => {
 export const getCurrentUser = () => {
   const token = localStorage.getItem("jwt");
 
-  return fetch("http://localhost:5500/api/users/me", {
+  return fetch("http://localhost:5000/api/users/me", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -10,7 +10,7 @@ export const addClinic = ({
   zipcode,
 }) => {
   const token = localStorage.getItem("jwt");
-  return fetch("http://localhost:5500/api/clinics", {
+  return fetch("http://localhost:5000/api/clinics", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

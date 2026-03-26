@@ -29,12 +29,9 @@ const SignupForm = () => {
       firstName: "",
       lastName: "",
       email: "",
-      phone: "",
-      smsOptIn: null,
       password: "",
     },
   });
-  const smsOptIn = watch("smsOptIn");
 
   // Pas values to our onSubmit. Values will be our useForm registered values
   const onSubmit = async (values) => {
@@ -153,74 +150,6 @@ const SignupForm = () => {
             <span className="text-danger small">{errors.email.message}</span>
           )}
         </div>
-        <div className="col-12 mb-4">
-          <TextInput
-            labelText="Your Phone Number"
-            required
-            placeholder="Your phone number"
-            {...register("phone", {
-              required: "Phone number is required",
-              validate: (raw) => {
-                const digitsOnly = raw.replace(/[^\d+]/g, "");
-                const normalized = digitsOnly.startsWith("+")
-                  ? digitsOnly
-                  : `+${digitsOnly}`;
-                const isValid = /^\+[1-9]\d{1,14}$/.test(normalized);
-                return isValid || "Please enter a valid phone number";
-              },
-            })}
-            onChange={(evt) => {
-              const digits = evt.target.value.replace(/\D/g, "");
-              setValue("phone", digits ? `+${digits}` : "", {
-                shouldValidate: true,
-              });
-            }}
-          />
-          <div className="d-flex flex-column">
-            {errors.phone && (
-              <span className="text-danger small mt-1">
-                {errors.phone.message}
-              </span>
-            )}
-            {!errors.phone && (
-              <span className="small text-body mt-1">
-                Begin your phone number with your country code
-              </span>
-            )}
-          </div>
-          <fieldset className="mt-4">
-            <legend className="small text-body">
-              Would you like to opt in to recieve SMS notifications?
-            </legend>
-            <div className="d-flex gap-3">
-              <div className="d-flex gap-1">
-                <input
-                  type="radio"
-                  id="true"
-                  name="sms_opt_in"
-                  value="True"
-                  onChange={() => setValue("smsOptIn", true)}
-                />
-                <label htmlFor="true" className="text-body">
-                  Yes
-                </label>
-              </div>
-              <div className="d-flex gap-1">
-                <input
-                  type="radio"
-                  id="false"
-                  name="sms_opt_in"
-                  value="False"
-                  onChange={() => setValue("smsOptIn", false)}
-                />
-                <label htmlFor="false" className="text-body">
-                  Not Now
-                </label>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-
         <div className="col-12 mb-4">
           <TextInput
             labelText="Create A Password"

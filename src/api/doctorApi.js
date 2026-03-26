@@ -15,7 +15,7 @@ export const createDoctorWithClinic = ({
   zipcode,
 }) => {
   const token = localStorage.getItem("jwt");
-  return fetch("http://localhost:5500/api/doctors/", {
+  return fetch("http://localhost:5000/api/doctors/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -45,7 +45,7 @@ export const createDoctorWithClinic = ({
 
 export const getUsersDoctors = () => {
   const token = localStorage.getItem("jwt");
-  return fetch("http://localhost:5500/api/doctors", {
+  return fetch("http://localhost:5000/api/doctors", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -61,7 +61,7 @@ export const getUsersDoctors = () => {
 
 export const updateDoctor = ({ data, id }) => {
   const token = localStorage.getItem("jwt");
-  return fetch(`http://localhost:5500/api/doctors/${id}`, {
+  return fetch(`http://localhost:5000/api/doctors/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export const updateDoctor = ({ data, id }) => {
 
 export const deleteDoctor = ({ id }) => {
   const token = localStorage.getItem("jwt");
-  return fetch(`http://localhost:5500/api/doctors/${id}`, {
+  return fetch(`http://localhost:5000/api/doctors/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

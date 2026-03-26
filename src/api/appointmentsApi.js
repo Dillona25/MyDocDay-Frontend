@@ -10,7 +10,7 @@ export const createAppointment = ({
   appointment_time,
 }) => {
   const token = localStorage.getItem("jwt");
-  return fetch("http://localhost:5500/api/appointments", {
+  return fetch("http://localhost:5000/api/appointments", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export const createAppointment = ({
 
 export const getUsersAppointments = () => {
   const token = localStorage.getItem("jwt");
-  return fetch("http://localhost:5500/api/appointments", {
+  return fetch("http://localhost:5000/api/appointments", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export const getUsersAppointments = () => {
 
 export const editAppointment = ({ data, id }) => {
   const token = localStorage.getItem("jwt");
-  return fetch(`http://localhost:5500/api/appointments/${id}`, {
+  return fetch(`http://localhost:5000/api/appointments/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export const editAppointment = ({ data, id }) => {
 
 export const deleteAppointment = ({ id }) => {
   const token = localStorage.getItem("jwt");
-  return fetch(`http://localhost:5500/api/appointments/${id}`, {
+  return fetch(`http://localhost:5000/api/appointments/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
