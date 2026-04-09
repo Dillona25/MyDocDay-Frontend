@@ -9,7 +9,7 @@ const Navigation = () => {
 
   const navItems = [
     { label: "Overview", href: "/dashboard" },
-    { label: "Your Doctors", href: "/dashboard/doctors" },
+    { label: "Your Providers", href: "/dashboard/providers" },
     { label: "Appointments", href: "/dashboard/appointments" },
     { label: "Reminders", href: "/dashboard/reminders" },
     { label: "Account", href: "/dashboard/account" },

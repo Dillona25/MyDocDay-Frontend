@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import EditAppointmentsForm from "../../../components/forms/common/EditAppointmentForm";
 import locationDot from "../../../assets/location-dot.svg";
 import doctorIcon from "../../../assets/Doctor-Icon.svg";
-import { useDoctorStore } from "../../../store/useDoctors";
 import Button from "../../../components/common/Button";
 import ModalConfirmationMessage from "../../../components/modals/ModalConfirmationMessage";
 import { useModal } from "../../../store/modalContext";
@@ -13,32 +12,18 @@ import { useToastStore } from "../../../store/useToast";
 
 const EditAppointmentPage = () => {
   const { appointments, initAppointments } = useAppointmentStore();
-  const { doctors, initDoctors } = useDoctorStore();
   const { id } = useParams();
   const { openModal, closeModal } = useModal();
   const navigate = useNavigate();
   const showToast = useToastStore((state) => state.showToast);
 
-  // Initializing our appointment - from our appointment store
   useEffect(() => {
     initAppointments();
   }, [initAppointments]);
 
-  // Initializing our doctors - from our doctor store
-  useEffect(() => {
-    initDoctors();
-  }, [initDoctors]);
-
-  // Finding the appointment ID in which matches the React Router id from the URL
-  // ? Could this be improved with an API endpoint? I feel like it can but for now appointment count is low..
   const appointment = useMemo(
     () => appointments.find((apt) => String(apt.id) === String(id)),
     [appointments, id]
-  );
-
-  // Finding the doctor whos ID matches the appointment objects doctor ID - Linking the two
-  const doctor = useMemo(() =>
-    doctors.find((doc) => String(doc.id) === String(appointment?.doctor_id))
   );
 
   // Formatting our Appointment date
@@ -120,30 +105,36 @@ const EditAppointmentPage = () => {
             </span>
           </div>
 
-          <div className="d-flex gap-2 mt-5">
-            <img
-              src={doctorIcon}
-              alt="Dot Icon"
-              className="img-fluid icon-lg"
-            />
-            <span className="fw-semibold">
-              {doctor?.first_name} {doctor?.last_name}
-            </span>
-          </div>
-
-          <div className="d-flex gap-2 mt-3">
-            <img
-              src={locationDot}
-              alt="Dot Icon"
-              className="img-fluid icon-lg"
-            />
-            <div className="d-flex flex-column">
-              <span className="fw-semibold">{doctor?.clinic_name}</span>
-              <span>
-                {doctor?.city}, {doctor?.state}
+          {appointment?.first_name && (
+            <div className="d-flex gap-2 mt-5">
+              <img
+                src={doctorIcon}
+                alt="Doctor Icon"
+                className="img-fluid icon-lg"
+              />
+              <span className="fw-semibold">
+                {appointment.first_name} {appointment.last_name}
               </span>
             </div>
-          </div>
+          )}
+
+          {appointment?.clinic_name && (
+            <div className={`d-flex gap-2 ${appointment?.first_name ? "mt-3" : "mt-5"}`}>
+              <img
+                src={locationDot}
+                alt="Location Icon"
+                className="img-fluid icon-lg"
+              />
+              <div className="d-flex flex-column">
+                <span className="fw-semibold">{appointment.clinic_name}</span>
+                {appointment?.city && appointment?.state && (
+                  <span>
+                    {appointment.city}, {appointment.state}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
           <Button
             onClick={openModal}
             buttonText="Remove Appointment"

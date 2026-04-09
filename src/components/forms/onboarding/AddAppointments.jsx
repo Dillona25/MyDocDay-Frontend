@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import FormWrapper from "../../../components/common/FormWrapper";
 import { SelectInput, TextInput } from "../../../components/common/Inputs";
 import Button from "../../common/Button";
-import { mockApi } from "../../../api/authApi";
 import { useDoctorStore } from "../../../store/useDoctors";
+import { useClinicStore } from "../../../store/useClinics";
 import { useForm } from "react-hook-form";
 import { useAuthStore } from "../../../store/useAuth";
 import { createAppointment } from "../../../api/appointmentsApi";
@@ -13,15 +13,26 @@ import { useToastStore } from "../../../store/useToast";
 
 const AddAppointments = () => {
   const { doctors } = useDoctorStore();
+  const { clinics, initClinics } = useClinicStore();
+
+  useEffect(() => {
+    initClinics();
+  }, [initClinics]);
   const { user } = useAuthStore();
   const { closeModal } = useModal();
-  const { addAppointmentToList } = useAppointmentStore();
+  const { initAppointments } = useAppointmentStore();
   const showToast = useToastStore((state) => state.showToast);
 
-  const doctorOptions = doctors.map((doc) => ({
-    value: String(doc.id),
-    label: `${doc.first_name} ${doc.last_name}`,
-  }));
+  const providerOptions = [
+    ...doctors.map((doc) => ({
+      value: `doc_${doc.id}`,
+      label: `${doc.first_name} ${doc.last_name}`,
+    })),
+    ...clinics.map((clinic) => ({
+      value: `clinic_${clinic.clinic_id}`,
+      label: clinic.clinic_name,
+    })),
+  ];
 
   const aptTypes = [
     {
@@ -37,13 +48,12 @@ const AddAppointments = () => {
   const {
     register,
     handleSubmit,
-    setError,
     setValue,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
       appointmentTitle: "",
-      doctor: "",
+      provider: "",
       appointmentDate: "",
       appointmentTime: "",
       appointmentType: "",
@@ -51,16 +61,13 @@ const AddAppointments = () => {
   });
 
   const onSubmit = async (values) => {
-    const selectedDoctor = doctors.find(
-      (doc) => String(doc.id) === values.doctor
-    );
+    const isClinic = values.provider?.startsWith("clinic_");
+    const providerId = values.provider?.split("_")[1];
 
     const payload = {
       user_id: user?.id,
-      doctor_id: Number(values.doctor),
-      doctor_name: selectedDoctor
-        ? `${selectedDoctor.first_name} ${selectedDoctor.last_name}`
-        : "",
+      doctor_id: isClinic ? null : Number(providerId),
+      clinic_id: isClinic ? Number(providerId) : null,
       appointment_title: values.appointmentTitle,
       appointment_type: values.appointmentType,
       appointment_date: values.appointmentDate,
@@ -68,8 +75,8 @@ const AddAppointments = () => {
     };
 
     try {
-      const res = await createAppointment(payload);
-      addAppointmentToList(res.appointment);
+      await createAppointment(payload);
+      await initAppointments();
       closeModal();
       showToast({
         title: "Appointment Added",
@@ -117,23 +124,20 @@ const AddAppointments = () => {
         <div className="row mb-4">
           <div className="col-12">
             <SelectInput
-              id="doctor-select"
-              labelText="Select Doctor"
-              options={doctorOptions}
-              defaultOptionText="Select Doctor"
+              id="provider-select"
+              labelText="Select Provider"
+              options={providerOptions}
+              defaultOptionText="Select Provider"
               required
-              {...register("doctor", {
+              {...register("provider", {
                 required: "This field is required",
               })}
               onChange={(evt) => {
-                const target = evt.target;
-                setValue("doctor", target.value, {
-                  shouldValidate: true,
-                });
+                setValue("provider", evt.target.value, { shouldValidate: true });
               }}
             />
-            {errors.doctor && (
-              <span className="text-danger small">{errors.doctor.message}</span>
+            {errors.provider && (
+              <span className="text-danger small">{errors.provider.message}</span>
             )}
           </div>
         </div>

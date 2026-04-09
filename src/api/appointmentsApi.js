@@ -3,7 +3,7 @@ import { processServerResponse } from "./serverResponse";
 export const createAppointment = ({
   user_id,
   doctor_id,
-  doctor_name,
+  clinic_id,
   appointment_title,
   appointment_type,
   appointment_date,
@@ -19,7 +19,7 @@ export const createAppointment = ({
     body: JSON.stringify({
       user_id,
       doctor_id,
-      doctor_name,
+      clinic_id,
       appointment_title,
       appointment_type,
       appointment_date,

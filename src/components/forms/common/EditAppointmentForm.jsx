@@ -2,6 +2,7 @@ import FormWrapper from "../../../components/common/FormWrapper";
 import { SelectInput, TextInput } from "../../../components/common/Inputs";
 import Button from "../../common/Button";
 import { useDoctorStore } from "../../../store/useDoctors";
+import { useClinicStore } from "../../../store/useClinics";
 import { useForm } from "react-hook-form";
 import { useToastStore } from "../../../store/useToast";
 import { useEffect } from "react";
@@ -10,6 +11,7 @@ import { useAppointmentStore } from "../../../store/useAppointments";
 
 const EditAppointmentsForm = ({ initialValues }) => {
   const { doctors } = useDoctorStore();
+  const { clinics } = useClinicStore();
   const { initAppointments } = useAppointmentStore();
 
   const showToast = useToastStore((state) => state.showToast);
@@ -28,23 +30,27 @@ const EditAppointmentsForm = ({ initialValues }) => {
     },
   ];
 
-  // Building our doctor options. The label is the doctors name, but the value is their unique ID
-  const doctorOptions = doctors.map((doc) => ({
-    value: String(doc.id),
-    label: `${doc.first_name} ${doc.last_name}`,
-  }));
+  const providerOptions = [
+    ...doctors.map((doc) => ({
+      value: `doc_${doc.id}`,
+      label: `${doc.first_name} ${doc.last_name}`,
+    })),
+    ...clinics.map((clinic) => ({
+      value: `clinic_${clinic.clinic_id}`,
+      label: clinic.clinic_name,
+    })),
+  ];
 
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
-    formState: { errors, isValid, dirtyFields },
+    formState: { dirtyFields },
   } = useForm({
     mode: "onChange",
     defaultValues: {
       appointment_title: "",
-      doctor_id: "",
+      provider: "",
       appointment_date: formattedDate,
       appointment_time: "",
       appointment_type: "",
@@ -58,8 +64,10 @@ const EditAppointmentsForm = ({ initialValues }) => {
     if (initialValues) {
       reset({
         appointment_title: initialValues.appointment_title,
-        doctor_id: initialValues.doctor_id
-          ? String(initialValues.doctor_id)
+        provider: initialValues.doctor_id
+          ? `doc_${initialValues.doctor_id}`
+          : initialValues.clinic_id
+          ? `clinic_${initialValues.clinic_id}`
           : "",
         appointment_date: formattedDate,
         appointment_time: initialValues.appointment_time,
@@ -75,13 +83,26 @@ const EditAppointmentsForm = ({ initialValues }) => {
       return acc;
     }, {});
 
+    if (changes.provider !== undefined) {
+      const isClinic = changes.provider?.startsWith("clinic_");
+      const providerId = changes.provider?.split("_")[1];
+      if (isClinic) {
+        changes.clinic_id = Number(providerId);
+        changes.doctor_id = null;
+      } else {
+        changes.doctor_id = Number(providerId);
+        changes.clinic_id = null;
+      }
+      delete changes.provider;
+    }
+
     if (Object.keys(changes).length === 0) {
       console.log("No changes detected.");
       return;
     }
 
     try {
-      const result = await editAppointment({
+      await editAppointment({
         id: initialValues.id,
         data: changes,
       });
@@ -112,11 +133,11 @@ const EditAppointmentsForm = ({ initialValues }) => {
         <div className="row mb-4">
           <div className="col-12">
             <SelectInput
-              id="doctor-select"
-              labelText="Select Doctor"
-              options={doctorOptions}
-              defaultOptionText="Select Doctor"
-              {...register("doctor_id")}
+              id="provider-select"
+              labelText="Select Provider"
+              options={providerOptions}
+              defaultOptionText="Select Provider"
+              {...register("provider")}
             />
           </div>
         </div>

@@ -40,6 +40,22 @@ const AppointmentCard = ({
 
   const formattedDate = formatAppointmentTime(aptDate);
 
+  const getDaysAway = (date) => {
+    if (!date) return null;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const apt = new Date(date);
+    apt.setHours(0, 0, 0, 0);
+    const diff = Math.round((apt - today) / (1000 * 60 * 60 * 24));
+    if (diff === 0) return "Today";
+    if (diff === 1) return "Tomorrow";
+    if (diff === -1) return "Yesterday";
+    if (diff > 0) return `In ${diff} days`;
+    return `${Math.abs(diff)} days ago`;
+  };
+
+  const daysAway = getDaysAway(aptDate);
+
   // Formatting our time
   function formattedTime(time) {
     const [hoursStr, minutes] = time.split(":");
@@ -63,6 +79,11 @@ const AppointmentCard = ({
             <div className="d-flex flex-column">
               <h5 className="m-0 text-body">{formattedDate}</h5>
               <p className="m-0 text-end">{formattedTime(aptTime)}</p>
+              {daysAway && (
+                <p className="m-0 text-end extra-small text-muted">
+                  {daysAway}
+                </p>
+              )}
             </div>
           </div>
           <div className="d-flex justify-content-between align-items-center gap-2">

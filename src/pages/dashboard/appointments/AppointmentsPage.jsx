@@ -95,11 +95,6 @@ const AppointmentsPage = () => {
               </div>
               <div className="row">
                 {appointmentsForDate.map((apt) => {
-                  const doctor = doctors.find(
-                    (doctor) => doctor.id === apt.doctor_id
-                  );
-                  const clinicName =
-                    doctor?.clinic_name || "Clinic not available";
                   return (
                     <div className="col-12 col-md-4 mt-3 mb-4" key={apt.id}>
                       <AppointmentCard
@@ -109,7 +104,7 @@ const AppointmentsPage = () => {
                         aptTime={apt.appointment_time}
                         aptDate={apt.appointment_date}
                         aptId={apt.id}
-                        aptlLocation={clinicName}
+                        aptlLocation={apt.clinic_name}
                       />
                     </div>
                   );

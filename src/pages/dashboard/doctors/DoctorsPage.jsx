@@ -3,17 +3,20 @@ import Button from "../../../components/common/Button";
 import DoctorCard from "../../../components/common/DoctorCard";
 import { useAuthStore } from "../../../store/useAuth";
 import { useDoctorStore } from "../../../store/useDoctors";
+import { useClinicStore } from "../../../store/useClinics";
 import { useModal } from "../../../store/modalContext";
 import ModalAddDoctor from "../../../components/modals/ModalAddDoctor";
 
 const DoctorsPage = () => {
   const { doctors, initDoctors } = useDoctorStore();
+  const { clinics, initClinics } = useClinicStore();
   const { user } = useAuthStore();
   const { openModal } = useModal();
 
   useEffect(() => {
     initDoctors();
-  }, [initDoctors]);
+    initClinics();
+  }, [initDoctors, initClinics]);
 
   return (
     <>
@@ -25,7 +28,7 @@ const DoctorsPage = () => {
             </h3>
             <Button
               onClick={openModal}
-              buttonText="Add Doctor"
+              buttonText="Add Provider"
               className="max-w-fit bg-primary-light text-white align-self-center"
             />
           </div>
@@ -33,6 +36,9 @@ const DoctorsPage = () => {
       </div>
 
       <div className="row mt-5">
+        <div className="col-12 mb-3">
+          <h5 className="text-body fw-semibold border-bottom pb-2">Doctors</h5>
+        </div>
         {doctors.length > 0 ? (
           doctors.map((doc) => (
             <div className="col-12 col-md-6 col-xl-4 mb-3" key={doc.id}>
@@ -42,18 +48,38 @@ const DoctorsPage = () => {
                 image={doc.image_url}
                 specialty={doc.specialty}
                 clinicName={doc.clinic_name}
-                city={doc.city}
-                state={doc.state}
                 docId={doc.id}
               />
             </div>
           ))
         ) : (
           <div className="col-12">
-            <h5 className="text-body fw-semibold text-center my-5">
-              You currently have no added doctors. When you do, they will appear
-              here.
-            </h5>
+            <p className="text-body text-center my-3">No doctors added yet.</p>
+          </div>
+        )}
+      </div>
+
+      <div className="row mt-4">
+        <div className="col-12 mb-3">
+          <h5 className="text-body fw-semibold border-bottom pb-2">Clinics</h5>
+        </div>
+        {clinics.length > 0 ? (
+          clinics.map((clinic) => (
+            <div
+              className="col-12 col-md-6 col-xl-4 mb-3"
+              key={clinic.clinic_id}
+            >
+              <DoctorCard
+                image={clinic.image_url}
+                specialty={clinic.specialty}
+                clinicName={clinic.clinic_name}
+                docId={clinic.clinic_id}
+              />
+            </div>
+          ))
+        ) : (
+          <div className="col-12">
+            <p className="text-body text-center my-3">No clinics added yet.</p>
           </div>
         )}
       </div>
